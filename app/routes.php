@@ -28,8 +28,24 @@ Route::group(['before'=>'auth'], function(){
 	|	Logout (GET)
 	*/
 	Route::get('/account/logout', [
-		'as' => 'account-logout',
+		'as'   => 'account-logout',
 		'uses' => 'AccountController@getLogout'
+	]);
+
+	/*
+	|	Settings (GET)
+	*/
+	Route::get('/account/settings', [
+		'as'   => 'account-settings',
+		'uses' => 'AccountController@getSettings'
+	]);
+
+	/*
+	|	Settings (POST)
+	*/
+	Route::post('/account/settings', [
+		'as' => 'account-settings-post',
+		'uses' => 'AccountController@postSettings'
 	]);
 });
 

@@ -8,7 +8,7 @@ class AccountController extends BaseController{
 	public function getRegister()
 	{
 		return View::make('account.register')
-			->with('title', 'Big Tents :: Register');
+			->with('title', 'Register');
 	}
 
 	/*
@@ -19,7 +19,6 @@ class AccountController extends BaseController{
 		//Validation Rules
 		$validation = Validator::make(Input::all(), [
 			'username'       => 'required|min:3|max:20|unique:users',
-			'profile_name'   => 'required|min:3|max:20|unique:users',
 			'password'       => 'required|min:5',
 			'password_again' => 'required|same:password',
 			'email'          => 'required|email|max:50|unique:users',
@@ -38,7 +37,6 @@ class AccountController extends BaseController{
 			//Insert details to table
 			User::create([
 				'username'     => Input::get('username'),
-				'profile_name' => Input::get('profile_name'),
 				'password'     => Hash::make(Input::get('password')),
 				'email'        => Input::get('email'),
 				'acc_type'     => Input::get('account_type'),
@@ -75,12 +73,12 @@ class AccountController extends BaseController{
 
 			//Set verified state to 1 and empty code
 			$user->verified = 1;
-			$user->code = '';
+			$user->code     = '';
 
 			//Update settings
 			if($user->save()){
 				return Redirect::route('home')
-				->with('message', 'Your account has been sucessfully verified!');
+					->with('message', 'Your account has been sucessfully verified!');
 			}
 		}
 
@@ -89,12 +87,12 @@ class AccountController extends BaseController{
 	}
 
 	/*
-	|	Viewing the login form
+	|	View the login form
 	*/
 	public function getLogin()
 	{
 		return View::make('account.login')
-			->with('title', 'Big Tents :: Login Page');
+			->with('title', 'Login');
 	}
 
 	/*
@@ -121,7 +119,7 @@ class AccountController extends BaseController{
 
 			//Attemping to login user
 			$auth = Auth::attempt([
-				'email' => Input::get('email'),
+				'email'    => Input::get('email'),
 				'password' => Input::get('password'),
 				'verified' => 1
 			], $remember);
@@ -129,10 +127,10 @@ class AccountController extends BaseController{
 			//If user has been logged in
 			if($auth){
 				return Redirect::intended(route('home'))
-				->with('message', 'You have successfully logged in, ' . Auth::user()->username . '.');
+					->with('message', 'You have successfully logged in, ' . Auth::user()->username . '.');
 			}else{
 				return Redirect::route('account-login')
-				->with('message', 'Email/Password wrong, or account not verified.');
+					->with('message', 'Email/Password wrong, or account not verified.');
 			}
 		}
 
@@ -148,6 +146,55 @@ class AccountController extends BaseController{
 	{
 		Auth::logout();
 		return Redirect::route('home')
-		->with('message', 'You have been sucessfully logged out.');
+			->with('message', 'You have been sucessfully logged out.');
 	}
+
+	/*
+	|	Account Settings (GET) - View the form
+	*/
+	public function getSettings()
+	{
+		return View::make('account.settings')
+			->with('title', 'Settings');
+	}
+
+	/*
+	|	Account Settings (POST)
+	*/
+	public function postSettings()
+	{
+		//Validation Rules
+		$validation = Validator::make(Input::all(), [
+			'old_password'       => 'required|min:5',
+			'new_password'       => 'required|min:5',
+			'new_password_again' => 'required|min:5|same:new_password',
+		]);
+
+		//If validation fails
+		if($validation->fails()){
+			return Redirect::route('account-settings')
+				->withErrors($validation)
+				->withInput();
+		}else{
+		//If validation succeeds 
+			$user = Auth::user();
+			$old_password = Input::get('old_password');
+			$new_password = Input::get('new_password');
+
+			//If old password matches password in database
+			if(Hash::check($old_password, $user->password)){
+				$user->password = Hash::make($new_password);
+				//Update settings
+				if($user->save()){
+					return Redirect::route('account-settings')
+						->with('message', 'You have changed your password.');
+				}
+			}else{
+			//If old password not match
+				return Redirect::route('account-settings')
+					->with('message', 'Incorrect old password.');
+			}
+		}
+	}
+
 }

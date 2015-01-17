@@ -5,14 +5,10 @@
 <hr>
 
 @include('home.nav')
+@include('common.message')
 
-	<!-- If there's message  -->
-	@if(Session::has('message'))
-		{{ Session::get('message') }}
-	@endif
-	
 @if(Auth::check())
-	
+
 @else
 	<h3>Content</h3>
 @endif

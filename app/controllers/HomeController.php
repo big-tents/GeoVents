@@ -21,7 +21,7 @@ class HomeController extends BaseController {
 	public function getIndex()
 	{
 		return View::make('home.index')
-			->with('title', 'Big Tents :: Home');
+			->with('title', 'Home');
 	}
 
 }

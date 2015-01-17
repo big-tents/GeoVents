@@ -3,13 +3,13 @@
 @section('content')
 <h2>Register Page</h2>
 <hr>
+
 @include('home.nav')
 
 	<!-- If there's error -->
 	@if($errors->has())
-		<ul>
+		<ul class="errors">
 			{{ $errors->first('username', '<li>:message</li>') }}
-			{{ $errors->first('profile_name', '<li>:message</li>') }}
 			{{ $errors->first('password', '<li>:message</li>') }}
 			{{ $errors->first('password_again', '<li>:message</li>') }}
 			{{ $errors->first('email', '<li>:message</li>') }}
@@ -31,10 +31,6 @@
 		<p>
 			{{ Form::label('username', 'Username: ') }}
 			{{ Form::text('username', Input::old('username')) }}
-		</p>
-		<p>
-			{{ Form::label('profile_name', 'Profile Name: ') }}
-			{{ Form::text('profile_name', Input::old('profile_name'))}}
 		</p>
 		<p>
 			{{ Form::label('password', 'Password: ') }}

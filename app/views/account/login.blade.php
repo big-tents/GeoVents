@@ -3,16 +3,13 @@
 @section('content')
 <h2>Login Page</h2>
 <hr>
-@include('home.nav')
 
-	<!-- If there's message  -->
-	@if(Session::has('message'))
-		{{ Session::get('message') }}
-	@endif
+@include('home.nav')
+@include('common.message')
 
 	<!-- If there's error -->
 	@if($errors->has())
-		<ul>
+		<ul class="errors">
 			{{ $errors->first('email', '<li>:message</li>') }}
 			{{ $errors->first('password', '<li>:message</li>') }}
 		</ul>
