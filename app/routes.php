@@ -11,7 +11,38 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+/*
+|	Home Page
+*/
+Route::get('/', [
+	'as'   => 'home', 
+	'uses' => 'HomeController@getIndex'
+]);
+/*
+|	Unauthenticated group
+*/
+Route::group(['before'=>'guest'], function(){
+
+	/*
+	|	CSRF protection group
+	*/
+	Route::group(['before'=>'csrf'], function(){
+		Route::post('/account/register', [
+			'as'   => 'account-register-post',
+			'uses' => 'AccountController@postRegister'
+		]);
+	});
+
+	/*
+	|	Create account (GET)
+	*/
+	Route::get('/account/register', [
+		'as'   => 'account-register',
+		'uses' => 'AccountController@getRegister'
+	]);
+
+	Route::get('/account/verify/{code}', [
+		'as'   => 'account-verify',
+		'uses' => 'AccountController@getVerify'
+	]);
 });
