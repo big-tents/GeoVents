@@ -57,5 +57,4 @@
 <!-- Register Field Ends-->
 
 <hr>
-@include('home.footer')
 @stop

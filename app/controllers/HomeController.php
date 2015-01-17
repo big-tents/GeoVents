@@ -15,9 +15,11 @@ class HomeController extends BaseController {
 	|
 	*/
 
+	/*
+	|	Return to home/index page
+	*/
 	public function getIndex()
 	{
-
 		return View::make('home.index')
 			->with('title', 'Big Tents :: Home');
 	}

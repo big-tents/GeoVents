@@ -9,5 +9,6 @@
 </head>
 <body>
 	@yield('content')
+	@include('home.footer')
 </body>
 </html>
