@@ -21,6 +21,10 @@
 			border: 1px solid black;
 			border-radius: 5px;
 		}
+		table, tr, td{
+			border:1px solid lightgrey;
+			border-radius:3px;
+		}
 	</style>
 </head>
 <body>

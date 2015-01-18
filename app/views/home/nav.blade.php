@@ -7,6 +7,7 @@
 	@if(Auth::check())
 		<li><a href="{{ URL::route('account-logout') }}">Logout</a></li>
 		<li><a href="{{ URL::route('account-settings') }}">Account Settings</a></li>
+		<li><a href="{{ URL::route('profile') }}/{{ Auth::user()->username }}">My Profile</a></li>
 
 	<!-- If NOT Logged -->
 	@else

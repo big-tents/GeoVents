@@ -13,13 +13,14 @@ class CreateProfileTable extends Migration {
 	public function up()
 	{
 		// Create 'profile' table
-		Schema::create('profile', function($table)
+		Schema::create('profiles', function($table)
 		{
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->string('profile_name');
 			$table->text('description');
 			$table->text('image');
+			$table->timestamps();
 		});
 	}
 
@@ -31,7 +32,7 @@ class CreateProfileTable extends Migration {
 	public function down()
 	{
 		//Drop 'profile' table
-		Schema::drop('profile');
+		Schema::drop('profiles');
 	}
 
 }

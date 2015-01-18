@@ -20,6 +20,17 @@ Route::get('/', [
 ]);
 
 /*
+|	Profile Page
+*/
+Route::get('/user/{username}',[
+	'as' => 'profile-user',
+	'uses' => 'ProfileController@getUser'
+]);
+
+Route::get('/user/', [
+	'as' => 'profile'
+]);
+/*
 |	Authenticated group
 */
 Route::group(['before'=>'auth'], function(){
@@ -47,6 +58,39 @@ Route::group(['before'=>'auth'], function(){
 		'as' => 'account-settings-post',
 		'uses' => 'AccountController@postSettings'
 	]);
+
+	/*
+	|	Create Profile (GET)
+	*/
+	Route::get('/profile/create', [
+		'as' => 'profile-create',
+		'uses' =>'ProfileController@getCreateProfile'
+	]);
+
+	/*
+	|	Create Profile (POST)
+	*/
+	Route::post('/profile/create', [
+		'as' => 'profile-create-post',
+		'uses' =>'ProfileController@postCreateProfile'
+	]);
+
+	/*
+	|	Edit Profile (GET)
+	*/
+	Route::get('/profile/edit', [
+		'as' => 'profile-edit',
+		'uses' => 'ProfileController@getEditProfile'
+	]);
+
+	/*
+	|	Edit Profile (POST)
+	*/
+	Route::post('/profile/edit', [
+		'as' => 'profile-edit-post',
+		'uses' => 'ProfileController@postEditProfile'
+	]);
+
 });
 
 
