@@ -1,5 +1,5 @@
 <!-- If there's message  -->
 @if(Session::has('message'))
 
-	<span class="message">{{ Session::get('message') }}</span>
+	<div class="message">{{ Session::get('message') }}</div>
 @endif

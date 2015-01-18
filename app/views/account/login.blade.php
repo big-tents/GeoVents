@@ -19,26 +19,24 @@
 	{{ Form::open(['url'=>URL::route('account-login-post'), 'method'=>'POST']) }}
 	
 	{{ Form::token() }}
-
-	<p>
-		{{ Form::label('email', 'Email: ') }}
-		{{ Form::email('email', Input::old('email')) }}
-	</p>
-
-	<p>
-		{{ Form::label('password', 'Password: ') }}
-		{{ Form::password('password') }}
-	</p>
-
-	<p>
-		{{ Form::label('remember', 'Remember me: ') }}
-		{{ Form::checkbox('remember', 'remember', false) }}
-	</p>
-
-	<p>
-		{{ Form::submit('Log in') }}
-	</p>
-
+	<table>
+		<tr>
+			<td>{{ Form::label('email', 'Email: ') }}</td>
+			<td>{{ Form::email('email', Input::old('email')) }}</td>
+		</tr>
+		<tr>
+			<td>{{ Form::label('password', 'Password: ') }}</td>
+			<td>{{ Form::password('password') }}</td>
+		</tr>
+		<tr>
+			<td>{{ Form::label('remember', 'Remember me: ') }}</td>
+			<td>{{ Form::checkbox('remember', 'remember', false) }}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>{{ Form::submit('Log in') }}</td>
+		</tr>
+	</table>
 	{{ Form::close()}}
 <hr>
 

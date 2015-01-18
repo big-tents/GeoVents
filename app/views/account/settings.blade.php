@@ -20,24 +20,24 @@
 {{ Form::open(['url'=>URL::route('account-settings'), 'method'=>'POST']) }}
 {{ Form::token() }}
 
-<p>
-	{{ Form::label('old_password', 'Old password: ') }}
-	{{ Form::password('old_password') }}
-</p>
-
-<p>
-	{{ Form::label('new_password', 'New password: ') }}
-	{{ Form::password('new_password') }}
-</p>
-
-<p>
-	{{ Form::label('new_password_again', 'New password again: ') }}
-	{{ Form::password('new_password_again') }}
-</p>
-
-<p>
-	{{ Form::submit('Update Settings') }}
-</p>
+<table>
+	<tr>
+		<td>{{ Form::label('old_password', 'Old password: ') }}</td>
+		<td>{{ Form::password('old_password') }}</td>
+	</tr>
+	<tr>
+		<td>{{ Form::label('new_password', 'New password: ') }}</td>
+		<td>{{ Form::password('new_password') }}</td>
+	</tr>
+	<tr>
+		<td>{{ Form::label('new_password_again', 'New password again: ') }}</td>
+		<td>{{ Form::password('new_password_again') }}</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>{{ Form::submit('Update Settings') }}</td>
+	</tr>
+</table>
 
 {{ Form::close() }}
 <hr>

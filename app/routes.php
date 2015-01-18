@@ -23,13 +23,22 @@ Route::get('/', [
 |	Profile Page
 */
 Route::get('/user/{username}',[
-	'as' => 'profile-user',
+	'as'   => 'profile-user',
 	'uses' => 'ProfileController@getUser'
 ]);
 
 Route::get('/user/', [
 	'as' => 'profile'
 ]);
+
+/*
+|	Events Page
+*/
+Route::get('/events/',[
+	'as'   => 'events',
+	'uses' => 'EventController@getEvents'
+]);
+
 /*
 |	Authenticated group
 */

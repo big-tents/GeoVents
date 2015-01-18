@@ -1,7 +1,6 @@
 <?php
 
-class ProfileController extends BaseController
-{
+class ProfileController extends BaseController{
 	/*
 	|	Look up user by their username
 	*/
