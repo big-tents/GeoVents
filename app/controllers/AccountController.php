@@ -112,8 +112,8 @@ class AccountController extends BaseController{
 				->withErrors($validation)
 				->withInput();
 		}else{
-		//If validation succeeds
 
+		//If validation succeeds
 			//Return true or fasle value of remembering user
 			$remember = (Input::has('remember')) ? true : false;
 
@@ -126,7 +126,7 @@ class AccountController extends BaseController{
 
 			//If user has been logged in
 			if($auth){
-				return Redirect::intended(route('home'))
+				return Redirect::intended(route('events'))
 					->with('message', 'You have successfully logged in, ' . Auth::user()->username . '.');
 			}else{
 				return Redirect::route('account-login')

@@ -7,14 +7,8 @@
 @include('home.nav')
 @include('common.message')
 
-<!-- If there's error -->
-@if($errors->has())
-	<ul class="errors">
-		{{ $errors->first('old_password', '<li>:message</li>') }}
-		{{ $errors->first('new_password', '<li>:message</li>') }}
-		{{ $errors->first('new_password_again', '<li>:message</li>') }}
-	</ul>
-@endif
+<!-- If there's error, show errors -->
+@include('common.errors')
 
 <!-- Change Password Form -->
 {{ Form::open(['url'=>URL::route('account-settings'), 'method'=>'POST']) }}

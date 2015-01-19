@@ -7,13 +7,9 @@
 @include('home.nav')
 @include('common.message')
 
-<!-- If there's error -->
-@if($errors->has())
-	<ul class="errors">
-		{{ $errors->first('description', '<li>:message</li>') }}
-	</ul>
-@endif
-
+<!-- If there's error, show errors -->
+@include('common.errors')
+	
 <!-- FORM FIELDS -->
 <hr/>
 {{ Form::open(['url'=>URL::route('profile-edit-post'), 'method'=>'POST']) }}

@@ -7,13 +7,8 @@
 @include('home.nav')
 @include('common.message')
 
-<!-- If there's error -->
-@if($errors->has())
-	<ul class="errors">
-		{{ $errors->first('profile_name', '<li>:message</li>') }}
-		{{ $errors->first('description', '<li>:message</li>') }}
-	</ul>
-@endif
+<!-- If there's error, show errors -->
+@include('common.errors')
 
 <!-- FORM FIELDS -->
 <hr/>

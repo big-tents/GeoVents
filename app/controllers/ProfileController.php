@@ -1,33 +1,45 @@
 <?php
 
 class ProfileController extends BaseController{
+
 	/*
 	|	Look up user by their username
 	*/
 	public function getUser($username){
 
-		$user_id = User::where('username', '=', $username)->first()->id;
-		$profile = Profile::where('user_id', '=', $user_id)->first();
+		$user_exists = User::where('username', '=', $username)->exists();
 
-		//If user has created a profile already
-		if($profile){
-			return View::make('profile.user')
-				->with('title', $username . "'s Profile")
-				->with('profile', $profile);
+		//Check if user exists
+		if($user_exists){
+
+			$user = User::where('username', '=', $username)->first();
+			$user_id = $user->id;
+			$profile = Profile::where('user_id', '=', $user_id)->first();
+
+			//If user has created a profile already
+			if($profile){
+				return View::make('profile.user')
+					->with('title', $username . "'s Profile")
+					->with('profile', $profile);
+			}else{
+
+				//If user has not created a profile but it's logged, and current user equals to username on the url
+				//Go to create profile page
+				if(Auth::check() && Auth::user()->username == $username){
+					return Redirect::route('profile-create')
+						->with('message', 'It seems like you haven\'t created a profile yet.
+	Let\'s get started!');
+				}else{
+
+				//Show global message when user hasn't created a profile yet.
+					return 'This user hasn\'t created a profile yet.';
+				}
+			}
 		}else{
 
-			//If user has not created a profile but it's logged
-			//Go to create profile page
-			if(Auth::check()){
-				return Redirect::route('profile-create')
-					->with('message', 'It seems like you haven\'t created a profile yet.
-Let\'s get started!');
-			}else{
-			//Show global message when user hasn't created a profile yet.
-				return 'This user hasn\'t created at profile yet.';
-			}
+			//If user not exist
+			return 'User does\'t not exists';
 		}
-
 	}
 	/*
 	|	Create profile (GET)

@@ -27,9 +27,11 @@ Route::get('/user/{username}',[
 	'uses' => 'ProfileController@getUser'
 ]);
 
-Route::get('/user/', [
-	'as' => 'profile'
-]);
+if(Auth::check()){
+	Route::get('/user/' . Auth::user()->username, [
+		'as' => 'my-profile'
+	]);
+}
 
 /*
 |	Events Page

@@ -7,13 +7,8 @@
 @include('home.nav')
 @include('common.message')
 
-	<!-- If there's error -->
-	@if($errors->has())
-		<ul class="errors">
-			{{ $errors->first('email', '<li>:message</li>') }}
-			{{ $errors->first('password', '<li>:message</li>') }}
-		</ul>
-	@endif
+<!-- If there's error, show errors -->
+@include('common.errors')
 
 	<!-- Login Field -->
 	{{ Form::open(['url'=>URL::route('account-login-post'), 'method'=>'POST']) }}

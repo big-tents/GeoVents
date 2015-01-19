@@ -6,16 +6,8 @@
 
 @include('home.nav')
 
-	<!-- If there's error -->
-	@if($errors->has())
-		<ul class="errors">
-			{{ $errors->first('username', '<li>:message</li>') }}
-			{{ $errors->first('password', '<li>:message</li>') }}
-			{{ $errors->first('password_again', '<li>:message</li>') }}
-			{{ $errors->first('email', '<li>:message</li>') }}
-			{{ $errors->first('account_type', '<li>:message</li>') }}
-		</ul>
-	@endif
+	<!-- If there's error, show errors -->
+	@include('common.errors')
 
 	<!-- Register Field -->
 	{{ Form::open(['url'=>URL::route('account-register-post'), 'method'=>'POST']) }}
@@ -52,7 +44,7 @@
 				<td>{{ Form::submit('Register account') }}</td>
 			</tr>
 		</table>
-		
+
 	{{ Form::close() }}
 <!-- Register Field Ends-->
 
