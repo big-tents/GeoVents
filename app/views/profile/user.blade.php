@@ -14,7 +14,7 @@
 			<img style="width: 100px; height: 100px;" src="{{$profile->image}}"/>
 			<center>{{ $profile->profile_name }}</center>
 		</td>
-		<td>{{ $profile->description }}</td>
+		<td>{{ HTML::entities($profile->description) }}</td>
 	</tr>
 	<tr>
 		<td>Created at: </td>

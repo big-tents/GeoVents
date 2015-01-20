@@ -63,27 +63,11 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
-	|	Settings (POST)
-	*/
-	Route::post('/account/settings', [
-		'as' => 'account-settings-post',
-		'uses' => 'AccountController@postSettings'
-	]);
-
-	/*
 	|	Create Profile (GET)
 	*/
 	Route::get('/profile/create', [
 		'as' => 'profile-create',
 		'uses' =>'ProfileController@getCreateProfile'
-	]);
-
-	/*
-	|	Create Profile (POST)
-	*/
-	Route::post('/profile/create', [
-		'as' => 'profile-create-post',
-		'uses' =>'ProfileController@postCreateProfile'
 	]);
 
 	/*
@@ -95,13 +79,35 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
-	|	Edit Profile (POST)
+	|	CSRF Protected Group
 	*/
-	Route::post('/profile/edit', [
-		'as' => 'profile-edit-post',
-		'uses' => 'ProfileController@postEditProfile'
-	]);
+	Route::group(['before'=>'csrf'], function(){
+		
+		/*
+		|	Settings (POST)
+		*/
+		Route::post('/account/settings', [
+			'as' => 'account-settings-post',
+			'uses' => 'AccountController@postSettings'
+		]);
 
+		/*
+		|	Create Profile (POST)
+		*/
+		Route::post('/profile/create', [
+			'as' => 'profile-create-post',
+			'uses' =>'ProfileController@postCreateProfile'
+		]);
+
+		/*
+		|	Edit Profile (POST)
+		*/
+		Route::post('/profile/edit', [
+			'as' => 'profile-edit-post',
+			'uses' => 'ProfileController@postEditProfile'
+		]);
+
+	});
 });
 
 
