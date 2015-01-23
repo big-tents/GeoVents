@@ -66,7 +66,7 @@ Route::group(['before'=>'auth'], function(){
 	|	Delete Account (GET)
 	*/
 	Route::get('/account/delete', [
-		'as' => 'account-delete',
+		'as'   => 'account-delete',
 		'uses' => 'AccountController@getDelete'
 	]);
 
@@ -74,7 +74,7 @@ Route::group(['before'=>'auth'], function(){
 	|	Delete Account (POST)
 	*/
 	Route::post('/account/delete', [
-		'as' => 'account-delete-post',
+		'as'   => 'account-delete-post',
 		'uses' => 'AccountController@postDelete'
 	]);
 
@@ -82,7 +82,7 @@ Route::group(['before'=>'auth'], function(){
 	|	Create Profile (GET)
 	*/
 	Route::get('/profile/create', [
-		'as' => 'profile-create',
+		'as'   => 'profile-create',
 		'uses' =>'ProfileController@getCreateProfile'
 	]);
 
@@ -90,7 +90,7 @@ Route::group(['before'=>'auth'], function(){
 	|	Edit Profile (GET)
 	*/
 	Route::get('/profile/edit', [
-		'as' => 'profile-edit',
+		'as'   => 'profile-edit',
 		'uses' => 'ProfileController@getEditProfile'
 	]);
 
@@ -103,7 +103,7 @@ Route::group(['before'=>'auth'], function(){
 		|	Settings (POST)
 		*/
 		Route::post('/account/settings', [
-			'as' => 'account-settings-post',
+			'as'   => 'account-settings-post',
 			'uses' => 'AccountController@postSettings'
 		]);
 
@@ -111,7 +111,7 @@ Route::group(['before'=>'auth'], function(){
 		|	Create Profile (POST)
 		*/
 		Route::post('/profile/create', [
-			'as' => 'profile-create-post',
+			'as'   => 'profile-create-post',
 			'uses' =>'ProfileController@postCreateProfile'
 		]);
 
@@ -119,7 +119,7 @@ Route::group(['before'=>'auth'], function(){
 		|	Edit Profile (POST)
 		*/
 		Route::post('/profile/edit', [
-			'as' => 'profile-edit-post',
+			'as'   => 'profile-edit-post',
 			'uses' => 'ProfileController@postEditProfile'
 		]);
 
@@ -149,16 +149,40 @@ Route::group(['before'=>'guest'], function(){
 		|	Login (POST)
 		*/
 		Route::post('/account/login', [
-			'as' => 'account-login-post',
+			'as'   => 'account-login-post',
 			'uses' => 'AccountController@postLogin'
 		]);
+
+		/*
+		|	Forgot Password (POST)
+		*/
+		Route::post('/account/forgot-password', [
+			'as'   => 'account-forgot-password-post',
+			'uses' => 'AccountController@postForgotPassword'
+		]);
 	});
+
+	/*
+	|	Forgot Password (GET)
+	*/
+	Route::get('/account/forgot-password', [
+		'as'   => 'account-forgot-password',
+		'uses' => 'AccountController@getForgotPassword'
+	]);
+
+	/*
+	|	
+	*/
+	Route::get('/account/recover/{code}', [
+		'as'   => 'account-recover',
+		'uses' => 'AccountController@getRecover'
+	]);
 
 	/*
 	|	Login (GET)
 	*/
 	Route::get('/account/login', [
-		'as' => 'account-login',
+		'as'   => 'account-login',
 		'uses' => 'AccountController@getLogin'
 	]);
 

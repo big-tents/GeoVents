@@ -26,7 +26,7 @@ class AddETypeIdToEvents extends Migration {
 	 */
 	public function down()
 	{
-		//Drop 'e_type_id' table from 'events' table
+		//Drop 'e_type_id' column from 'events' table
 		Schema::table('events', function($table)
 		{
 			$table->dropColumn('e_type_id');

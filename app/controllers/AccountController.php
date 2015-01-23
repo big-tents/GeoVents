@@ -229,4 +229,96 @@ class AccountController extends BaseController{
 				->with('message', 'Sorry, for some reasons you account could not be deleted. Please contact customer support.');
 		}
 	}
+
+	/*
+	|	Forgot Password (GET)
+	*/
+	public function getForgotPassword()
+	{
+		return View::make('account.forgot')
+			->with('title', 'Forgot Password');
+	}
+
+	/*
+	|	Forgot Password (POST)
+	*/
+	public function postForgotPassword()
+	{
+		$validation = Validator::make(Input::all(),[
+			'email' => 'required|email'
+		]);
+
+		if($validation->fails()){
+			return Redirect::route('account-forgot-password')
+				->withErrors($validation)
+				->withInput();
+		}else{
+			$user_exists = User::where('email', '=', Input::get('email'))->exists();
+
+			if($user_exists){
+				$user = User::where('email', '=', Input::get('email'))->first();
+				
+				//Generate new code and password
+				$code                = str_random(60);
+				$password            = str_random(10);
+				$user->code          = $code;
+				$user->password_temp = Hash::make($password);
+
+				if($user->save()){
+
+					Mail::send('emails.auth.forgot', [
+						'link'     =>URL::route('account-recover', $code), 
+						'username' => $user->username, 
+						'password' => $password
+					], function($message) use ($user){
+						$message
+							->to($user->email, $user->username)
+							->subject('Your new password');
+					});
+
+					return Redirect::route('home')
+						->with('message', 'New password has been sent to your email.');
+				}else{
+
+				}
+
+			}else{
+				return Redirect::route('account-forgot-password')
+					->with('message', 'User does\'t not exists');
+			}
+		}
+
+		return Redirect::route('account-forgot-password')
+			->with('message', 'New password could not be requested.');
+	}
+
+	/*
+	|	Recover Password (GET)
+	*/
+	public function getRecover($code)
+	{
+		$user = User::where('code', '=', $code)
+			->where('password_temp', '!=', '');
+
+		//Check if user exists
+		if($user->count()){
+			
+			$user = $user->first();
+			
+			$user->password      = $user->password_temp;
+			$user->password_temp = '';
+			$user->code          = '';
+
+			if($user->save()){
+				return Redirect::route('home')
+					->with('message', 'Your account has been recovered. Use your new password to login.');
+			}else{
+
+			}
+		}
+
+		//Worst case scenario
+		return Redirect::route('home')
+			->with('message', 'Account could not be recovered.');
+	}
 }

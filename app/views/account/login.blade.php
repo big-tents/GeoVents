@@ -33,6 +33,10 @@
 		</tr>
 	</table>
 	{{ Form::close()}}
+
+	<ul>
+		<li><a href="{{ URL::route('account-forgot-password') }}">Forgot Password?</a></li>
+	</ul>
 <hr>
 
 @stop
