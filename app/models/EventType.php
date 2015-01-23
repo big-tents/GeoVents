@@ -5,14 +5,10 @@ class EventType extends Eloquent{
 	protected $table = 'event_types';
 	protected $filleable = ['e_type'];
 	public $timestamps = false;
-	// protected $guarded = 'id';
 
-	// public function event()
-	// {
-	// 	return $this->morphOne('EEvent', 'eventable');
-	// }
-
-	public function eevent(){
-		return $this->belongsTo('EEvents');
+	//Define Relationship
+	public function event()
+	{
+		return $this->hasMany('event', 'e_type_id', 'id');
 	}
 }

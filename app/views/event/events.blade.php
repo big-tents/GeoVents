@@ -75,11 +75,11 @@
 		@foreach ($events as $e)
 		<tr>
 			<td>{{ $e->id }}</td>
-			<td>{{ EventType::find($e->e_type_id)->e_type }}</td>
+			<td>{{ $e->eventType->e_type }}</td>
 			<td>{{ $e->e_name }}</td>
 			<td>{{ $e->e_date }}</td>
 			<td>{{ $e->e_location }}</td>
-			<td>0/{{ $e->total_attendees }}</td>
+			<td>{{ $e->total_attendees }}</td>
 			<td>{{ $e->status }}</td>
 			<td>{{ $e->created_at }}</td>
 			<td><a href="">Join</a></td>
