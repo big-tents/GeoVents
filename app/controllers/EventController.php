@@ -8,6 +8,8 @@ class EventController extends BaseController{
 	{
 
 		$events = EEvent::all();
+		// echo EventType::find(1)->first()->e_type;
+		// $event_type = EventType::where('id', '=', EEvent::all());
 
 		return View::make('event.events')
 			->with('title', 'Events')

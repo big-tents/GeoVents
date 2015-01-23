@@ -155,7 +155,8 @@ class AccountController extends BaseController{
 	public function getSettings()
 	{
 		return View::make('account.settings')
-			->with('title', 'Settings');
+			->with('title', 'Settings')
+			->with('user', Auth::user());
 	}
 
 	/*
@@ -197,4 +198,35 @@ class AccountController extends BaseController{
 		}
 	}
 
+	/*
+	|	Account Deletion (GET) - View the form
+	*/
+	public function getDelete()
+	{
+		return View::make('account.delete')
+			->with('title', 'Delete my account');
+	}
+
+	/*
+	|	Account Deletion (POST) - Remove user from database
+	*/
+	public function postDelete()
+	{
+		$user_id = Auth::user()->id;
+		$user = User::find($user_id);
+		$profile = Profile::where('user_id', '=', $user_id);
+
+		//Logout user
+		Auth::logout();
+
+		//If successfully deleted a user account
+		if($user->delete() && $profile->delete()){
+			return Redirect::route('home')
+				->with('message', 'Account deleted. We are sorry to see you go :(');
+		}else{
+		//If account could not be deleted.
+			return Redirect::route('account-delete')
+				->with('message', 'Sorry, for some reasons you account could not be deleted. Please contact customer support.');
+		}
+	}
 }

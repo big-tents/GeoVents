@@ -63,6 +63,22 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
+	|	Delete Account (GET)
+	*/
+	Route::get('/account/delete', [
+		'as' => 'account-delete',
+		'uses' => 'AccountController@getDelete'
+	]);
+
+	/*
+	|	Delete Account (POST)
+	*/
+	Route::post('/account/delete', [
+		'as' => 'account-delete-post',
+		'uses' => 'AccountController@postDelete'
+	]);
+
+	/*
 	|	Create Profile (GET)
 	*/
 	Route::get('/profile/create', [

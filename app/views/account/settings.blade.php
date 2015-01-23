@@ -1,7 +1,7 @@
 @extends('templates.default')
 
 @section('content')
-<h2>Settings</h2>
+<h2>{{ $title }}</h2>
 <hr>
 
 @include('home.nav')
@@ -16,15 +16,23 @@
 
 <table>
 	<tr>
-		<td>{{ Form::label('old_password', 'Old password: ') }}</td>
+		<td>Username: </td>
+		<td>{{ $user->username }}</td>
+	</tr>
+	<tr>
+		<td>Email: </td>
+		<td>{{ $user->email }}</td>
+	</tr>
+	<tr>
+		<td>{{ Form::label('old_password', 'Old password: ') }}*</td>
 		<td>{{ Form::password('old_password') }}</td>
 	</tr>
 	<tr>
-		<td>{{ Form::label('new_password', 'New password: ') }}</td>
+		<td>{{ Form::label('new_password', 'New password: ') }}*</td>
 		<td>{{ Form::password('new_password') }}</td>
 	</tr>
 	<tr>
-		<td>{{ Form::label('new_password_again', 'New password again: ') }}</td>
+		<td>{{ Form::label('new_password_again', 'New password again: ') }}*</td>
 		<td>{{ Form::password('new_password_again') }}</td>
 	</tr>
 	<tr>
@@ -34,6 +42,8 @@
 </table>
 
 {{ Form::close() }}
-<hr>
 
+<a href="{{ URL::route('account-delete') }}">Delete my account</a>
+
+<hr>
 @stop

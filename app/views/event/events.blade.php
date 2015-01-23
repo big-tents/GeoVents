@@ -1,7 +1,7 @@
 @extends('templates.default')
 
 @section('content')
-<h2>Events Page</h2>
+<h2>{{ $title }}</h2>
 <hr>
 
 @include('home.nav')
@@ -72,16 +72,16 @@
 		</tr>
 		
 		<!--FOR LOOP-->
-		@foreach ($events as $event)
+		@foreach ($events as $e)
 		<tr>
-			<td>{{ $event->id }}</td>
-			<td>{{ $event->e_type }}</td>
-			<td>{{ $event->e_name }}</td>
-			<td>{{ $event->e_date }}</td>
-			<td>{{ $event->e_location }}</td>
-			<td>0/{{ $event->total_attendees }}</td>
-			<td>{{ $event->status }}</td>
-			<td>{{ $event->created_at }}</td>
+			<td>{{ $e->id }}</td>
+			<td>{{ EventType::find($e->e_type_id)->e_type }}</td>
+			<td>{{ $e->e_name }}</td>
+			<td>{{ $e->e_date }}</td>
+			<td>{{ $e->e_location }}</td>
+			<td>0/{{ $e->total_attendees }}</td>
+			<td>{{ $e->status }}</td>
+			<td>{{ $e->created_at }}</td>
 			<td><a href="">Join</a></td>
 		</tr>
 		@endforeach
