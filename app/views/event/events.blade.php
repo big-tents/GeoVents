@@ -21,34 +21,34 @@
 	<p>Using the filters below limit the events displayed to match only your desired parameters.</p>
 	<table>
 			<tr>
-				<td>Event Name: </td>
+				<td>{{ Form::label('e_name', 'Event Name:') }}</td>
 				<td>{{ Form::text('e_name', Input::old('e_name')) }}</td>
 			</tr>
 			<tr>
-				<td>Event Type: </td>
+				<td>{{ Form::label('e_type', 'Event Type:') }}</td>
 				<td>{{ Form::text('e_type', Input::old('e_type')) }}</td>
 			</tr>
 			<tr>
-				<td>Date: </td>
+				<td>{{ Form::label('e_date', 'Date: ') }}</td>
 				<td>{{ Form::input('date', 'e_date', Input::old('e_date')) }}</td>
 			</tr>
 			<tr>
-				<td>Total Attendees</td>
+				<td>{{ Form::label('tt_attendees', 'Total Attendees: ') }}</td>
 				<td>{{ Form::input('number', 'tt_attendees') }}</td>
 			</tr>
 			<tr>
-				<td>Location: </td>
+				<td>{{ Form::label('e_location', 'Location:') }}</td>
 				<td>{{ Form::text('e_location', Input::old('e_location')) }}</td>
 			</tr>
 			<tr>
-				<td>Distance: </td>
+				<td>{{ Form::label('e_distance', 'Distance:') }}</td>
 				<td>{{ Form::text('e_distance', Input::old('e_distance')) }}</td>
 			</tr>
 			<tr>
 				<td>Organizer: </td>
 				<td>
-					<p>{{ Form::radio('e_organizer', 'Student', true) }} Student</p>
-					<p>{{ Form::radio('e_organizer', 'Organization', true) }} Organization</p>
+					<p>{{ Form::radio('e_organizer', 'Student', false, ['id'=>'e_student']) }} {{ Form::label('e_student', 'Student') }}</p>
+					<p>{{ Form::radio('e_organizer', 'Organization', false, ['id'=>'e_organizer']) }} {{ Form::label('e_organizer', 'Organization') }}</p>
 				</td>
 			</tr>
 			<tr>
@@ -75,9 +75,9 @@
 		@foreach ($events as $e)
 		<tr>
 			<td>{{ $e->id }}</td>
-			<td>{{ $e->eventType->e_type }}</td>
+			<td>{{ $e->eventType->type }}</td>
 			<td>{{ $e->e_name }}</td>
-			<td>{{ $e->e_date }}</td>
+			<td>{{ date('d/m/Y', $e->e_date) }}</td>
 			<td>{{ $e->e_location }}</td>
 			<td>{{ $e->total_attendees }}</td>
 			<td>{{ $e->status }}</td>
@@ -90,8 +90,8 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td colspan="2">{{ Form::submit('Refresh List') }}</td>
-			<td colspan="3">{{ Form::submit('Host Event') }}</td>
+			<td colspan="2"><a class="input_pretend" href="{{ URL::route('events') }}">Refersh List</a></td>
+			<td colspan="3"><a class="input_pretend" href="{{ URL::route('event-host') }}">Host Event</a></td>
 		</tr>
 	</table>
 </aside>

@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'bigtents2015@gmail.com', 'name' => 'BigTents'),
+	'from' => array('address' => 'geovents2015@gmail.com', 'name' => 'GeoVents'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'geotents',
+	'username' => 'geovents2015',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'wcmvqvvzvvebipvq',
+	'password' => 'fzftixtbuevcfslv',
 
 	/*
 	|--------------------------------------------------------------------------

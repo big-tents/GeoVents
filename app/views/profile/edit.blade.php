@@ -1,7 +1,7 @@
 @extends('templates.default')
 
 @section('content')
-<h2>Edit Profile</h2>
+<h2>{{ $title }}</h2>
 <hr>
 
 @include('home.nav')

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddETypeIdToEvents extends Migration {
+class ReformatEdateFromEventsToDatetime extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,14 @@ class AddETypeIdToEvents extends Migration {
 	 */
 	public function up()
 	{
-		//Add 'etype_id' column to 'events' table
+		//
 		Schema::table('events', function($table)
 		{
-			$table->integer('etype_id');
+			$table->dropColumn('e_date');
+		});
+		Schema::table('events', function($table)
+		{
+			$table->integer('e_date');
 		});
 	}
 
@@ -26,10 +30,14 @@ class AddETypeIdToEvents extends Migration {
 	 */
 	public function down()
 	{
-		//Drop 'etype_id' column from 'events' table
+		//
 		Schema::table('events', function($table)
 		{
-			$table->dropColumn('etype_id');
+			$table->dropColumn('e_date');
+		});
+		Schema::table('events', function($table)
+		{
+			$table->timestamp('e_date');
 		});
 	}
 

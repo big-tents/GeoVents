@@ -12,6 +12,11 @@
 */
 
 /*
+|===============================================	
+|	              Normal group                 |
+|===============================================
+*/
+/*
 |	Home Page
 */
 Route::get('/', [
@@ -41,8 +46,14 @@ Route::get('/events/',[
 	'uses' => 'EventController@getEvents'
 ]);
 
+
+
+
+
 /*
-|	Authenticated group
+|===============================================	
+|	          Authenticated group              |
+|===============================================
 */
 Route::group(['before'=>'auth'], function(){
 
@@ -95,10 +106,24 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
+	|	Host Event (GET)
+	*/
+	Route::get('/event/host', [
+		'as' => 'event-host',
+		'uses' => 'EventController@getHostEvent'
+	]);
+
+	/*
 	|	CSRF Protected Group
 	*/
 	Route::group(['before'=>'csrf'], function(){
-		
+		/*
+		|	Host Event (POST)
+		*/
+		Route::post('/event/host', [
+			'as' => 'event-host-post',
+			'uses' => 'EventController@postHostEvent'
+		]);
 		/*
 		|	Settings (POST)
 		*/
@@ -127,8 +152,12 @@ Route::group(['before'=>'auth'], function(){
 });
 
 
+
+
 /*
-|	Unauthenticated group
+|===============================================	
+|	         Unauthenticated group             |
+|===============================================
 */
 Route::group(['before'=>'guest'], function(){
 
@@ -197,5 +226,27 @@ Route::group(['before'=>'guest'], function(){
 	Route::get('/account/verify/{code}', [
 		'as'   => 'account-verify',
 		'uses' => 'AccountController@getVerify'
+	]);
+
+});
+
+/*
+|===============================================	
+|	               API group                   |
+|===============================================
+*/
+
+/*
+|------------------------------
+|     Authenticated group     |
+|------------------------------
+*/
+Route::group(['before'=>'auth'], function(){
+	/*
+	|	Host Event (API) - Event Type Dropdown List
+	*/
+	Route::get('/api/event-types/{input}', [
+		'as'   => 'api-event-types',
+		'uses' => 'EventController@getEventTypes'
 	]);
 });

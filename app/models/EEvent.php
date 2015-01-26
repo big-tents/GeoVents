@@ -7,9 +7,17 @@ class EEvent extends Eloquent{
 	protected $guarded = ['create_at', 'updated_at', 'e_organizer_id', 'e_type_id', 'test_id'];
 
 	//Define Relationship
+
+	// events <==> event_types
 	public function eventType()
 	{
-		return $this->belongsTo('EventType', 'e_type_id', 'id');
+		return $this->belongsTo('EventType', 'etype_id', 'id');
+	}
+
+	//	events <==> users
+	public function host()
+	{
+		return $this->belongsTo('User', 'user_id', 'id');
 	}
 
 }

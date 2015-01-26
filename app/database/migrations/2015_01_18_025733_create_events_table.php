@@ -18,7 +18,7 @@ class CreateEventsTable extends Migration {
 			$table->integer('e_organizer_id');
 			$table->string('e_type');
 			$table->string('e_name');
-			$table->timestamp('e_date');
+			$table->integer('e_date');
 			$table->text('e_location');
 			$table->integer('total_attendees');
 			$table->boolean('status');
