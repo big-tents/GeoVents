@@ -75,10 +75,10 @@
 		@foreach ($events as $e)
 		<tr>
 			<td>{{ $e->id }}</td>
-			<td>{{ $e->eventType->type }}</td>
-			<td>{{ $e->e_name }}</td>
+			<td>{{ e($e->eventType->type) }}</td>
+			<td>{{ e($e->e_name) }}</td>
 			<td>{{ date('d/m/Y', $e->e_date) }}</td>
-			<td>{{ $e->e_location }}</td>
+			<td>{{ e($e->e_location) }}</td>
 			<td>{{ $e->total_attendees }}</td>
 			<td>{{ $e->status }}</td>
 			<td>{{ $e->created_at }}</td>

@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="BASE_URL" content="{{ URL::route('home') }}">
+
 	<title>GeoVents :: {{$title}}</title>
 
 	<!-- ========== EXTERNAL ========== -->
 	<!-- Google font -->
 	{{ HTML::style('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700') }}
-
-	<!-- jQuery -->
-	{{ HTML::script('js/jquery-1.11.2.min.js') }}
 
 	<!-- Modernzr -->
 	{{ HTML::script('http://modernizr.com/downloads/modernizr-latest.js') }}
@@ -20,14 +19,16 @@
 	
 	<!-- ========== INTERNAL ========== -->
 	<!-- Default CSS -->
-	{{ HTML::style('css/default.css') }}
-	
+	{{ HTML::style('assets/css/default.css') }}
+
+	<!-- jQuery -->
+	{{ HTML::script('assets/js/jquery-1.11.2.min.js') }}
+
 	<!-- Google Maps (Get Geolocation) -->
-	{{ HTML::script('js/getGeolocation.js') }}
+	{{ HTML::script('assets/js/getGeolocation.js') }}
 
 	<!-- Initilization -->
-	{{ HTML::script('js/init.js') }}
-	
+	{{ HTML::script('assets/js/init.js') }}
 
 </head>
 <body>

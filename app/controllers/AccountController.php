@@ -18,8 +18,8 @@ class AccountController extends BaseController{
 	{ 
 		//Validation Rules
 		$validation = Validator::make(Input::all(), [
-			'username'       => 'required|min:3|max:20|unique:users',
-			'password'       => 'required|min:5',
+			'username'       => 'required|min:3|max:20|alpha_dash|unique:users',
+			'password'       => 'required|min:5|required_alphanumeric',
 			'password_again' => 'required|same:password',
 			'email'          => 'required|email|max:50|unique:users',
 			'account_type'   => 'required',

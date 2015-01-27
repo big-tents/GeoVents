@@ -32,15 +32,14 @@ class EventController extends BaseController{
 	*/
 	public function postHostEvent()
 	{
-		// return Input::get('event_date');
 		//Validation Rules
 		$validation = Validator::make(Input::all(), [
-			'event_name'	=> 'required|min:3',
+			'event_name'	=> 'required|min:3|basic_title', 
 			'event_type' => 'required|min:3',
-			'event_date'	=>	'required|date_format:d-m-Y',
+			'event_date'	=>	'required|date_format:d-m-Y|after_now',
 			'event_location'	=> 'required|min:3',
-			'EventLatitude'	=>	'required|regex:/^[+-]?\d+\.\d+$/',
-			'EventLongitude'	=>	'required|regex:/^[+-]?\d+\.\d+$/',
+			'EventLatitude'	=>	'required|float',
+			'EventLongitude'	=>	'required|float',
 			'max_attendees'	=>	'required|numeric',
 			'audience'	=>	'required|numeric|max:2'
 		]);

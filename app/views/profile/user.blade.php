@@ -25,7 +25,7 @@
 		<td>{{ e($profile->updated_at) }}</td>
 	</tr>
 	<tr>
-		<td><center><a href="{{ URL::route('profile-edit') }}">Edit Profile</a></center></td>
+		<td><center><a href="{{ e(URL::route('profile-edit')) }}">Edit Profile</a></center></td>
 	</tr>
 </table>
 <!-- User Profile Area Ends -->

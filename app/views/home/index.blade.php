@@ -15,13 +15,6 @@
 	<p>[[you can edit this page at views/home/index.blade.php]]</p>
 @endif
 
-<center>
-<a href="#" class="big_search">Search Events!</a>
-<small style="text-decoration:underline">Search events around you and join them now!</small>
-
-</center>
-
-
 <hr>
 
 @stop

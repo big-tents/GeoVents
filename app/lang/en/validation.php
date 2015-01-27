@@ -73,9 +73,15 @@ return array(
 	"url"                  => "The :attribute format is invalid.",
 	"timezone"             => "The :attribute must be a valid zone.",
 
+	//Custom Validations
+	'float' => 'The :attribute must be a float number.',
+	'required_alphanumeric' => 'The :attribute must be alphanumeric.',
+	'basic_title' => 'The :attribute only allows character, number, space, period(.), plus (+), single quote(\'), and dash (-)',
+	'after_now' => 'The :attribute must be greater than current time.',
+
 	/*
 	|--------------------------------------------------------------------------
-	| Custom Validation Language Lines
+	|  
 	|--------------------------------------------------------------------------
 	|
 	| Here you may specify custom validation messages for attributes using the
