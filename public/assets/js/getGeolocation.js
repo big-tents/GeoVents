@@ -44,10 +44,32 @@ function initialize() {
 //getGeoLocationFromMap
 function getGeoLocationFromMap() {
   var address = document.getElementById('event_location').value;
+  
+  // North-East and South-West of the UK
+   var ne = new google.maps.LatLng(59.00, 2.00);
+   var sw = new google.maps.LatLng(50.00, -7.60);
+
+   // Define bounding box for drawing
+   var boundingBoxPoints = [
+      ne, new google.maps.LatLng(ne.lat(), sw.lng()),
+      sw, new google.maps.LatLng(sw.lat(), ne.lng()), ne
+   ];
+
+   // Show bounding box on map   
+   new google.maps.Polyline({
+      path: boundingBoxPoints,
+      strokeColor: 'red',
+      strokeOpacity: 0.5,
+      strokeWeight: 5,
+      map: map
+   });
+
 
   geocoder.geocode( 
   	{
-  		'address': address + ', UK',
+		'address': address,
+		'region':  'uk',
+		'bounds':  new google.maps.LatLngBounds(sw, ne)
   	}, 
   	function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {

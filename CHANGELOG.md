@@ -1,3 +1,18 @@
+# 01-02-2015
+
+## Added
+- Redirection route from 'event' to 'events'.
+
+- Added 'joined_events' (id, attendee_id, host_id, event_id, status, created_at, updated_at).
+
+- In progress of 'join event'. Added validation rules that:
+	- A host cannot also be an attendee
+	- Prevent antendees joining an event twice
+
+- Added dashboard page for user to see their hosted/joined events.
+
+- Added 'JoinedEvents' Model.
+
 # 26-01-2015
 
 ## Fixes

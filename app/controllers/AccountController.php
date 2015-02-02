@@ -1,7 +1,7 @@
 <?php
 
 class AccountController extends BaseController{
-	
+
 	/*
 	|	View registration form
 	*/

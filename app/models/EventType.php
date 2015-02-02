@@ -10,6 +10,6 @@ class EventType extends Eloquent{
 	//Define Relationship
 	public function event()
 	{
-		return $this->hasMany('event', 'etype_id', 'id');
+		return $this->hasMany('EEvent', 'etype_id', 'id');
 	}
 }

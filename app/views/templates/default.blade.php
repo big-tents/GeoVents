@@ -8,13 +8,15 @@
 
 	<!-- ========== EXTERNAL ========== -->
 	<!-- Google font -->
-	{{ HTML::style('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700') }}
-
+	{{ HTML::style('//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700') }}
+	
+	<!-- jQuery UI CSS -->
+	{{ HTML::style('//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
 	<!-- Modernzr -->
-	{{ HTML::script('http://modernizr.com/downloads/modernizr-latest.js') }}
+	{{ HTML::script('//modernizr.com/downloads/modernizr-latest.js') }}
 
 	<!-- Google Maps API -->
-	{{ HTML::script('https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true') }}
+	{{ HTML::script('//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true') }}
 
 	
 	<!-- ========== INTERNAL ========== -->
@@ -23,6 +25,7 @@
 
 	<!-- jQuery -->
 	{{ HTML::script('assets/js/jquery-1.11.2.min.js') }}
+	{{ HTML::script('assets/js/jquery-ui.js') }}
 
 	<!-- Google Maps (Get Geolocation) -->
 	{{ HTML::script('assets/js/getGeolocation.js') }}

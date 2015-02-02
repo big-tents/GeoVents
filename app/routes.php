@@ -46,7 +46,10 @@ Route::get('/events/',[
 	'uses' => 'EventController@getEvents'
 ]);
 
-
+/*
+|	Expected typo redirection
+*/
+Route::get('/event/', function(){return Redirect::route('events');});
 
 
 
@@ -111,6 +114,30 @@ Route::group(['before'=>'auth'], function(){
 	Route::get('/event/host', [
 		'as' => 'event-host',
 		'uses' => 'EventController@getHostEvent'
+	]);
+
+	/*
+	|	Join Event (GET)
+	*/
+	Route::get('/event/{event_id}', [
+		'as' => 'event-join',
+		'uses' => 'EventController@getJoinEvent'
+	]);
+
+	/*
+	|	Join Event (POST)
+	*/
+	Route::post('/event/join/', [
+		'as' => 'event-join-request',
+		'uses' => 'EventController@postJoinEvent'
+	]);
+
+	/*
+	|	Dashboard (GET)
+	*/
+	Route::get('/dashboard/', [
+		'as' => 'dashboard',
+		'uses' => 'DashboardController@index'
 	]);
 
 	/*
@@ -200,7 +227,7 @@ Route::group(['before'=>'guest'], function(){
 	]);
 
 	/*
-	|	
+	|	Account Recovery (GET)
 	*/
 	Route::get('/account/recover/{code}', [
 		'as'   => 'account-recover',
@@ -223,6 +250,9 @@ Route::group(['before'=>'guest'], function(){
 		'uses' => 'AccountController@getRegister'
 	]);
 
+	/*
+	|	Verify Account (GET)
+	*/
 	Route::get('/account/verify/{code}', [
 		'as'   => 'account-verify',
 		'uses' => 'AccountController@getVerify'

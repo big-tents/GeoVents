@@ -9,6 +9,7 @@
 		<li><a href="{{ URL::route('account-logout') }}">Logout</a></li>
 		<li><a href="{{ URL::route('account-settings') }}">Account Settings</a></li>
 		<li><a href="{{ URL::route('my-profile') }}">My Profile</a></li>
+		<li><a href="{{ URL::to('dashboard') }}">Dashboard</a></li>
 	
 	<!-- If NOT Logged -->
 	@else

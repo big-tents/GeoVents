@@ -82,7 +82,7 @@
 			<td>{{ $e->total_attendees }}</td>
 			<td>{{ $e->status }}</td>
 			<td>{{ $e->created_at }}</td>
-			<td><a href="">Join</a></td>
+			<td><a href="event/{{ $e->id }}">Join</a></td>
 		</tr>
 		@endforeach
 		<tr class="events_buttons">
