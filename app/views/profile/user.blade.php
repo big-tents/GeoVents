@@ -1,10 +1,9 @@
-@extends('templates.default')
+@extends('templates.v1')
 
 @section('content')
 <h2>{{ ucfirst($title) }}</h2>
 <hr>
 
-@include('home.nav')
 @include('common.message')
 
 <!-- User Profile Area -->
@@ -25,7 +24,7 @@
 		<td>{{ e($profile->updated_at) }}</td>
 	</tr>
 	<tr>
-		<td><center><a href="{{ e(URL::route('profile-edit')) }}">Edit Profile</a></center></td>
+		<td><center><a href="{{ e(URL::route('profile-edit')) }}"/>Edit Profile</a></center></td>
 	</tr>
 </table>
 <!-- User Profile Area Ends -->

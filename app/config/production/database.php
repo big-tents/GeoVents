@@ -22,10 +22,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'geovents.mysql.eu1.frbit.com',
-			'database'  => 'geovents',
-			'username'  => 'geovents',
-			'password'  => 'uWqx_vlZrG7jqADg',
+			'host'      => 'geovents2015.mysql.eu1.frbit.com',
+			'database'  => 'geovents2015',
+			'username'  => 'geovents2015',
+			'password'  => 'IdCcJrIPQXAkmGjR',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

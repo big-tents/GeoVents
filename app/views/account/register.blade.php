@@ -1,10 +1,9 @@
-@extends('templates.default')
+@extends('templates.v1')
 
 @section('content')
 <h2>Register Page</h2>
 <hr>
 
-@include('home.nav')
 
 	<!-- If there's error, show errors -->
 	@include('common.errors')

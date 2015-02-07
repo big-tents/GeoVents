@@ -1,10 +1,9 @@
-@extends('templates.default')
+@extends('templates.v1')
 
 @section('content')
 <h2>{{ $title }}</h2>
 <hr>
 
-@include('home.nav')
 @include('common.message')
 
 <!-- If there's error, show errors -->

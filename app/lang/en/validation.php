@@ -74,10 +74,11 @@ return array(
 	"timezone"             => "The :attribute must be a valid zone.",
 
 	//Custom Validations
-	'float' => 'The :attribute must be a float number.',
+	'float'                 => 'The :attribute must be a float number.',
 	'required_alphanumeric' => 'The :attribute must be alphanumeric.',
-	'basic_title' => 'The :attribute only allows character, number, space, period(.), plus (+), single quote(\'), and dash (-)',
-	'after_now' => 'The :attribute must be greater than current time.',
+	'basic_title'           => 'The :attribute only allows character, number, space, period(.), plus (+), single quote(\'), and dash (-)',
+	'after_now'             => 'The :attribute must be greater than current time.',
+	'one_year'             => 'The :attribute range has to be within a year.',
 
 	/*
 	|--------------------------------------------------------------------------

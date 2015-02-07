@@ -1,3 +1,37 @@
+# 06-02-2015
+
+## Added
+- [] Implemented web design. 
+
+## Upcoming
+- [] Function/Method comments
+- [] Implement web design
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
+# 02-02-2015
+
+## Fixes
+- [x] Max. word count event_name = 50
+- [x] Max. word count event_type = 20
+- [x] Only allow to create an event within 1 year (31536000 seconds)
+- [x] XSS :: Join Event page (Date)
+- [x] XSS :: Profile Edit -> Img
+- [x] Token:: Join
+- [x] acc_type validation
+- [x] Limit the amount of events an attendee can join
+- [x] Limit the amount of events a host can create
+
+## Upcoming
+- [] Function/Method comments
+- [] Implement web design
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
 # 01-02-2015
 
 ## Added

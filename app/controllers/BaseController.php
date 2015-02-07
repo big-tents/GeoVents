@@ -15,4 +15,14 @@ class BaseController extends Controller {
 		}
 	}
 
+	/**
+	 *	a consturctor to share global variables to all views
+	 *
+	 */
+	public function __construct()
+	{
+		// Configure Site name:
+		View::share('app_name', 'Geovents');
+	}
+
 }

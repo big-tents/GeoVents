@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="BASE_URL" content="{{ URL::route('home') }}">
 
-	<title>GeoVents :: {{$title}}</title>
+	<title>{{ $app_name }} :: {{$title}}</title>
 
 	<!-- ========== EXTERNAL ========== -->
 	<!-- Google font -->
@@ -36,6 +36,6 @@
 </head>
 <body>
 	@yield('content')
-	@include('home.footer')
+	
 </body>
 </html>

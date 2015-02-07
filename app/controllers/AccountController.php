@@ -22,7 +22,7 @@ class AccountController extends BaseController{
 			'password'       => 'required|min:5|required_alphanumeric',
 			'password_again' => 'required|same:password',
 			'email'          => 'required|email|max:50|unique:users',
-			'account_type'   => 'required',
+			'account_type'   => 'required|max:2',
 		]);
 
 		//If validation fails

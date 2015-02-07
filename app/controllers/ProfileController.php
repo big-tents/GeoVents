@@ -58,7 +58,8 @@ class ProfileController extends BaseController{
 		//Validation Rules
 		$validation = Validator::make(Input::all(), [
 			'profile_name'       => 'required|min:3|max:20|unique:profiles',
-			'description'       => 'required|min:10'
+			'description'       => 'required|min:10',
+			'img_url'	=>	'url'
 		]);
 
 		//If validation fails
