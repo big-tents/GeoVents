@@ -12,10 +12,10 @@
 	<span>Active Events: 100</span>
 </header>
 
-<small class="little_note">** Bare in mind this page is not functional yet.</small>
+<!-- <small class="little_note">** Bare in mind this page is not functional yet.</small> -->
 
 <!-- Events Filter-->
-<aside role="events_filter">
+<!-- <aside role="events_filter">
 	<h4>Filter Events</h4>
 	<p>Using the filters below limit the events displayed to match only your desired parameters.</p>
 	<table>
@@ -55,13 +55,14 @@
 			</tr>
 		</table>	
 </aside>
-
+ -->
 <!-- EVENTS TABLE -->
 <aside role="events_all">
 	<table>
 		<tr>
 			<th>id</th>
 			<th>Event Type</th>
+			<th>Restriction</th>
 			<th>Event Name</th>
 			<th>Date</th>
 			<th>Location</th>
@@ -75,6 +76,7 @@
 		<tr>
 			<td>{{ $e->id }}</td>
 			<td>{{ e($e->eventType->type) }}</td>
+			<td>{{ e($e->audience) }}</td>
 			<td>{{ e($e->e_name) }}</td>
 			<td>{{ date('d/m/Y', $e->e_date) }}</td>
 			<td>{{ e($e->e_location) }}</td>
@@ -85,10 +87,7 @@
 		</tr>
 		@endforeach
 		<tr class="events_buttons">
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td colspan="5"></td>
 			<td colspan="2"><a class="input_pretend" href="{{ URL::route('events') }}">Refersh List</a></td>
 			<td colspan="3"><a class="input_pretend" href="{{ URL::route('event-host') }}">Host Event</a></td>
 		</tr>

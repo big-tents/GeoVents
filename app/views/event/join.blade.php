@@ -1,7 +1,7 @@
 @extends('templates.v1')
 
 @section('content')
-<h2>{{ $title }}</h2>
+<h2>{{ $title }} @if($isJoined) <span style="color:green;font-weight:bold;">(Joined)</span> @endif</h2>
 <hr>
 
 @include('common.message')
@@ -11,7 +11,15 @@
 
 <!-- FORM FIELDS -->
 <hr/>
-{{ Form::open(['url'=>URL::route('event-join-request'), 'method'=>'POST']) }}
+<!-- If user has alread joined this event -->
+@if(!$isJoined)
+	{{ Form::open(['url'=>URL::route('event-join-request'), 'method'=>'POST']) }}
+@else
+	{{ Form::open(['url'=>URL::route('event-leave-request'), 'method'=>'POST']) }}
+<!-- If user has NOT joined this event -->
+
+@endif
+
 <table width=100%>
 	<tr>
 		<td>Event Name</td>
@@ -33,14 +41,28 @@
 		<td>{{ e($e->total_attendees) }}</td>
 	</tr>
 
-	{{ Form::input('hidden', 'event_id', $e->id) }}
-	{{ Form::input('hidden', 'audience', $e->audience) }}
-	{{ Form::input('hidden', 'EventLongitude', $e->e_lng, ['id'=>'EventLongitude']) }}
-	{{ Form::input('hidden', 'EventLatitude', $e->e_lat, ['id'=>'EventLatitude']) }}
 	<tr>
-		<td colspan="2">{{ Form::submit('Join', ['style'=>'width:100%;height:100px;']) }}</td>
+	
+	<!-- If user has alread joined this event -->
+	@if(!$isJoined)
+		<td colspan="2">
+		{{ Form::submit('Join', ['style'=>'width:100%;height:100px;']) }}
+		</td>
+	@else
+		<td colspan="2" align='right'>
+		{{ Form::submit('Leave Event') }}
+		</td>
+	@endif
+
 	</tr>
 	</table>
+
+<!-- HIDDEN VALUES -->
+{{ Form::input('hidden', 'event_id', $e->id) }}
+{{ Form::input('hidden', 'audience', $e->audience) }}
+{{ Form::input('hidden', 'EventLongitude', $e->e_lng, ['id'=>'EventLongitude']) }}
+{{ Form::input('hidden', 'EventLatitude', $e->e_lat, ['id'=>'EventLatitude']) }}
+
 {{ Form::close() }}
-<hr>
+
 @stop

@@ -1,7 +1,29 @@
+# 07-02-2015
+
+## Fixes
+- [x] after_now & one_year validators
+
+## Added
+- [x] Hide Join button if the user has already joined.
+- [x] Allow users to leave joined events
+- [x] Prevent users to join a already full event
+ 
+## Upcoming
+- [] Add host name on event page
+- [] Add a red text 'Host' on the event page if you're the host
+- [] Joined attendees / Total Attendees
+- [] Validation to prevent users to join an event that's already full
+- [] Hide Private Events and Set password for restricted events
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
 # 06-02-2015
 
 ## Added
-- [] Implemented web design. 
+- [x] Implemented web design. 
 
 ## Upcoming
 - [] Function/Method comments
@@ -31,6 +53,7 @@
 - [] Add Event Description
 - [] Kick/leave an event -> Delete entry
 - [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Recreate migration
 
 # 01-02-2015
 

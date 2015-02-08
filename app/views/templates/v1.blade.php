@@ -78,7 +78,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('templates.nav');
+        @include('templates.nav')
         <!-- /#sidebar-wrapper -->
 
 

@@ -14,8 +14,7 @@
 		<td>Event(s) you have joined:</td>
 		<td>
 			@foreach($joined_events as $je)
-				<li><a href="event/{{ $je->event->first()->id }}">{{ e($je->event->first()->e_name) }}</a>
-				</li>
+				<li><a href="event/{{ $je->event->first()->id }}">{{ e($je->event->first()->e_name) }}</a></li>
 			@endforeach
 		</td>
 	</tr>
@@ -23,8 +22,7 @@
 		<td>Event(s) you have hosted:</td>
 		<td>
 			@foreach($hosted_events as $he)
-				<li><a href="event/{{ $he->event->first()->id }}">{{ e($he->event->first()->e_name) }}</a>
-				</li>
+				<li><a href="event/{{ $he->event->first()->id }}">{{ e($he->event->first()->e_name) }}</a></li>
 			@endforeach
 		</td>
 	</tr>

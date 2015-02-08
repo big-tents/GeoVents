@@ -38,17 +38,16 @@ Validator::extend('basic_title', function($attribute, $value, $parameters)
 */
 Validator::extend('after_now', function($attribute, $value, $parameters)
 {
-	//Only numeric value allowed
-	if(!is_numeric($value)){
-		return false;
-	}
+	//Convert chosen time into timestamp
+	$chosen_time = DateTime::createFromFormat('j-n-Y', $value)->getTimeStamp();
 
 	//Calculates total seconds in a day
 	$day = 24 * 60 * 60;
-	$chosen_time = DateTime::createFromFormat('j-n-Y', $value)->getTimeStamp();
+
+	//Current time
 	$current_time = time();
 	
-	return $chosen_time + $day > $current_time ? true : false;
+	return $chosen_time + $day > $current_time;
 });
 
 /*
@@ -58,9 +57,11 @@ Validator::extend('after_now', function($attribute, $value, $parameters)
 */
 Validator::extend('one_year', function($attribute, $value, $parameters)
 {
+	//Conver chosen time into timestamp
+	$chosen_time = DateTime::createFromFormat('j-n-Y', $value)->getTimeStamp();
+
 	//Only allow user to create event within a year (31536000 seconds)			
-	//Date range equals to current time + 1 year (in seconds)
 	$date_range = time() + 31536000;
 
-	return $value > $date_range ? true : false;
+	return $chosen_time > $date_range ? false : true;
 });

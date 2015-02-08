@@ -18,9 +18,10 @@ body{
 }
 .message{
 	padding: 5px;
-	border: 1px solid black;
+	border: 1px solid rgb(245, 225, 10);
 	border-radius: 5px;
 	margin:5px;
+	color: rgb(202, 22, 97);
 }
 .warning{
 	border: 1px solid rgb(216, 216, 80);
@@ -31,7 +32,7 @@ body{
 }
 
 table, tr, td{
-	border:1px solid lightgrey;
+	border: 1px solid rgb(255, 232, 0);
 	border-radius:3px;
 	padding:5px;
 	background-color:white;

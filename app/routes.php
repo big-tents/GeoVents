@@ -133,6 +133,14 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
+	|	Leave Event (POST)
+	*/
+	Route::post('/event/leave', [
+		'as' => 'event-leave-request',
+		'uses' => 'EventController@postLeaveEvent'
+	]);
+
+	/*
 	|	Dashboard (GET)
 	*/
 	Route::get('/dashboard/', [

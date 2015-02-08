@@ -50,12 +50,14 @@ class EventController extends BaseController{
 	  */
 	public function postHostEvent()
 	{
-		//Calculate how many events a user has hosted
-		
-		$host_id = Auth::user()->id;
-		$total_hosted_events = EEvent::where('user_id', '=', $host_id)->count();
+		//Configurations:
 		$max_allowed_host = 8;
 
+		$host_id = Auth::user()->id;
+
+		//Calculate how many events a user has hosted
+		$total_hosted_events = EEvent::where('user_id', '=', $host_id)->count();
+		
 		//If it's more than 10, then not allowed to host
 		if($total_hosted_events > $max_allowed_host){
 			return Redirect::route('event-host')
@@ -152,13 +154,22 @@ class EventController extends BaseController{
 	  */
 	public function getJoinEvent($event_id)
 	{
+
 		$event = EEvent::with('eventType')->where('id', '=', $event_id)->get()->first();
+
+		//Check if user has already joined the clicked event
+		$isJoined = JoinedEvents::where('attendee_id', '=', Auth::user()->id)
+			->where('event_id', '=', $event->id);
+
+		//If user has joined then set isJoined = 1, else 0
+		$isJoined = $isJoined->count();
 
 		//If event exists
 		if($event){
 			return View::make('event.join')
 				->with('title', 'Join Event :: ' . $event->e_name)
-				->with('e', $event);
+				->with('e', $event)
+				->with('isJoined', $isJoined);
 		}
 		//If event id not found
 		return Redirect::route('events')
@@ -176,6 +187,9 @@ class EventController extends BaseController{
 	  */
 	public function postJoinEvent()
 	{
+		//Configurations:
+		$max_allowed_join = 10;
+
 		$attendee_id = Auth::user()->id;
 		$event_id = Input::get('event_id');
 		$host_id = EEvent::where('id', '=', $event_id)->get()->first()->user_id;
@@ -183,26 +197,40 @@ class EventController extends BaseController{
 		//Last Url
 		$last_url = 'event/' . $event_id;
 
-		//Calculate how many events the attendee have joined
-		$total_joined_events = JoinedEvents::where('attendee_id', '=', $attendee_id)->count();
-		$max_allowed_join = 10;
+		/*********** General Validations **********/
+		/*---------------------------------------*/
 
+		//Calculate total joined attendees
+		$total_joined_attendees = JoinedEvents::where('event_id', '=', $event_id)->count();
+		$max_attendees = EEvent::where('id', '=', $event_id)->first()->total_attendees;
+
+		//If event is full
+		if($total_joined_attendees >= $max_attendees){
+			return Redirect::to($last_url)
+				->with('message', 'Sorry, you\'re one step too late. This event is currently full.');
+		}
+
+
+
+		//(2) Calculate how many events the attendee have joined
+		$total_joined_events = JoinedEvents::where('attendee_id', '=', $attendee_id)->count();
+		
 		//If it's more than 10, then not allowed to join
 		if($total_joined_events > $max_allowed_join){
 			return Redirect::to($last_url)
 				->with('message', 'You\'ve reach the limit of joining more than 10 events.');
 		}
 
-		
-		//A host cannot also be an attendee
+
+		//(3) A host cannot also be an attendee
 		if($attendee_id == $host_id){
 			return Redirect::to($last_url)
 				->with('message', 'Hey.. you\'re the host of this event!');
 		}
 
-		// Prevent attendees joining an event twice
-		$isJoined = JoinedEvents::where('attendee_id', '=', $attendee_id)
-			->where('event_id', '=', $event_id);
+
+		//(4) Prevent attendees joining an event twice
+		$isJoined = JoinedEvents::where('attendee_id', '=', $attendee_id)->where('event_id', '=', $event_id);
 
 		//If already joined
 		if($isJoined->count()){
@@ -210,6 +238,8 @@ class EventController extends BaseController{
 				->with('message', 'You want to join an event twice? really?');
 		}
 
+		/*---------------------------------------*/
+		/*********** General Validations Ends **********/
 
 		//Event Audience
 		switch(Input::get('audience')){
@@ -244,5 +274,34 @@ class EventController extends BaseController{
 
 		}
 	}
+
+
+
+
+
+	/**
+	  * (POST) Leave Event :: Allow users to leave events
+	  *
+	  *	@return event/join.blade.php | events page
+	  */
+	public function postLeaveEvent()
+	{
+		//Get Event
+		$event = EEvent::where('id', '=', Input::get('event_id'))->first();
+
+		//Get leaving event name
+		$event_name = $event->e_name;
+
+		//Get Joined Event
+		$joined_event = JoinedEvents::where('attendee_id', '=', Auth::user()->id)->where('event_id', '=', $event->id);
+		
+		//Leave Event
+		$joined_event->delete();
+
+		//Delete Assoicated Entries
+		return Redirect::route('events')
+			->with('message', 'You\'ve just left <b><i>' . $event_name . '</i></b> event.');
+	}
+
 
 }
