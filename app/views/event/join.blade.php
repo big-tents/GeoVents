@@ -1,7 +1,10 @@
 @extends('templates.v1')
 
 @section('content')
-<h2>{{ $title }} @if($isJoined) <span style="color:green;font-weight:bold;">(Joined)</span> @endif</h2>
+<h2>{{ $title }} 
+	@if($isJoined) <span style="color:green;font-weight:bold;">(Joined)</span> @endif
+	@if($isHost) <span style="color:red;font-weight:bold;">(Host)</span> @endif
+</h2>
 <hr>
 
 @include('common.message')
@@ -11,20 +14,24 @@
 
 <!-- FORM FIELDS -->
 <hr/>
-<!-- If user has alread joined this event -->
-@if(!$isJoined)
-	{{ Form::open(['url'=>URL::route('event-join-request'), 'method'=>'POST']) }}
-@else
+<!-- If user has already joined this event -->
+@if($isJoined)
 	{{ Form::open(['url'=>URL::route('event-leave-request'), 'method'=>'POST']) }}
-<!-- If user has NOT joined this event -->
 
+<!-- If user is a host -->
+@elseif($isHost)
+	{{ Form::open(['url'=>URL::route('event-delete'), 'method'=>'POST']) }}
+
+<!-- If user has NOT joined this event -->
+@else
+	{{ Form::open(['url'=>URL::route('event-join-request'), 'method'=>'POST']) }}
 @endif
 
-<table width=100%>
+<table class="table table-hover">
 	<tr>
 		<td>Event Name</td>
 		<td>{{ e($e->e_name)}}</td>
-	</tr>
+</tr>
 	<tr>
 		<td>Date</td>
 		<td>{{ e(date('d/m/Y', $e->e_date))}}</td>
@@ -42,18 +49,22 @@
 	</tr>
 
 	<tr>
-	
-	<!-- If user has alread joined this event -->
-	@if(!$isJoined)
 		<td colspan="2">
-		{{ Form::submit('Join', ['style'=>'width:100%;height:100px;']) }}
-		</td>
-	@else
-		<td colspan="2" align='right'>
-		{{ Form::submit('Leave Event') }}
-		</td>
-	@endif
 
+		<!-- If user has already joined this event -->
+		@if($isJoined)
+			{{ Form::submit('Leave Event', ['class'=>'btn btn-block btn-danger']) }}
+
+		<!-- If user is the host of the event -->
+		@elseif ($isHost)
+			{{ Form::submit('Delete Event', ['class'=>'btn btn-block btn-danger']) }}
+
+		<!-- If user has NOT joined this event -->
+		@else
+			{{ Form::submit('Join', ['class'=>'btn btn-block btn-primary']) }}
+		@endif
+
+		</td>
 	</tr>
 	</table>
 

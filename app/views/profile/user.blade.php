@@ -7,12 +7,18 @@
 @include('common.message')
 
 <!-- User Profile Area -->
-<table>
+<table class="table .table-hover">
 	<tr>
-		<td>
-			<img style="width: 100px; height: 100px;" src="{{$profile->image}}"/>
-			<center>{{ e($profile->profile_name) }}</center>
+		<td colspan="2" align="center">
+			<img style="width: 200px; height: 200px;" src="{{$profile->image}}" class="thumbnail"/>
 		</td>
+	</tr>
+	<tr>
+		<td>Profile Name: </td>
+		<td>{{ e($profile->profile_name) }}</td>	
+	</tr>
+	<tr>
+		<td>Description: </td>
 		<td>{{ e($profile->description) }}</td>
 	</tr>
 	<tr>
@@ -24,7 +30,10 @@
 		<td>{{ e($profile->updated_at) }}</td>
 	</tr>
 	<tr>
-		<td><center><a href="{{ e(URL::route('profile-edit')) }}"/>Edit Profile</a></center></td>
+		<!-- If Logged -->
+		@if (Auth::check() && Auth::user()->id == $user_id)
+		<td colspan="2"><a href="{{ e(URL::route('profile-edit')) }}" class="btn btn-primary"/>Edit Profile</a></td>
+		@endif
 	</tr>
 </table>
 <!-- User Profile Area Ends -->

@@ -10,24 +10,23 @@
 @include('common.errors')
 	
 <!-- FORM FIELDS -->
-<hr/>
 {{ Form::open(['url'=>URL::route('profile-edit-post'), 'method'=>'POST']) }}
 
-<table>
+<table class="table">
 	<tr>
 		<td>{{ Form::label('profile_name', 'Profile Name: ') }}</td>
 		<td>{{ Form::label('profile_name', $profile_name)}}</td>
 	</tr>
 	<tr>
 		<td>{{ Form::label('description', 'Description: ') }}</td>
-		<td>{{ Form::textarea('description', $description)}}</td>
+		<td>{{ Form::textarea('description', $description, ['class'=>'form-control'])}}</td>
 	</tr>
 	<tr>
 		<td>{{ Form::label('img_url', 'Image Url: ') }}</td>
-		<td>{{ Form::text('img_url', $img_url)}}</td>
+		<td>{{ Form::text('img_url', $img_url, ['class'=>'form-control'])}}</td>
 	</tr>
 </table>
-{{ Form::submit('Edit Profile') }}
+{{ Form::submit('Edit Profile' , ['class'=>'btn btn-danger']) }}
 {{ Form::close() }}
 <hr>
 @stop

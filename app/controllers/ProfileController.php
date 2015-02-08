@@ -20,7 +20,8 @@ class ProfileController extends BaseController{
 			if($profile){
 				return View::make('profile.user')
 					->with('title', $username . "'s Profile")
-					->with('profile', $profile);
+					->with('profile', $profile)
+					->with('user_id', $user_id);
 			}else{
 
 				//If user has not created a profile but it's logged, and current user equals to username on the url

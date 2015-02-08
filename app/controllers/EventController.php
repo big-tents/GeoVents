@@ -13,11 +13,36 @@ class EventController extends BaseController{
 	  */
 	public function getEvents()
 	{
-		$events = EEvent::with('eventType')->get();
+		$events = EEvent::with('eventType', 'attendees')->get();
 
-		return View::make('event.events')
-			->with('title', 'Events')
-			->with('events', $events);
+		//If logged
+		if(Auth::check()){
+
+			//Retrieve user joined events
+			$joined_events = JoinedEvents::where('attendee_id', '=', Auth::user()->id)->get();
+
+			//Creare an empty array
+			$joined_events_id = [];
+
+			//Push the joined events' id into the created array
+			foreach($joined_events as $je){
+				array_push($joined_events_id, $je->event_id);
+			}
+
+			//Return view
+			return View::make('event.events')
+				->with('title', 'Events')
+				->with('events', $events)
+				->with('joined_events_id', $joined_events_id);
+
+		//If NOT logged
+		}else{
+
+			//Return view
+			return View::make('event.events')
+				->with('title', 'Events')
+				->with('events', $events);
+		}
 
 	}
 
@@ -34,6 +59,17 @@ class EventController extends BaseController{
 	{
 
 		$eventTypes = EventType::lists('type');
+
+		//Check if user is the host of the event
+		//If user is the host then set isHost = 1, else 0
+		// $isHost = EEvent::where('user_id', '=', Auth::user()->id)->where('id', '=', $event_id);
+		// $isHost = $isHost->count();
+
+		//Check if user has already joined the clicked event
+		//If user has joined then set isJoined = 1, else 0
+		// $isJoined = JoinedEvents::where('attendee_id', '=', Auth::user()->id)->where('event_id', '=', $event->id);
+		// $isJoined = $isJoined->count();
+
 
 		return View::make('event.host')
 			->with('title', 'Host Event')
@@ -157,9 +193,14 @@ class EventController extends BaseController{
 
 		$event = EEvent::with('eventType')->where('id', '=', $event_id)->get()->first();
 
+		//Check if user is the host of the event
+		$isHost = EEvent::where('user_id', '=', Auth::user()->id)->where('id', '=', $event_id);;
+		
+		//If user is the host then set isHost = 1, else 0
+		$isHost = $isHost->count();
+
 		//Check if user has already joined the clicked event
-		$isJoined = JoinedEvents::where('attendee_id', '=', Auth::user()->id)
-			->where('event_id', '=', $event->id);
+		$isJoined = JoinedEvents::where('attendee_id', '=', Auth::user()->id)->where('event_id', '=', $event->id);
 
 		//If user has joined then set isJoined = 1, else 0
 		$isJoined = $isJoined->count();
@@ -167,9 +208,10 @@ class EventController extends BaseController{
 		//If event exists
 		if($event){
 			return View::make('event.join')
-				->with('title', 'Join Event :: ' . $event->e_name)
+				->with('title', $event->e_name)
 				->with('e', $event)
-				->with('isJoined', $isJoined);
+				->with('isJoined', $isJoined)
+				->with('isHost', $isHost);
 		}
 		//If event id not found
 		return Redirect::route('events')
@@ -246,11 +288,15 @@ class EventController extends BaseController{
 
 			//Public (Anyone can join)
 			case 0:
+
+				//Save details into database
 				JoinedEvents::create([
 					'attendee_id'	=>	$attendee_id,
 					'host_id'	=>	$host_id,
 					'event_id'	=>	$event_id
 				]);
+
+				//Redirect user back to joined event
 				return Redirect::to($last_url)
 					->with('message', 'You\'ve joined an event.');
 			break;
@@ -304,4 +350,49 @@ class EventController extends BaseController{
 	}
 
 
+
+
+	/**
+	  * (POST) Delete Event :: Allow hosts to delete an event and remove its related entries
+	  *    
+	  *
+	  *	@return dashboard/dashboard.blade.php | dashboard
+	  */
+	public function postDeleteEvent()
+	{
+		//Get event id from hidden input
+		$event_id = Input::get('event_id');
+
+		//Get Event
+		$event = EEvent::where('id', '=', $event_id);
+
+		//Get delete event name
+		$event_name = $event->first()->e_name;
+
+		//Check if user is the host of the event
+		$isHost = EEvent::where('user_id', '=', Auth::user()->id)->where('id', '=', $event_id);;
+
+		//Only allow hosts to delete its own events
+		if($isHost->count()){
+
+			//Retrieve all assoicated joined events entries 
+			$affected_entries = JoinedEvents::where('event_id', '=', $event_id);
+
+			//Delete entries
+			$affected_entries->delete();
+
+			//Remove event
+			$event->delete();
+
+			//Redirect user back to dashboard
+			return Redirect::route('dashboard')
+				->with('message', 'You have successfully deleted <b><i>' . $event_name . '</i></b>.');
+
+		//If user is not the host of the event
+		}else{
+			return Redirect::to('event/' . $event_id)
+				->with('message', 'Are you trying to delete an event that\'s not yours??');
+		}
+		
+	}
 }

@@ -13,31 +13,33 @@
 <hr/>
 {{ Form::open(['url'=>URL::route('event-host-post'), 'method'=>'POST']) }}
 
-<table width=100%>
+<table class="table">
 	<tr>
 		<td>{{ Form::label('event_name', 'Event Name: ') }}</td>
-		<td>{{ Form::text('event_name', Input::old('event_name'))}}</td>
+		<td>{{ Form::text('event_name', Input::old('event_name'), ['class'=>'form-control'])}}</td>
 	</tr>
 	<tr>
 
 		<td>{{ Form::label('event_type', 'Event Type: ') }}</td>
-		<td>{{ Form::text('event_type', null, ['id'=>'e_type', 'list'=>'event_type'], Input::old('event_type')) }}</td>
+		<td>{{ Form::text('event_type', null, ['id'=>'e_type', 'list'=>'event_type', 'class'=>'form-control'], Input::old('event_type')) }}</td>
 		<datalist id="event_type"></datalist>
 	</tr>
 	<tr>
 		
 	<script>
   $(function() {
-    $( ".datepicker" ).datepicker({dateFormat: 'dd-mm-yy'});
+    $( ".datepicker" ).datepicker({dateFormat: 'dd-mm-yy', altField: '#event_date'});
   });
   </script>
 		<td>{{ Form::label('event_date', 'Event Date:') }}</td>
-		<td>{{ Form::input('text', 'event_date', null, ['class'=>'datepicker']) }}</td>
+		<!-- <td>{{ Form::input('text', 'event_date', null, ['class'=>'datepicker']) }}</td> -->
+		<td><div class="datepicker"></div></td>
+		{{ Form::input('hidden', 'event_date') }}
 	</tr>
 	<tr>
 		<td>{{ Form::label('event_location', 'Event Location: ') }}</td>
 		<td>
-			{{ Form::text('event_location', Input::old('event_location'))}}
+			{{ Form::text('event_location', Input::old('event_location'), ['class'=>'form-control'])}}
 
 			<!-- default Lancaster's LatLng values -->
 			<br/>{{ Form::input('hidden', 'EventLatitude', 54.0103942, ['id'=>'EventLatitude']) }}
@@ -52,7 +54,7 @@
 	</tr>
 	<tr>
 		<td>{{ Form::label('max_attendees', 'Maximum Attendees: ') }}</td>
-		<td>{{ Form::input('number', 'max_attendees', 8) }}</td>
+		<td>{{ Form::input('number', 'max_attendees', 8, ['class'=>'form-control']) }}</td>
 	</tr>
 	<tr>
 		<td>{{ Form::label('audience', 'Audience: ') }}</td>
@@ -65,7 +67,7 @@
 	</tr>
 </table>
 
-{{ Form::submit('Create Event') }}
+{{ Form::submit('Create Event', ['class'=>'btn btn-primary btn-block']) }}
 {{ Form::close() }}
 <hr>
 @stop

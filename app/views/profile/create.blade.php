@@ -13,7 +13,7 @@
 <hr/>
 {{ Form::open(['url'=>URL::route('profile-create-post'), 'method'=>'POST']) }}
 
-<table>
+<table class="table">
 	<tr>
 		<td>{{ Form::label('profile_name', 'Profile Name: ') }}</td>
 		<td>{{ Form::text('profile_name', Input::old('profile_name'))}}</td>

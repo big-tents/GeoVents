@@ -141,6 +141,13 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
+	|	Delete Event (POST)
+	*/
+	Route::post('/event/delete', [
+		'as' => 'event-delete',
+		'uses' => 'EventController@postDeleteEvent'
+	]);
+	/*
 	|	Dashboard (GET)
 	*/
 	Route::get('/dashboard/', [

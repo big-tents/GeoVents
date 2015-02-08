@@ -6,11 +6,11 @@
 
 @include('common.message')
 
-<article role="events_container">
+<!-- <article role="events_container">
 <header role="events_header">
 	<span>Events List</span>
 	<span>Active Events: 100</span>
-</header>
+</header> -->
 
 <!-- <small class="little_note">** Bare in mind this page is not functional yet.</small> -->
 
@@ -18,7 +18,7 @@
 <!-- <aside role="events_filter">
 	<h4>Filter Events</h4>
 	<p>Using the filters below limit the events displayed to match only your desired parameters.</p>
-	<table>
+	<table class="table">
 			<tr>
 				<td>{{ Form::label('e_name', 'Event Name:') }}</td>
 				<td>{{ Form::text('e_name', Input::old('e_name')) }}</td>
@@ -57,23 +57,41 @@
 </aside>
  -->
 <!-- EVENTS TABLE -->
-<aside role="events_all">
-	<table>
+<!-- <aside role="events_all"> -->
+	<table class="table table-hover .table-condensed">
+	<thead>
 		<tr>
-			<th>id</th>
+			<th>#</th>
 			<th>Event Type</th>
 			<th>Restriction</th>
 			<th>Event Name</th>
 			<th>Date</th>
 			<th>Location</th>
-			<th>Total Attendees</th>
+			<th>Max. Attendees</th>
 			<th>Status</th>
 			<th>Created at</th>
 		</tr>
-		
+	</thead>
+
+	<tbody>
+
 		<!--FOR LOOP-->
 		@foreach ($events as $e)
-		<tr>
+		
+		<!-- IF LOGGED -->
+		@if(Auth::check())
+			<!--If you're the host-->
+			@if($e->user_id == Auth::user()->id)
+				<tr class="active">
+
+			<!-- If you've already joined the event -->
+			@elseif(in_array($e->id, $joined_events_id))
+				<tr class="active">
+			@else
+				<tr>
+			@endif
+		@endif
+
 			<td>{{ $e->id }}</td>
 			<td>{{ e($e->eventType->type) }}</td>
 			<td>{{ e($e->audience) }}</td>
@@ -83,16 +101,36 @@
 			<td>{{ $e->total_attendees }}</td>
 			<td>{{ $e->status }}</td>
 			<td>{{ $e->created_at }}</td>
-			<td><a href="event/{{ $e->id }}">Join</a></td>
+		
+		<!-- IF LOGGED -->
+		@if(Auth::check())
+			<!--If you're the host-->
+			@if($e->user_id == Auth::user()->id)
+				<td><a href="event/{{ $e->id }}" class="btn btn-danger">Host</a></td>
+
+			<!-- If you've already joined the event -->
+			@elseif(in_array($e->id, $joined_events_id))
+				<td><a href="event/{{ $e->id }}" class="btn btn-warning">View</a></td>
+			@else
+				<td><a href="event/{{ $e->id }}" class="btn btn-success">Join</a></td>
+			@endif
+		@endif
+
 		</tr>
+
 		@endforeach
 		<tr class="events_buttons">
 			<td colspan="5"></td>
-			<td colspan="2"><a class="input_pretend" href="{{ URL::route('events') }}">Refersh List</a></td>
-			<td colspan="3"><a class="input_pretend" href="{{ URL::route('event-host') }}">Host Event</a></td>
+			<td colspan="2"><a class="btn btn-default btn-block" href="{{ URL::route('events') }}">Refersh List</a></td>
+			
+			<!-- If Logged -> Show host event button -->
+			@if(Auth::check())
+				<td colspan="3"><a class="btn btn-default btn-block btn-primary" href="{{ URL::route('event-host') }}">Host Event</a></td>
+			@endif
 		</tr>
+	</tbody>
 	</table>
-</aside>
+<!-- </aside> -->
 
 </article>
 <hr>

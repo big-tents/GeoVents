@@ -20,4 +20,10 @@ class EEvent extends Eloquent{
 		return $this->belongsTo('User', 'user_id', 'id');
 	}
 
+	//	events <==> attendees
+	public function attendees()
+	{
+		return $this->hasMany('JoinedEvents', 'event_id', 'id');
+	}
+
 }

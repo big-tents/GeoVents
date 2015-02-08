@@ -1,3 +1,28 @@
+# 08-02-2015 
+
+## Added
+- [x] Display host/join status on events page
+- [x] Changed datepicker from popup to inline
+- [x] Applied bootstrap styles to tables and buttons
+- [x] Validation to prevent users to join an event that's already full
+- [x] Added a red text 'Host' on the event page if you're the host
+- [x] Allow host to delete events (and removing its assoicated joined events entries)
+- [x] Disabled Google Map Marker to stay at the centre when the map is dragged (Reason: mobile compatibility issues)
+
+## Upcoming
+- [] Notify users when an event is removed
+- [] Add host name on events page
+- [] Allow host to edit event 
+- [] Added host name on event page
+- [] Joined attendees / Total Attendees
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
 # 07-02-2015
 
 ## Fixes
@@ -7,7 +32,7 @@
 - [x] Hide Join button if the user has already joined.
 - [x] Allow users to leave joined events
 - [x] Prevent users to join a already full event
- 
+
 ## Upcoming
 - [] Add host name on event page
 - [] Add a red text 'Host' on the event page if you're the host
@@ -53,7 +78,6 @@
 - [] Add Event Description
 - [] Kick/leave an event -> Delete entry
 - [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
-- [] Recreate migration
 
 # 01-02-2015
 

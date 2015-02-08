@@ -35,7 +35,7 @@ function initialize() {
 
     google.maps.event.addListener(map, "center_changed", function() {
         var position = map.getCenter();
-        marker.setPosition(position);
+        // marker.setPosition(position);
         $("#EventLatitude").val(position.lat());
         $("#EventLongitude").val(position.lng());
     });

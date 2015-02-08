@@ -11,7 +11,7 @@
 
 <!-- Forgot Password Form -->
 {{ Form::open(['url'=>URL::route('account-forgot-password-post'), 'method'=>'POST']) }}
-	<table>
+	<table class="table">
 		<tr>
 			<td>{{ Form::label('email', 'Email: ') }}</td>
 			<td>{{ Form::email('email', e(Input::old('email'))) }}</td>
