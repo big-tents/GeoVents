@@ -2,7 +2,6 @@
 
 @section('content')
 <h2>{{ $title }}</h2>
-<hr>
 
 @include('common.message')
 

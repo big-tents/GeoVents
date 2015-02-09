@@ -58,19 +58,10 @@ class EventController extends BaseController{
 	public function getHostEvent()
 	{
 
+		//Retrieve all event types
 		$eventTypes = EventType::lists('type');
 
-		//Check if user is the host of the event
-		//If user is the host then set isHost = 1, else 0
-		// $isHost = EEvent::where('user_id', '=', Auth::user()->id)->where('id', '=', $event_id);
-		// $isHost = $isHost->count();
-
-		//Check if user has already joined the clicked event
-		//If user has joined then set isJoined = 1, else 0
-		// $isJoined = JoinedEvents::where('attendee_id', '=', Auth::user()->id)->where('event_id', '=', $event->id);
-		// $isJoined = $isJoined->count();
-
-
+		//Send event types to view
 		return View::make('event.host')
 			->with('title', 'Host Event')
 			->with('eventTypes', $eventTypes);
@@ -89,6 +80,7 @@ class EventController extends BaseController{
 		//Configurations:
 		$max_allowed_host = 8;
 
+		//Get host id (current user id)
 		$host_id = Auth::user()->id;
 
 		//Calculate how many events a user has hosted
@@ -172,8 +164,10 @@ class EventController extends BaseController{
 	  */
 	public function getEventTypes($input)
 	{
+		//Get event types
 		$event_types = EventType::where('type', 'LIKE', '%' . $input . '%')->get();
 		
+		//Return event types as JSON data
 		return Response::json($event_types);
 
 	}
@@ -191,6 +185,7 @@ class EventController extends BaseController{
 	public function getJoinEvent($event_id)
 	{
 
+		//Get selected event 
 		$event = EEvent::with('eventType')->where('id', '=', $event_id)->get()->first();
 
 		//Check if user is the host of the event
@@ -239,10 +234,10 @@ class EventController extends BaseController{
 		//Last Url
 		$last_url = 'event/' . $event_id;
 
-		/*********** General Validations **********/
+		/*********** Validations **********/
 		/*---------------------------------------*/
 
-		//Calculate total joined attendees
+		//(1) Calculate total joined attendees
 		$total_joined_attendees = JoinedEvents::where('event_id', '=', $event_id)->count();
 		$max_attendees = EEvent::where('id', '=', $event_id)->first()->total_attendees;
 
@@ -252,17 +247,14 @@ class EventController extends BaseController{
 				->with('message', 'Sorry, you\'re one step too late. This event is currently full.');
 		}
 
-
-
 		//(2) Calculate how many events the attendee have joined
 		$total_joined_events = JoinedEvents::where('attendee_id', '=', $attendee_id)->count();
 		
-		//If it's more than 10, then not allowed to join
+		//If joined more than 10 events, then not allowed to join
 		if($total_joined_events > $max_allowed_join){
 			return Redirect::to($last_url)
 				->with('message', 'You\'ve reach the limit of joining more than 10 events.');
 		}
-
 
 		//(3) A host cannot also be an attendee
 		if($attendee_id == $host_id){
@@ -270,10 +262,9 @@ class EventController extends BaseController{
 				->with('message', 'Hey.. you\'re the host of this event!');
 		}
 
-
 		//(4) Prevent attendees joining an event twice
 		$isJoined = JoinedEvents::where('attendee_id', '=', $attendee_id)->where('event_id', '=', $event_id);
-
+		
 		//If already joined
 		if($isJoined->count()){
 			return Redirect::to($last_url)
@@ -281,7 +272,7 @@ class EventController extends BaseController{
 		}
 
 		/*---------------------------------------*/
-		/*********** General Validations Ends **********/
+		/*********** Validations Ends **********/
 
 		//Event Audience
 		switch(Input::get('audience')){

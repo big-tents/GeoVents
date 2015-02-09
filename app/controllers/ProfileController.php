@@ -2,6 +2,8 @@
 
 class ProfileController extends BaseController{
 
+
+
 	/*
 	|	Look up user by their username
 	*/
@@ -42,14 +44,34 @@ class ProfileController extends BaseController{
 			return 'User does\'t not exists';
 		}
 	}
+
+
+
+
 	/*
 	|	Create profile (GET)
 	*/
 	public function getCreateProfile()
 	{
+		//Check if user has already created a profile
+		$hasProfile = Profile::where('user_id', '=', Auth::user()->id)->exists();
+
+		//If already has a profile
+		if($hasProfile){
+
+			//Redirect back to profile page
+			return Redirect::to('user/' . Auth::user()->username)
+				->with('message', 'You\'ve already created a profile!');
+		}
+
+		//Return to create profile page
 		return View::make('profile.create')
 			->with('title', 'Create Profile');
 	}
+
+
+
+
 
 	/*
 	|	Create Profile (POST)
@@ -86,6 +108,9 @@ class ProfileController extends BaseController{
 
 	}
 
+
+
+
 	/*
 	|	Edit Profile (GET)
 	*/
@@ -99,6 +124,9 @@ class ProfileController extends BaseController{
 			->with('description', $profile->description)
 			->with('img_url', $profile->image);
 	}
+
+
+
 
 	/*
 	|	Edit Profile (POST)

@@ -32,12 +32,6 @@ Route::get('/user/{username}',[
 	'uses' => 'ProfileController@getUser'
 ]);
 
-if(Auth::check()){
-	Route::get('/user/' . Auth::user()->username, [
-		'as' => 'my-profile'
-	]);
-}
-
 /*
 |	Events Page
 */
@@ -143,7 +137,7 @@ Route::group(['before'=>'auth'], function(){
 	/*
 	|	Delete Event (POST)
 	*/
-	Route::post('/event/delete', [
+	Route::post('/event/{$event_id}/delete', [
 		'as' => 'event-delete',
 		'uses' => 'EventController@postDeleteEvent'
 	]);

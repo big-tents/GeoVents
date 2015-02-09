@@ -10,7 +10,7 @@
 <table class="table .table-hover">
 	<tr>
 		<td colspan="2" align="center">
-			<img style="width: 200px; height: 200px;" src="{{$profile->image}}" class="thumbnail"/>
+			<img style="width: 200px; height: 200px;" src="{{{$profile->image}}}" class="thumbnail"/>
 		</td>
 	</tr>
 	<tr>

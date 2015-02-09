@@ -2,7 +2,6 @@
 
 @section('content')
 <h2>{{ $title }}</h2>
-<hr>
 
 @include('common.message')
 
@@ -16,19 +15,19 @@
 <table class="table">
 	<tr>
 		<td>{{ Form::label('profile_name', 'Profile Name: ') }}</td>
-		<td>{{ Form::text('profile_name', Input::old('profile_name'))}}</td>
+		<td>{{ Form::text('profile_name', Input::old('profile_name'), ['class'=>'form-control'])}}</td>
 	</tr>
 	<tr>
 		<td>{{ Form::label('description', 'Description: ') }}</td>
-		<td>{{ Form::textarea('description', Input::old('description'))}}</td>
+		<td>{{ Form::textarea('description', Input::old('description'), ['class'=>'form-control'])}}</td>
 	</tr>
 	<tr>
 		<td>{{ Form::label('img_url', 'Image Url: ') }}</td>
-		<td>{{ Form::text('img_url', Input::old('img_url'))}}</td>
+		<td>{{ Form::text('img_url', Input::old('img_url'), ['class'=>'form-control'])}}</td>
 	</tr>
 </table>
 
-{{ Form::submit('Create Profile') }}
+{{ Form::submit('Create Profile', ['class'=>'btn btn-primary btn-block']) }}
 {{ Form::close() }}
 <hr>
 @stop
