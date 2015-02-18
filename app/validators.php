@@ -65,3 +65,19 @@ Validator::extend('one_year', function($attribute, $value, $parameters)
 
 	return $chosen_time > $date_range ? false : true;
 });
+
+
+/*
+|--------------------------------------------------------------------------
+|  Email must end with @lancaster.ac.uk
+|--------------------------------------------------------------------------
+*/
+Validator::extend('lancaster', function($attribute, $value, $parameters)
+{
+	// $test = 'testing@lancaster.ac.uk';
+
+	$domain_white_list = ['lancaster.ac.uk'];
+	$email = explode('@', $value);
+
+	return in_array($email[1], $domain_white_list);
+});

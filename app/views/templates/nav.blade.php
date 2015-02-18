@@ -3,6 +3,7 @@
 		<!-- General Navigations -->
 		<li><a href="{{ URL::route('home') }}">Home</a></li>
 		<li><a href="{{ URL::route('events') }}">Find Events</a></li>
+		<li><a href="{{ URL::to('/eventsv2/') }}">Find Events v2</a></li>
 
 		<!-- If Logged -->
 		@if(Auth::check())

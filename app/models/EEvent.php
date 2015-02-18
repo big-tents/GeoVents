@@ -26,4 +26,25 @@ class EEvent extends Eloquent{
 		return $this->hasMany('JoinedEvents', 'event_id', 'id');
 	}
 
+	//Override array
+	public function toArray(){
+		$array = parent::toArray();
+
+		//Check if user is the host of the event
+		$isHost = EEvent::where('user_id', '=', Auth::user()->id)
+		->where('id', '=', $array['id'])
+		->count();
+
+		//Check if user has already joined the event
+		$isJoined = JoinedEvents::where('attendee_id', '=', Auth::user()->id)
+		->where('event_id', '=', $array['id'])
+		->count();
+
+		//Append these two 'columns' to the parent's array
+		$array['hosting'] = $isHost; 
+		$array['joined'] = $isJoined; 
+		
+		//Update custom attributes to result
+		return $array;
+	}
 }

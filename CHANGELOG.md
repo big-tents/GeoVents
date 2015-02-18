@@ -1,3 +1,25 @@
+# 18-02-2015 
+
+## Added
+- [x] Only allow @lancaster.ac.uk domain in validator.php (can be added after testing)
+- [x] Created events API (PATH: /api/events/{input?}) to allow users to filter columns with a value, and also appended with 2 logical columns 'joined' and 'hosting'. The results varies on logged-in users.  
+
+
+## Upcoming
+- [] Display attendees on host page
+- [] Notify users when an event is removed
+- [] Add host name on events page
+- [] Allow host to edit event 
+- [] Added host name on event page
+- [] Joined attendees / Total Attendees
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
 # 09-02-2015 
 
 ## Fixes

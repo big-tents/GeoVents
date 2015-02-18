@@ -5,7 +5,6 @@
 	@if($isJoined) <span style="color:green;font-weight:bold;">(Joined)</span> @endif
 	@if($isHost) <span style="color:red;font-weight:bold;">(Host)</span> @endif
 </h2>
-<hr>
 
 @include('common.message')
 

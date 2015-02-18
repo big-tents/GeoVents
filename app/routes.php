@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Appplication Routes
 |---------------------------------date_range-----------------------------------------
 |
 | Here is where you can register all of the routes for an application.
@@ -286,6 +286,22 @@ Route::group(['before'=>'auth'], function(){
 	*/
 	Route::get('/api/event-types/{input}', [
 		'as'   => 'api-event-types',
-		'uses' => 'EventController@getEventTypes'
+		'uses' => 'EventController@getApiEventTypes'
 	]);
+
+	/*
+	|	Events (API) - Search Events
+	*/
+	Route::get('/api/events/{input?}', [
+		'as' => 'api-filter-events',
+		'uses' => 'EventController@getApiFilterEvents'
+	]);	
+
+	/*Testing*/
+	Route::get('/eventsv2/', function(){
+		return View::make('event.eventsv2')
+		->with('title', 'Events')
+		->with('app_name', 'Geovents');
+	});
+
 });

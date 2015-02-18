@@ -79,6 +79,7 @@ return array(
 	'basic_title'           => 'The :attribute only allows character, number, space, period(.), plus (+), single quote(\'), and dash (-)',
 	'after_now'             => 'The :attribute must be greater than current time.',
 	'one_year'             => 'The :attribute range has to be within a year.',
+	'lancaster'             => 'The :attribute must end with @lancaster.ac.uk',
 
 	/*
 	|--------------------------------------------------------------------------
