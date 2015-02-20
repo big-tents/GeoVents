@@ -54,6 +54,43 @@ Route::get('/event/', function(){return Redirect::route('events');});
 */
 Route::group(['before'=>'auth'], function(){
 
+
+	/*
+	| Friend (GET)
+	*/
+	Route::get('/friend/', [
+		'as'   => 'friend',
+		'uses' => 'FriendController@getIndex'
+	]);
+
+
+	/*
+	| Send Friend Request (GET)
+	*/
+	Route::get('/friend/send-frequest/{id}', [
+		'as'   => 'friend-request',
+		'uses' => 'FriendController@getSendRequest'
+	]);
+
+
+	/*
+	| Accept Friend Request (GET)
+	*/
+	Route::get('/friend/accept-frequest/{id}', [
+		'as'   => 'friend-accept',
+		'uses' => 'FriendController@getAcceptRequest'
+	]);
+
+
+	/*
+	| Remove/Decline Friend Request  (GET)
+	*/
+	Route::get('/friend/remove-frequest/{id}', [
+		'as'   => 'friend-remove',
+		'uses' => 'FriendController@getRemoveRequest'
+	]);
+	
+	
 	/*
 	|	Logout (GET)
 	*/
