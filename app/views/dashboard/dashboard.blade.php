@@ -47,4 +47,25 @@
 	</div>
 </div>
 
+
+<hr>
+
+<!-- Friends -->
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Your Friend(s):</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table table-hover">
+			@foreach($friends as $fr)
+				<tr>
+					<td>{{  $fr->username }}</td>
+					<td>{{ link_to_action('friend-remove', 'Remove', array('id' => $fr->id)) }}</td>
+				</tr>
+			@endforeach
+		</table>
+	</div>
+</div>
+
+
 @stop
