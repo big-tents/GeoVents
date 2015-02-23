@@ -8,6 +8,7 @@
 		<!-- If Logged -->
 		@if(Auth::check())
 			<li><a href="{{ URL::to('user', Auth::user()->username) }}">My Profile</a></li>
+			<li><a href="{{ URL::to('friend') }}">Friends</a></li>
 			<li><a href="{{ URL::to('dashboard') }}">Dashboard</a></li>
 			<li class="divider"></li>
 			<li><a href="{{ URL::route('account-settings') }}">Account Settings</a></li>
