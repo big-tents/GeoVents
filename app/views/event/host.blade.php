@@ -8,8 +8,17 @@
 <!-- If there's error, show errors -->
 @include('common.errors')
 
+<!-- Onload JavaScript -->
+<script>
+$().ready(function(){
+	$("#e_type").keyup(function(){
+		getEventTypes();
+	});
+});
+</script>
+<!-- End/ onload JavaScript -->
+
 <!-- FORM FIELDS -->
-<hr/>
 {{ Form::open(['url'=>URL::route('event-host-post'), 'method'=>'POST']) }}
 
 <table class="table">

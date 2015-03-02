@@ -1,3 +1,52 @@
+# 02-03-2015 
+
+## Add
+- [x] 
+
+
+## Upcoming
+- [] Display attendees on host page
+- [] Notify users when an event is removed
+- [] Add host name on events page
+- [] Allow host to edit event 
+- [] Added host name on event page
+- [] Joined attendees / Total Attendees
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
+# 23-02-2015 
+
+## Add
+- [x] Merged friend system implemented by Andrew
+
+
+## Upcoming
+- [] Display attendees on host page
+- [] Notify users when an event is removed
+- [] Add host name on events page
+- [] Allow host to edit event 
+- [] Added host name on event page
+- [] Joined attendees / Total Attendees
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
+
 # 18-02-2015 
 
 ## Added
@@ -19,6 +68,9 @@
 - [] Add Event Description
 - [] Kick/leave an event -> Delete entry
 - [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
 
 # 09-02-2015 
 
