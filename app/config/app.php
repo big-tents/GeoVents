@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://geovents2015b.eu1.frbit.net',
+	'url' => 'http://geovents.co.uk',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -1,8 +1,6 @@
 //DEFINE BASE URL
 var BASE_URL = $('meta[name="BASE_URL"]').attr('content');
 
-
-
 /**
  * Get event types
  * Path: event/host
@@ -40,19 +38,29 @@ function getEvents(){
 	 			table.html('No results were found.');
 	 		}
 		    $.each(data, function(index, e){
-		    	var lat = e.e_lat;
+
+		    	var client_latitude = $("#client_latitude").val();
+				var client_longitude = $("#client_longitude").val();
+		    	
+		    	// Events Information
+				var lat = e.e_lat;
 		    	var lng = e.e_lng;
 		    	var id = e.id;
 		    	var type = e.type;
 		    	var audience = e.audience;
 		    	var eName = e.e_name;
-
 		    	var date = new Date(e.e_date * 1000);
 		    	var ddmmyyyy = date.getDate() +'/'+ (date.getMonth()+1) +'/'+ date.getFullYear();
-		    	
 		    	var location = e.e_location;
 		    	var ttAttendees = e.total_attendees;
 		    	var createdAt = e.created_at;
+
+		    	//Client infomation
+		    	var pos1 = new google.maps.LatLng(client_latitude, client_longitude);
+		    	var pos2 = new google.maps.LatLng(lat, lng);
+
+		    	var distance = calculateDistance(pos1, pos2);
+
 				var button = '<a href="event/' + e.id + '" class="btn btn-success">Join</a>';
 
 		    	var tr = '<tr>';
@@ -77,21 +85,29 @@ function getEvents(){
 		    	"<td>" + ttAttendees + "</td>" + 
 		    	"<td>" + createdAt + "</td>" + 
 		    	"<td>" + button + "</td>" + 
+		    	"<td>" + distance + "</td>" + 
 		    	"</tr>");
 		    });
 		 }
 	});
 }//End of getEvents()
 
+
+/**
+ * Get golocation 
+ */
 function getLocation() {
-    if (navigator.geolocation) {
+    if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
+    }else {
         $("#msg").innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 function showPosition(position) {
-   $("#eLat").val(position.coords.latitude);
-   $("#eLag").val(position.coords.longitude);
+	$("#client_latitude").val(position.coords.latitude);
+	$("#client_longitude").val(position.coords.longitude);
 }
-
+function calculateDistance(pos1, pos2){
+	unit = " km";
+	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(2) + unit;
+}

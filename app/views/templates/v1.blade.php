@@ -17,11 +17,12 @@
 	
 	<!-- jQuery UI CSS -->
 	{{ HTML::style('//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css') }}
+	
 	<!-- Modernzr -->
 	{{ HTML::script('//modernizr.com/downloads/modernizr-latest.js') }}
-
+    
 	<!-- Google Maps API -->
-	{{ HTML::script('//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true') }}
+	{{ HTML::script('//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry') }}
 
 	
 	<!-- ========== INTERNAL ========== -->
@@ -46,6 +47,10 @@
 
     <!-- Custom CSS -->    
     {{ HTML::style('assets/css/custom.css') }}
+    
+    <!-- Table Sorter -->    
+    {{ HTML::script('assets/js/vendors/Tablesorter/jquery.tablesorter.js') }}
+    {{ HTML::script('assets/js/vendors/Tablesorter/jquery.tablesorter.min.js') }}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -93,7 +98,7 @@
 							<!-- CONTENT AREA STARTS -->
 							@yield('content')
 							<!-- CONTENT AREA ENDS -->
-						</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,7 +114,7 @@
 
 
     <!-- Menu Toggle Script -->
-    <script>
+	<script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");

@@ -6,12 +6,26 @@
 <!-- Onload JavaScript -->
 <script>
 $().ready(function(){
+
 	getLocation();
 	getEvents();
+
 	$("#filter").keyup(function(){
 		getEvents();
 	});
+
+	var extractNumbersOnly = function(node)  {      
+    	return $(node).text().replace(/[^0-9.]/g, ''); 
+	}
+
+	$("#sort_distance").click(function(){
+		$("#events_table").tablesorter({
+			sortList: [[11, 0]], 
+			textExtraction: extractNumbersOnly
+		}); 
+	});
 });
+
 </script>
 <!-- End/ onload JavaScript -->
 
@@ -23,8 +37,15 @@ $().ready(function(){
 	<input id="filter" name="filter" type="text" class="form-control" placeholder="Type your keywords here...">
 </div>
 
+<!-- Sort Buttons-->
+<button id="sort_distance">Sort by distance</button>
+
+
+{{ Form::input('hidden', 'client_latitude', null, ['id'=>'client_latitude']) }}
+{{ Form::input('hidden', 'client_longitude', null, ['id'=>'client_longitude']) }}
+
 <!-- Events Table -->
-<table class="table table-hover .table-condensed">
+<table id="events_table" class="table table-hover .table-condensed">
 	
 	<!-- Events Table Header -->
 	<thead>
@@ -40,6 +61,7 @@ $().ready(function(){
 			<th>Max. Attendees</th>
 			<th>Created at</th>
 			<th></th>
+			<th>Distance</th>
 		</tr>
 	</thead>
 	
@@ -47,9 +69,6 @@ $().ready(function(){
 	<tbody id="events-table-body"></tbody>
 
 </table>
-{{ Form::input('hidden', 'eLat', null, ['id'=>'eLat']) }}
-{{ Form::input('hidden', 'eLag', null, ['id'=>'eLag']) }}
-
 <!-- /Events Table -->
 
 @stop
