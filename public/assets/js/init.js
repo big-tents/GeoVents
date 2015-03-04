@@ -1,6 +1,14 @@
 //DEFINE BASE URL
 var BASE_URL = $('meta[name="BASE_URL"]').attr('content');
 
+$().ready(function(){
+	if(typeof $.cookie('client_latitude') === 'undefined'){
+		getLocation();
+		console.log('NO COOKIES');
+	}else{
+		console.log('HAVE COOKIES');
+	}
+});
 /**
  * Get event types
  * Path: event/host
@@ -39,8 +47,8 @@ function getEvents(){
 	 		}
 		    $.each(data, function(index, e){
 
-		    	var client_latitude = $("#client_latitude").val();
-				var client_longitude = $("#client_longitude").val();
+		    	var client_latitude = $.cookie('client_latitude');
+				var client_longitude = $.cookie('client_longitude');
 		    	
 		    	// Events Information
 				var lat = e.e_lat;
@@ -104,8 +112,8 @@ function getLocation() {
     }
 }
 function showPosition(position) {
-	$("#client_latitude").val(position.coords.latitude);
-	$("#client_longitude").val(position.coords.longitude);
+	$.cookie('client_latitude', position.coords.latitude)
+	$.cookie('client_longitude', position.coords.longitude);
 }
 function calculateDistance(pos1, pos2){
 	unit = " km";

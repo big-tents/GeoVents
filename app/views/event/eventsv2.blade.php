@@ -6,10 +6,7 @@
 <!-- Onload JavaScript -->
 <script>
 $().ready(function(){
-
-	getLocation();
 	getEvents();
-
 	$("#filter").keyup(function(){
 		getEvents();
 	});
@@ -39,10 +36,6 @@ $().ready(function(){
 
 <!-- Sort Buttons-->
 <button id="sort_distance">Sort by distance</button>
-
-
-{{ Form::input('hidden', 'client_latitude', null, ['id'=>'client_latitude']) }}
-{{ Form::input('hidden', 'client_longitude', null, ['id'=>'client_longitude']) }}
 
 <!-- Events Table -->
 <table id="events_table" class="table table-hover .table-condensed">

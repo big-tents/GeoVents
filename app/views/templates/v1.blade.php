@@ -35,7 +35,10 @@
 
 	<!-- Google Maps (Get Geolocation) -->
 	{{ HTML::script('assets/js/getGeolocation.js') }}
-
+    
+    <!-- jQuery cookie -->
+    {{ HTML::script('assets/js/jquery.cookie.js') }}
+    
 	<!-- Initilization -->
 	{{ HTML::script('assets/js/init.js') }}
 
@@ -58,7 +61,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body>
 
