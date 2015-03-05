@@ -54,6 +54,7 @@
     <!-- Table Sorter -->    
     {{ HTML::script('assets/js/vendors/Tablesorter/jquery.tablesorter.js') }}
     {{ HTML::script('assets/js/vendors/Tablesorter/jquery.tablesorter.min.js') }}
+    {{ HTML::script('assets/js/vendors/Tablesorter/jquery.tablesorter.pager.js') }}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
