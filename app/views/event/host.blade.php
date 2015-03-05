@@ -14,6 +14,17 @@ $().ready(function(){
 	$("#e_type").keyup(function(){
 		getEventTypes();
 	});
+
+	//Get geolocation after
+	$("#event_location").blur(function(){
+		getGeoLocationFromMap();
+	});
+
+	//Show date picker
+	$(".datepicker").datepicker({dateFormat: 'dd-mm-yy', altField: '#event_date'});
+
+	//Initilize google map
+	google.maps.event.addDomListener(window, 'load', initialize);
 });
 </script>
 <!-- End/ onload JavaScript -->
@@ -34,11 +45,6 @@ $().ready(function(){
 	</tr>
 	<tr>
 		
-	<script>
-  $(function() {
-    $( ".datepicker" ).datepicker({dateFormat: 'dd-mm-yy', altField: '#event_date'});
-  });
-  </script>
 		<td>{{ Form::label('event_date', 'Event Date:') }}</td>
 		<!-- <td>{{ Form::input('text', 'event_date', null, ['class'=>'datepicker']) }}</td> -->
 		<td><div class="datepicker"></div></td>

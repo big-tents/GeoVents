@@ -1,3 +1,37 @@
+# 05-03-2015 
+
+## Add
+- [x] Remove eventsv2 page
+- [x] Add jQuery library tablesorter.js
+- [x] Fix host page google map initilization
+- [x] Add mobile events page
+
+## Upcoming
+- [] Transfer from glyphicons to new icon font
+- [] Video shooting
+- [] Pick your icon event
+- [] Event start/end date / description
+- [] Mobile 
+- [] Geolocation distance if you're going to the event
+- [] Accept / Decline invite
+- [] Display attendees on host page
+- [] Notify users when an event is removed
+- [] Add host name on events page
+- [] Allow host to edit event 
+- [] Added host name on event page
+- [] Joined attendees / Total Attendees
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Dashboard - A map shows events you've joined on the map
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
 # 04-03-2015 
 
 ## Add

@@ -6,10 +6,11 @@ class EventController extends BaseController{
 
 
 	/**
+	  * --------------------------- NOT USED ---------------------------
 	  * (GET) Events :: This method is responsible to retrieve all events 
 	  * in the database and send it to view.
-	  *
-	  *	@return View in Views/event/events.blade.php
+	  * 
+	  *	@return View in Views/event/eventsv2.blade.php
 	  */
 	public function getEvents()
 	{
@@ -30,7 +31,7 @@ class EventController extends BaseController{
 			}
 
 			//Return view
-			return View::make('event.events')
+			return View::make('event.eventsv2')
 				->with('title', 'Events')
 				->with('events', $events)
 				->with('joined_events_id', $joined_events_id);
@@ -39,7 +40,7 @@ class EventController extends BaseController{
 		}else{
 
 			//Return view
-			return View::make('event.events')
+			return View::make('event.eventsv2')
 				->with('title', 'Events')
 				->with('events', $events);
 		}
@@ -150,68 +151,6 @@ class EventController extends BaseController{
 				->with('message', 'Event Created.');
 
 		}
-	}
-
-
-
-
-	/**
-	  * (GET/API) Event Types :: It suggests a list of event types that are stored into the database.
-	  *
-	  * @param string    $input
-	  *
-	  *	@return Response found event types as JSON
-	  */
-	public function getApiEventTypes($input)
-	{
-		//Get event types
-		$event_types = EventType::where('type', 'LIKE', '%' . $input . '%')->get();
-		
-		//Return event types as JSON data
-		return Response::json($event_types);
-
-	}
-
-
-
-
-	/**
-	  * (GET/API) Events :: Filter Events
-	  *
-	  * @param string $input   
-	  *
-	  *	@return Response found events as json
-	  */
-	public function getApiFilterEvents($input = '')
-	{
-		//Get events
-		// $events = DB::table('events')
-		$events = EEvent::join('event_types', 'events.etype_id', '=', 'event_types.id')
-		// ->leftjoin('joined_events', 'joined_events.event_id', '=', 'events.id')
-		->select(
-			[
-				'events.id',
-				'type', 
-				'audience', 
-				'e_name',
-				'e_date',
-				'e_location',
-				'total_attendees',
-				'e_lat',
-				'e_lng',
-				'events.created_at',
-				// '*',
-				DB::raw('events.user_id = ' . Auth::user()->id . ' as hosting'),
-				// DB::raw('joined_events.attendee_id = ' . Auth::user()->id . ' && events.id = joined_events.event_id as joined')
-			]
-		)
-		->where('e_name', 'LIKE', '%' . $input . '%')
-		->orWhere('e_location', 'LIKE', '%' . $input . '%')
-		->orWhere('type', 'LIKE', '%' . $input . '%')
-		->get();
-
-		// return pretty JSON result
-		return Response::json($events, 200, array(), JSON_PRETTY_PRINT);
 	}
 
 

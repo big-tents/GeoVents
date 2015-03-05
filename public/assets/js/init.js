@@ -2,7 +2,8 @@
 var BASE_URL = $('meta[name="BASE_URL"]').attr('content');
 
 $().ready(function(){
-	if(typeof $.cookie('client_latitude') === 'undefined'){
+	//Set client latlng cookies if not set
+	if(typeof $.cookie('client_latitude') === 'undefined' || typeof $.cookie('client_longitude') === 'undefined'){
 		getLocation();
 	}
 });
@@ -32,12 +33,14 @@ function getEventTypes(){
  * Path: event/eventsv2
  */
 function getEvents(){
+	var table = $("#events-table-body");
+	table.html("Loading...");
 	$.ajax({
 	     type: "GET",
 	     url: BASE_URL + "/api/events/" + $("input[name=filter]").val(),
 		 dataType: "json",
 		 success: function(data){
-	 		var table = $("#events-table-body");
+		 	
 	 		table.empty();
 	 		if(!data.length){
 	 			table.html('No results were found.');

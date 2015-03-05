@@ -86,4 +86,5 @@ function getGeoLocationFromMap() {
   });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+//Initilize google map on host page
+// google.maps.event.addDomListener(window, 'load', initialize);

@@ -35,8 +35,7 @@ Route::get('/user/{username}',[
 /*
 |	Events Page
 */
-Route::get('/events/',[
-	'as'   => 'events',
+Route::get('/eventsv2/',[
 	'uses' => 'EventController@getEvents'
 ]);
 
@@ -323,7 +322,7 @@ Route::group(['before'=>'auth'], function(){
 	*/
 	Route::get('/api/event-types/{input}', [
 		'as'   => 'api-event-types',
-		'uses' => 'EventController@getApiEventTypes'
+		'uses' => 'EventControllerAPI@getEventTypes'
 	]);
 
 	/*
@@ -331,14 +330,15 @@ Route::group(['before'=>'auth'], function(){
 	*/
 	Route::get('/api/events/{input?}', [
 		'as' => 'api-filter-events',
-		'uses' => 'EventController@getApiFilterEvents'
+		'uses' => 'EventControllerAPI@getFilterEvents'
 	]);	
 
-	/*Testing*/
-	Route::get('/eventsv2/', function(){
-		return View::make('event.eventsv2')
-		->with('title', 'Events')
-		->with('app_name', 'Geovents');
-	});
+	/*
+	|	Events (API) - Return events page
+	*/
+	Route::get('/events/', [
+		'as'   => 'events',
+		'uses' => 'EventControllerAPI@getEvents'
+	]);
 
 });

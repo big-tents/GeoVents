@@ -46,7 +46,7 @@
     {{ HTML::style('assets/css/bootstrap.min.css') }}
 
     <!-- Bootstrap Core javaScript -->
-    {{ HTML::script('js/bootstrap.min.js') }}
+    {{ HTML::script('assets/js/bootstrap.min.js') }}
 
     <!-- Custom CSS -->    
     {{ HTML::style('assets/css/custom.css') }}
