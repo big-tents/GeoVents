@@ -75,4 +75,5 @@
 
 {{ Form::close() }}
 
+<script>google.maps.event.addDomListener(window, 'load', initialize);</script>
 @stop

@@ -8,27 +8,6 @@
 <!-- If there's error, show errors -->
 @include('common.errors')
 
-<!-- Onload JavaScript -->
-<script>
-$().ready(function(){
-	$("#e_type").keyup(function(){
-		getEventTypes();
-	});
-
-	//Get geolocation after
-	$("#event_location").blur(function(){
-		getGeoLocationFromMap();
-	});
-
-	//Show date picker
-	$(".datepicker").datepicker({dateFormat: 'dd-mm-yy', altField: '#event_date'});
-
-	//Initilize google map
-	google.maps.event.addDomListener(window, 'load', initialize);
-});
-</script>
-<!-- End/ onload JavaScript -->
-
 <!-- FORM FIELDS -->
 {{ Form::open(['url'=>URL::route('event-host-post'), 'method'=>'POST']) }}
 
@@ -84,4 +63,26 @@ $().ready(function(){
 {{ Form::submit('Create Event', ['class'=>'btn btn-primary btn-block']) }}
 {{ Form::close() }}
 <hr>
+
+<!-- Onload JavaScript -->
+<script>
+$().ready(function(){
+	$("#e_type").keyup(function(){
+		getEventTypes();
+	});
+
+	//Get geolocation after
+	$("#event_location").blur(function(){
+		getGeoLocationFromMap();
+	});
+
+	//Show date picker
+	$(".datepicker").datepicker({dateFormat: 'dd-mm-yy', altField: '#event_date'});
+
+	//Initilize google map
+	google.maps.event.addDomListener(window, 'load', initialize);
+});
+</script>
+<!-- End/ onload JavaScript -->
+
 @stop

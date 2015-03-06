@@ -115,7 +115,7 @@ function showPosition(position) {
 }
 function calculateDistance(pos1, pos2){
 	unit = " km";
-	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(2) + unit;
+	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(5) + unit;
 }
 
 /**
@@ -146,13 +146,14 @@ function removeDuplicateRows(){
 	});
 }
 
-function sortByDistance(){
+function sortByDistance(order){
+	var order = (order==0) ? 0 : 1;
 	var extractNumbersOnly = function(node)  {      
     	return $(node).text().replace(/[^0-9.]/g, ''); 
 	}
 	var thDistanceIndex = findHeaderIndex($("#header_distance").html());
 	$("#events_table").tablesorter({
-		sortList: [[thDistanceIndex, 0]], 
+		sortList: [[thDistanceIndex, order]], 
 		textExtraction: extractNumbersOnly
 	});
 }

@@ -1,6 +1,7 @@
 # 05-03-2015 
 
 ## Add
+- [] Add "Update my location" button
 - [x] Remove eventsv2 page
 - [x] Add jQuery library tablesorter.js
 - [x] Fix host page google map initilization
@@ -28,6 +29,7 @@
 - [] Kick/leave an event -> Delete entry
 - [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
 - [] Dashboard - A map shows events you've joined on the map
+- [] Autoupdate client location for every x amount of time
 
 ## Note to self
 - [] What if JSON file is too large? Produce partial of JSON data in route
