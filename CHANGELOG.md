@@ -1,3 +1,36 @@
+# 09-03-2015 
+
+## Add
+- [x] CHANGE 'user_id' FROM 'events' to 'host_id'
+- [x] REMOVE 'acc_type' and 'private_settings' FROM 'users'
+- [x] REMOVE 'acc_type' option ON 'register' page
+
+## Upcoming
+- [] Allow host to edit event 
+- [] Fix allow date to be same
+- [] Reminder
+- [] Change 'Delete' to 'cancel' instead
+- [] Rating/feedback systems
+- [] Kick/leave an event -> Delete entry
+- [] Host hosted events
+- [] Transfer from glyphicons to new icon font
+- [] Video shooting
+- [] Pick your icon event
+- [] Mobile 
+- [] Geolocation distance if you're going to the event
+- [] Accept / Decline invite
+- [] Notify users when an event is removed
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Dashboard - A map shows events you've joined on the map
+- [] Autoupdate client location for every x amount of time
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
 # 08-03-2015 
 
 ## Add

@@ -22,7 +22,6 @@ class AccountController extends BaseController{
 			'password'       => 'required|min:5|required_alphanumeric',
 			'password_again' => 'required|same:password',
 			'email'          => 'required|email|max:50|unique:users',
-			'account_type'   => 'required|max:2',
 		]);
 
 		//If validation fails
@@ -39,7 +38,6 @@ class AccountController extends BaseController{
 				'username'     => Input::get('username'),
 				'password'     => Hash::make(Input::get('password')),
 				'email'        => Input::get('email'),
-				'acc_type'     => Input::get('account_type'),
 				'code'         => $code,
 			]);
 

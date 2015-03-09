@@ -14,15 +14,6 @@
 	{{ Form::token() }}
 		<table class="table">
 			<tr>
-				<td>{{ Form::label('account_type', 'Account type: ') }}</td>
-				<td>
-					{{ Form::select('account_type', [
-						'0'=>'Student',
-						'1'=>'Organization'
-					]) }}
-				</td>
-			</tr>
-			<tr>
 				<td>{{ Form::label('username', 'Username: ') }}</td>
 				<td>{{ Form::text('username', Input::old('username'), ['class'=>'form-control']) }}</td>
 			</tr>

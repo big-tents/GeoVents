@@ -64,7 +64,7 @@ class EventControllerApi extends EventController{
                 'e_lng',
                 'events.created_at',
                 // '*',
-                DB::raw('events.user_id = ' . Auth::user()->id . ' as hosting'),
+                DB::raw('events.host_id = ' . Auth::user()->id . ' as hosting'),
                 // DB::raw('joined_events.attendee_id = ' . Auth::user()->id . ' && events.id = joined_events.event_id as joined')
             ]
         )

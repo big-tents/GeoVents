@@ -147,6 +147,13 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
+	|	Edit Event (GET)
+	*/
+	Route::get('/event/{event_id}/edit/', [
+		'uses' => 'EventController@getEditEvent'
+	]);
+
+	/*
 	|	Join Event (GET)
 	*/
 	Route::get('/event/{event_id}', [
@@ -196,6 +203,7 @@ Route::group(['before'=>'auth'], function(){
 			'as' => 'event-host-post',
 			'uses' => 'EventController@postHostEvent'
 		]);
+
 		/*
 		|	Settings (POST)
 		*/
@@ -219,6 +227,14 @@ Route::group(['before'=>'auth'], function(){
 			'as'   => 'profile-edit-post',
 			'uses' => 'ProfileController@postEditProfile'
 		]);
+
+		/*
+		|	Edit Event (POST)
+		*/
+		// Route::post('/event/{event_id}/edit', [
+		// 	'as'   => 'event-edit',
+		// 	'uses' => 'EventController@postEditEvent'
+		// ]);
 
 	});
 });

@@ -17,7 +17,7 @@ class EEvent extends Eloquent{
 	//	events <==> users
 	public function host()
 	{
-		return $this->belongsTo('User', 'user_id', 'id');
+		return $this->belongsTo('User', 'host_id', 'id');
 	}
 
 	//	events <==> attendees
@@ -31,7 +31,7 @@ class EEvent extends Eloquent{
 		$array = parent::toArray();
 
 		//Check if user is the host of the event
-		$isHost = EEvent::where('user_id', '=', Auth::user()->id)
+		$isHost = EEvent::where('host_id', '=', Auth::user()->id)
 		->where('id', '=', $array['id'])
 		->count();
 

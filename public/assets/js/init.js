@@ -61,7 +61,8 @@ function getEvents(){
 		    	var edate = new Date(e.e_endDate * 1000);
 		    	var sddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
 		    	var eddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
-		    	var description = e.e_description.substr(0,80) + '...';
+		    	// var description = e.e_description.substr(0,80) + '...';
+		    	var description = htmlEntities(e.e_description).substr(0, 80) + '...';
 		    	var location = e.e_location;
 		    	var totalJoined = e.totalJoined;
 		    	var maxAttendees = e.total_attendees;
@@ -105,6 +106,13 @@ function getEvents(){
 	});
 }//End of getEvents()
 
+/*
+ * Escapte html entities
+ * Snippet from: https://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
+ */
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 /**
  * Date Moth fixes
  */

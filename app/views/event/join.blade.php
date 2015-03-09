@@ -1,9 +1,11 @@
 @extends('templates.v1')
 
 @section('content')
-<h2>{{ $title }} 
+<h2>{{ $title }}
 	@if($isJoined) <span style="color:green;font-weight:bold;">(Joined)</span> @endif
-	@if($isHost) <span style="color:red;font-weight:bold;">(Host)</span> @endif
+	@if($isHost) 
+		<span style="color:red;font-weight:bold;">(Host)</span>
+	@endif
 </h2>
 
 @include('common.message')
@@ -74,8 +76,7 @@
 
 		<!-- If user is the host of the event -->
 		@elseif ($isHost)
-			{{ Form::submit('Delete Event', ['class'=>'btn btn-block btn-danger']) }}
-
+			<a class="btn btn-block btn-info" href="{{ URL::to('event', $event_id) }}/edit">Edit</a> 
 		<!-- If user has NOT joined this event -->
 		@else
 			{{ Form::submit('Join', ['class'=>'btn btn-block btn-primary']) }}

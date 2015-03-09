@@ -82,10 +82,10 @@ class EventController extends BaseController{
 		$max_allowed_host = 8;
 
 		//Get host id (current user id)
-		$host_id = Auth::user()->id;
+		$user_id = Auth::user()->id;
 
 		//Calculate how many events a user has hosted
-		$total_hosted_events = EEvent::where('user_id', '=', $host_id)->count();
+		$total_hosted_events = EEvent::where('host_id', '=', $user_id)->count();
 		
 		//If it's more than 10, then not allowed to host
 		if($total_hosted_events > $max_allowed_host){
@@ -146,7 +146,7 @@ class EventController extends BaseController{
 				'total_attendees' =>	Input::get('max_attendees'),
 				'e_lat'           =>	Input::get('EventLatitude'),
 				'e_lng'           =>	Input::get('EventLongitude'),
-				'user_id'         =>	Auth::user()->id,
+				'host_id'         =>	Auth::user()->id,
 				'audience'        =>	Input::get('audience'),
 				'etype_id'        => $event_type_id
 			]);
@@ -159,6 +159,53 @@ class EventController extends BaseController{
 	}
 
 
+	/**
+	  * (GET) Edit Event :: Allow hosts to edit events
+	  *    
+	  */
+	public function getEditEvent($event_id)
+	{
+		//Get selected event 
+		$event = EEvent::with('eventType')->where('id', '=', $event_id)->get()->first();
+
+		
+
+		//Check if user is the host of the event
+		$isHost = EEvent::where('host_id', '=', Auth::user()->id)->where('id', '=', $event_id)->count();
+
+		//ONLY ALLOW HOST TO EDIT
+
+		//Count how many people have joined this event
+		$totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
+
+		//Return a list of joined attendees
+		$joinedAttendees = User::
+		join('joined_events', 'users.id', '=', 'joined_events.attendee_id')
+		->where('event_id', '=', $event_id)
+		->get();
+
+		//If event exists
+		if($event){
+			return View::make('event.edit')
+				->with('title', $event->e_name . ' - edit ')
+				->with('e', $event)
+				->with('totalJoined', $totalJoined)
+				->with('joinedAttendees', $joinedAttendees);
+		}
+
+		//If event id not found
+		return Redirect::route('events')
+			->with('message', 'Sorry, event <b>' . $event_id . '</b> not found.');
+	}
+
+	/**
+	  * (POST) Edit Event :: Allow hosts to edit events
+	  *    
+	  */
+	// public function postEditEvent($event_id)
+	// {
+	// 	return Redirect::to('')
+	// }
 
 
 	/**
@@ -175,7 +222,7 @@ class EventController extends BaseController{
 		$event = EEvent::with('eventType')->where('id', '=', $event_id)->get()->first();
 
 		//Check if user is the host of the event
-		$isHost = EEvent::where('user_id', '=', Auth::user()->id)->where('id', '=', $event_id);
+		$isHost = EEvent::where('host_id', '=', Auth::user()->id)->where('id', '=', $event_id);
 		
 		//If user is the host then set isHost = 1, else 0
 		$isHost = $isHost->count();
@@ -197,7 +244,7 @@ class EventController extends BaseController{
 
 		//Host
 		$host = User::
-		join('events', 'users.id', '=', 'events.user_id')
+		join('events', 'users.id', '=', 'events.host_id')
 		->where('events.id', $event_id)->get()->first();
 
 		//If event exists
@@ -209,7 +256,8 @@ class EventController extends BaseController{
 				->with('isHost', $isHost)
 				->with('totalJoined', $totalJoined)
 				->with('joinedAttendees', $joinedAttendees)
-				->with('host', $host);
+				->with('host', $host)
+				->with('event_id', $event_id);
 		}
 		//If event id not found
 		return Redirect::route('events')
@@ -232,7 +280,7 @@ class EventController extends BaseController{
 
 		$attendee_id = Auth::user()->id;
 		$event_id = Input::get('event_id');
-		$host_id = EEvent::where('id', '=', $event_id)->get()->first()->user_id;
+		$host_id = EEvent::where('id', '=', $event_id)->get()->first()->host_id;
 
 		//Last Url
 		$last_url = 'event/' . $event_id;
@@ -275,13 +323,13 @@ class EventController extends BaseController{
 		}
 
 		//(6) If event is full
-		$totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
-		$eventMaxAttendees = EEvent::where('id', '=', $event_id)->select('total_attendees')->get();
+		// $totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
+		// $eventMaxAttendees = EEvent::where('id', '=', $event_id)->select('total_attendees')->get();
 		
-		if($totalJoined >= $eventMaxAttendees){
-			return Redirect::to($last_url)
-				->with('message', 'Sorry, this event is full.');
-		}
+		// if($totalJoined >= $eventMaxAttendees){
+		// 	return Redirect::to($last_url)
+		// 		->with('message', 'Sorry, this event is full.');
+		// }
 
 		/*---------------------------------------*/
 		/*********** Validations Ends **********/
@@ -373,7 +421,7 @@ class EventController extends BaseController{
 		$event_name = $event->first()->e_name;
 
 		//Check if user is the host of the event
-		$isHost = EEvent::where('user_id', '=', Auth::user()->id)->where('id', '=', $event_id);;
+		$isHost = EEvent::where('host_id', '=', Auth::user()->id)->where('id', '=', $event_id);;
 
 		//Only allow hosts to delete its own events
 		if($isHost->count()){
@@ -398,4 +446,5 @@ class EventController extends BaseController{
 		}
 		
 	}
+
 }
