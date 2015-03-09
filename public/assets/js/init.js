@@ -55,12 +55,17 @@ function getEvents(){
 		    	var lng = e.e_lng;
 		    	var id = e.id;
 		    	var type = e.type;
-		    	var audience = e.audience;
+		    	var audience = (e.audience === 0) ? "Public" : (e.audience === 1) ? "Private" : "Restricted";
 		    	var eName = e.e_name;
-		    	var date = new Date(e.e_date * 1000);
-		    	var ddmmyyyy = date.getDate() +'/'+ (date.getMonth()+1) +'/'+ date.getFullYear();
+		    	var sdate = new Date(e.e_date * 1000);
+		    	var edate = new Date(e.e_endDate * 1000);
+		    	var sddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
+		    	var eddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
+		    	var description = e.e_description.substr(0,80) + '...';
 		    	var location = e.e_location;
-		    	var ttAttendees = e.total_attendees;
+		    	var totalJoined = e.totalJoined;
+		    	var maxAttendees = e.total_attendees;
+		    	var status = (totalJoined >= maxAttendees) ? '<b>FULL</b>' : totalJoined + ' / ' + maxAttendees;
 		    	var createdAt = e.created_at;
 
 		    	//Client infomation
@@ -85,9 +90,11 @@ function getEvents(){
 		    	"<td>" + type + "</td>" + 
 		    	"<td>" + audience + "</td>" + 
 		    	"<td>" + eName + "</td>" + 
-		    	"<td>" + ddmmyyyy + "</td>" + 
+		    	"<td>" + sddmmyyyy + "</td>" + 
+		    	"<td>" + eddmmyyyy + "</td>" + 
+		    	"<td>" + description + "</td>" + 
 		    	"<td>" + location + "</td>" + 
-		    	"<td>" + ttAttendees + "</td>" + 
+		    	"<td>" + status + "</td>" + 
 		    	"<td>" + distance + "</td>" + 
 		    	"<td>" + button + "</td>" + 
 		    	"</tr>");
@@ -98,7 +105,12 @@ function getEvents(){
 	});
 }//End of getEvents()
 
-
+/**
+ * Date Moth fixes
+ */
+function dateFormatter(date){
+	return (date > 0 && date < 10) ? '0' + date : date;
+}
 /**
  * Get golocation 
  */
@@ -115,7 +127,7 @@ function showPosition(position) {
 }
 function calculateDistance(pos1, pos2){
 	unit = " km";
-	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(5) + unit;
+	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(2) + unit;
 }
 
 /**

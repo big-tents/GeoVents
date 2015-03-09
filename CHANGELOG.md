@@ -1,7 +1,72 @@
+# 08-03-2015 
+
+## Add
+- [x] Add migrations for event end date, description and icon
+- [x] Event start/end date / description
+- [x] Add read more description 
+- [x] Add when event is full
+- [x] Display attendees on host page
+- [x] Add host name on events page
+- [x] Joined attendees / Total Attendees
+
+## Upcoming
+- [] Host hosted events
+- [] Transfer from glyphicons to new icon font
+- [] Video shooting
+- [] Pick your icon event
+- [] Mobile 
+- [] Geolocation distance if you're going to the event
+- [] Accept / Decline invite
+- [] Notify users when an event is removed
+- [] Allow host to edit event 
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Dashboard - A map shows events you've joined on the map
+- [] Autoupdate client location for every x amount of time
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
+# 06-03-2015 
+
+## Add
+- [x] Add migrations for event end date, description and icon
+- [] Event start/end date / description
+
+## Upcoming
+- [] Transfer from glyphicons to new icon font
+- [] Video shooting
+- [] Pick your icon event
+- [] Mobile 
+- [] Geolocation distance if you're going to the event
+- [] Accept / Decline invite
+- [] Display attendees on host page
+- [] Notify users when an event is removed
+- [] Add host name on events page
+- [] Allow host to edit event 
+- [] Added host name on event page
+- [] Joined attendees / Total Attendees
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Add Event Description
+- [] Kick/leave an event -> Delete entry
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Dashboard - A map shows events you've joined on the map
+- [] Autoupdate client location for every x amount of time
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
 # 05-03-2015 
 
 ## Add
-- [] Add "Update my location" button
+- [x] Add "Update my location" button
 - [x] Remove eventsv2 page
 - [x] Add jQuery library tablesorter.js
 - [x] Fix host page google map initilization

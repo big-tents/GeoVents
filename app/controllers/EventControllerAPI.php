@@ -56,6 +56,8 @@ class EventControllerApi extends EventController{
                 'audience', 
                 'e_name',
                 'e_date',
+                'e_endDate',
+                'e_description',
                 'e_location',
                 'total_attendees',
                 'e_lat',

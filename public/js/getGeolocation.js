@@ -3,7 +3,7 @@ var map;
 var marker;
 
 //Google Map Initialization
-function initialize(map_canvas) {
+function initialize() {
 	geocoder = new google.maps.Geocoder();
 
 	var averageLatitude = $("#EventLatitude").val();
@@ -18,7 +18,7 @@ function initialize(map_canvas) {
 		center: latlng
 	}
 
-	map = new google.maps.Map(document.getElementById(map_canvas), mapOptions);
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	marker = new google.maps.Marker({
 		position: new google.maps.LatLng(averageLatitude, averageLongitude),
@@ -35,7 +35,7 @@ function initialize(map_canvas) {
 
     google.maps.event.addListener(map, "center_changed", function() {
         var position = map.getCenter();
-        // marker.setPosition(position);
+        marker.setPosition(position);
         $("#EventLatitude").val(position.lat());
         $("#EventLongitude").val(position.lng());
     });
@@ -44,32 +44,10 @@ function initialize(map_canvas) {
 //getGeoLocationFromMap
 function getGeoLocationFromMap() {
   var address = document.getElementById('event_location').value;
-  
-  // North-East and South-West of the UK
-   var ne = new google.maps.LatLng(59.00, 2.00);
-   var sw = new google.maps.LatLng(50.00, -7.60);
-
-   // Define bounding box for drawing
-   var boundingBoxPoints = [
-      ne, new google.maps.LatLng(ne.lat(), sw.lng()),
-      sw, new google.maps.LatLng(sw.lat(), ne.lng()), ne
-   ];
-
-   // Show bounding box on map   
-   new google.maps.Polyline({
-      path: boundingBoxPoints,
-      strokeColor: 'red',
-      strokeOpacity: 0.5,
-      strokeWeight: 5,
-      map: map
-   });
-
 
   geocoder.geocode( 
   	{
-		'address': address,
-		'region':  'uk',
-		'bounds':  new google.maps.LatLngBounds(sw, ne)
+  		'address': address + ', UK',
   	}, 
   	function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
@@ -79,11 +57,11 @@ function getGeoLocationFromMap() {
       map.setCenter(location);
       map.setZoom(16);
       marker.setPosition(location);
+
     }else{
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }
 
-//Initilize google map on host page
-// google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);

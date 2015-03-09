@@ -12,7 +12,6 @@
 @include('common.errors')
 
 <!-- FORM FIELDS -->
-<hr/>
 <!-- If user has already joined this event -->
 @if($isJoined)
 	{{ Form::open(['url'=>URL::route('event-leave-request'), 'method'=>'POST']) }}
@@ -28,25 +27,44 @@
 
 <table class="table table-hover">
 	<tr>
-		<td>Event Name</td>
-		<td>{{ e($e->e_name)}}</td>
-</tr>
+		<td>Host: </td>
+		<td>{{ HTML::link('user/' . $host->username, $host->username) }}</td>
+
+	</tr>
 	<tr>
-		<td>Date</td>
-		<td>{{ e(date('d/m/Y', $e->e_date))}}</td>
+		<td>Event Name</td>
+		<td>{{{ e($e->e_name) }}}</td>
+	</tr>
+	<tr>
+		<td>Start Date</td>
+		<td>{{{ e(date('d/m/Y', $e->e_date)) }}}</td>
+	</tr>
+	<tr>
+		<td>End Date</td>
+		<td>{{{ e(date('d/m/Y', $e->e_endDate)) }}}</td>
+	</tr>
+	<tr>
+		<td>Description</td>
+		<td><div class="read-more-content">{{{ e($e->e_description) }}}</div> <a href="#" class="read-more">Read More...</a></td>
 	</tr>
 	<tr>
 		<td>Event Location</td>
-		<td>{{ e($e->e_location) }}</td>
+		<td>{{{ e($e->e_location) }}}</td>
 	</tr>
 	<tr>
 		<td colspan="2"><div id="map-canvas"></div></td>
 	</tr>
 	<tr>
 		<td>Total Attendees</td>
-		<td>{{ e($e->total_attendees) }}</td>
+		<td>{{ e($totalJoined) }} / <b>{{ e($e->total_attendees) }}</b></td>
 	</tr>
-
+	
+	<tr>
+		<td>Attendees</td>
+		<td>@foreach($joinedAttendees as $attendee)
+		<li>{{ HTML::link('user/' . $attendee->username, $attendee->username) }}</li>
+		@endforeach</td>
+	</tr>
 	<tr>
 		<td colspan="2">
 
@@ -75,5 +93,25 @@
 
 {{ Form::close() }}
 
-<script>google.maps.event.addDomListener(window, 'load', initialize);</script>
+<script>
+
+//Initilize google map
+google.maps.event.addDomListener(window, 'load', initialize('map-canvas'));
+
+//Read More 
+$('.read-more').click(function(){
+	content = $('.read-more-content');
+	height = '35px';
+	if(content.css('height') != height){
+		content.stop().animate({height: height}, 100);
+		$(this).text('Read More...');
+	}else{
+		content.css({height: '100%'});
+		var xx = content.height();
+		content.css({height:height});
+        content.stop().animate({height: xx}, 300);
+        $(this).text('Less...');
+	}
+});
+</script>
 @stop

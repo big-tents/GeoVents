@@ -95,14 +95,16 @@ class EventController extends BaseController{
 
 		//Validation Rules
 		$validation = Validator::make(Input::all(), [
-			'event_name'     => 'required|min:3|basic_title|max:50', 
-			'event_type'     => 'required|min:3|max:20',
-			'event_date'     =>	'required|date_format:d-m-Y|after_now|one_year',
-			'event_location' => 'required|min:3',
-			'EventLatitude'  =>	'required|float',
-			'EventLongitude' =>	'required|float',
-			'max_attendees'  =>	'required|numeric',
-			'audience'       =>	'required|numeric|max:2'
+			'event_name'        => 'required|min:3|basic_title|max:50', 
+			'event_type'        => 'required|min:3|max:20',
+			'event_date'        =>	'required|date_format:d-m-Y|after_now|one_year|before:' . Input::get('event_end_date'),
+			'event_end_date'    => 'required|date_format:d-m-Y|after_now|one_year|after:' . Input::get('event_date'),
+			'event_description' => 'required|min:3', 
+			'event_location'    => 'required|min:3',
+			'EventLatitude'     =>	'required|float',
+			'EventLongitude'    =>	'required|float',
+			'max_attendees'     =>	'required|numeric',
+			'audience'          =>	'required|numeric|max:2'
 		]);
 
 		//If validation fails
@@ -128,7 +130,8 @@ class EventController extends BaseController{
 			}
 
 			//Convert date into UK format
-			$timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
+			$start_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
+			$end_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_end_date'))->getTimeStamp();
 
 			//Get event_type_id
 			$event_type_id = EventType::where('type', '=', Input::get('event_type'))->first()->id;
@@ -136,7 +139,9 @@ class EventController extends BaseController{
 			//Store data into events table
 			EEvent::create([
 				'e_name'          =>	Input::get('event_name'),
-				'e_date'          =>	$timestamp,
+				'e_date'          =>	$start_timestamp,
+				'e_endDate'       =>	$end_timestamp,
+				'e_description'   => 	Input::get('event_description'),
 				'e_location'      =>	Input::get('event_location'),
 				'total_attendees' =>	Input::get('max_attendees'),
 				'e_lat'           =>	Input::get('EventLatitude'),
@@ -181,13 +186,30 @@ class EventController extends BaseController{
 		//If user has joined then set isJoined = 1, else 0
 		$isJoined = $isJoined->count();
 
+		//Count how many people have joined this event
+		$totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
+
+		//Return a list of joined attendees
+		$joinedAttendees = User::
+		join('joined_events', 'users.id', '=', 'joined_events.attendee_id')
+		->where('event_id', '=', $event_id)
+		->get();
+
+		//Host
+		$host = User::
+		join('events', 'users.id', '=', 'events.user_id')
+		->where('events.id', $event_id)->get()->first();
+
 		//If event exists
 		if($event){
 			return View::make('event.join')
 				->with('title', $event->e_name)
 				->with('e', $event)
 				->with('isJoined', $isJoined)
-				->with('isHost', $isHost);
+				->with('isHost', $isHost)
+				->with('totalJoined', $totalJoined)
+				->with('joinedAttendees', $joinedAttendees)
+				->with('host', $host);
 		}
 		//If event id not found
 		return Redirect::route('events')
@@ -246,10 +268,19 @@ class EventController extends BaseController{
 		//(4) Prevent attendees joining an event twice
 		$isJoined = JoinedEvents::where('attendee_id', '=', $attendee_id)->where('event_id', '=', $event_id);
 		
-		//If already joined
+		//(5) If already joined
 		if($isJoined->count()){
 			return Redirect::to($last_url)
 				->with('message', 'You want to join an event twice? really?');
+		}
+
+		//(6) If event is full
+		$totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
+		$eventMaxAttendees = EEvent::where('id', '=', $event_id)->select('total_attendees')->get();
+		
+		if($totalJoined >= $eventMaxAttendees){
+			return Redirect::to($last_url)
+				->with('message', 'Sorry, this event is full.');
 		}
 
 		/*---------------------------------------*/

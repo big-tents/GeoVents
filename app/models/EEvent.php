@@ -40,9 +40,13 @@ class EEvent extends Eloquent{
 		->where('event_id', '=', $array['id'])
 		->count();
 
+		//Total joined attendees
+		$totalJoined = JoinedEvents::where('event_id', '=', $array['id'])->count();
+
 		//Append these two 'columns' to the parent's array
 		$array['hosting'] = $isHost; 
 		$array['joined'] = $isJoined; 
+		$array['totalJoined'] = $totalJoined; 
 		
 		//Update custom attributes to result
 		return $array;
