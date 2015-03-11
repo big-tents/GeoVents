@@ -120,6 +120,8 @@
 <!-- Onload JavaScript -->
 <script>
 $().ready(function(){
+	
+	//Get event types
 	$("#e_type").keyup(function(){
 		getEventTypes();
 	});
@@ -160,6 +162,7 @@ $().ready(function(){
 
 	});
 
+	//When 'close' button is clicked
 	$("#btn-close-map").click(function(){
 		$("#map-canvas-fullscreen").hide();
 		$("#btn-close-map").hide();

@@ -168,44 +168,121 @@ class EventController extends BaseController{
 		//Get selected event 
 		$event = EEvent::with('eventType')->where('id', '=', $event_id)->get()->first();
 
-		
-
 		//Check if user is the host of the event
 		$isHost = EEvent::where('host_id', '=', Auth::user()->id)->where('id', '=', $event_id)->count();
 
 		//ONLY ALLOW HOST TO EDIT
+		if($isHost){
+			//Count how many people have joined this event
+			$totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
 
-		//Count how many people have joined this event
-		$totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
+			//Return a list of joined attendees
+			$joinedAttendees = User::
+			join('joined_events', 'users.id', '=', 'joined_events.attendee_id')
+			->where('event_id', '=', $event_id)
+			->get();
 
-		//Return a list of joined attendees
-		$joinedAttendees = User::
-		join('joined_events', 'users.id', '=', 'joined_events.attendee_id')
-		->where('event_id', '=', $event_id)
-		->get();
+			//If event exists
+			if($event){
+				return View::make('event.edit')
+					->with('title', $event->e_name . ' - edit ')
+					->with('e', $event)
+					->with('e_type', $event->eventType->type)
+					->with('totalJoined', $totalJoined)
+					->with('joinedAttendees', $joinedAttendees);
+			}
 
-		//If event exists
-		if($event){
-			return View::make('event.edit')
-				->with('title', $event->e_name . ' - edit ')
-				->with('e', $event)
-				->with('totalJoined', $totalJoined)
-				->with('joinedAttendees', $joinedAttendees);
 		}
 
 		//If event id not found
 		return Redirect::route('events')
-			->with('message', 'Sorry, event <b>' . $event_id . '</b> not found.');
+			->with('message', 'Are you trying to edit an event that doesn\'t belong to you?');
 	}
 
 	/**
 	  * (POST) Edit Event :: Allow hosts to edit events
 	  *    
 	  */
-	// public function postEditEvent($event_id)
-	// {
-	// 	return Redirect::to('')
-	// }
+	public function postEditEvent()
+	{
+		$event_id = Input::get('event_id');
+		$kicks = Input::get('kicks');
+
+		// Validation Rules
+		$validation = Validator::make(Input::all(), [
+			'event_name'        => 'required|min:3|basic_title|max:50', 
+			'event_type'        => 'required|min:3|max:20',
+			'event_date'        =>	'required|date_format:d-m-Y|after_now|one_year|before:' . Input::get('event_end_date'),
+			'event_end_date'    => 'required|date_format:d-m-Y|after_now|one_year|after:' . Input::get('event_date'),
+			'event_description' => 'required|min:3', 
+			'event_location'    => 'required|min:3',
+			'EventLatitude'     =>	'required|float',
+			'EventLongitude'    =>	'required|float',
+			'max_attendees'     =>	'required|numeric',
+			'audience'          =>	'required|numeric|max:2'
+		]);
+		
+		//If validation failes
+		if($validation->fails()){
+			return Redirect::to('event/' . $event_id . '/edit/')
+				->withErrors($validation)
+				->withInput();
+		}else{
+			//If validation succeeds
+			//Check if event type exists
+			$event_type_exists = EventType::where('type', '=', Input::get('event_type'))->exists();
+
+			//If event type not exist
+			if(!$event_type_exists){
+				//Then create a new type and store it into eventTypes table
+				EventType::create([
+					'type'	=>	Input::get('event_type')
+				]);
+			}
+
+			//Convert date into UK format
+			$start_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
+			$end_timestamp   = DateTime::createFromFormat('j-n-Y', Input::get('event_end_date'))->getTimeStamp();
+
+			//Get event_type_id
+			$event_type_id = EventType::where('type', '=', Input::get('event_type'))->first()->id;
+
+			//Update data
+			$event = EEvent::where('host_id', '=', Auth::user()->id)->where('id', '=', $event_id)->first();
+
+			$event->e_name          = Input::get('event_name');
+			$event->e_date          = $start_timestamp;
+			$event->e_endDate       = $end_timestamp;
+			$event->e_description   = Input::get('event_location');
+			$event->e_location      = Input::get('event_name');
+			$event->total_attendees = Input::get('max_attendees');
+			$event->e_lat           = Input::get('EventLatitude');
+			$event->e_lng           = Input::get('EventLongitude');
+			$event->audience        = Input::get('audience');
+			$event->etype_id        = $event_type_id;
+
+			if($event->save()){
+
+				//Kick attendees
+				for($i = 0; $i < count($kicks); $i++){
+					$attendee_id = User::where('username', '=', $kicks[$i])->get()->first()->id;
+					
+					$kick_attendee = JoinedEvents::where('event_id', '=', $event_id)
+												  ->where('attendee_id', '=', $attendee_id)
+												  ->where('host_id', '=', Auth::user()->id)
+												  ->first();
+
+					$kick_attendee->delete();
+				}
+				//Redirect user back to 'find events' page
+				return Redirect::to('event/' . $event_id)
+				->with('message', 'Event ' . Input::get('event)name') . ' Updated!');
+			}
+			
+		}
+
+		
+	}
 
 
 	/**
@@ -321,15 +398,6 @@ class EventController extends BaseController{
 			return Redirect::to($last_url)
 				->with('message', 'You want to join an event twice? really?');
 		}
-
-		//(6) If event is full
-		// $totalJoined = JoinedEvents::where('event_id', '=', $event_id)->count();
-		// $eventMaxAttendees = EEvent::where('id', '=', $event_id)->select('total_attendees')->get();
-		
-		// if($totalJoined >= $eventMaxAttendees){
-		// 	return Redirect::to($last_url)
-		// 		->with('message', 'Sorry, this event is full.');
-		// }
 
 		/*---------------------------------------*/
 		/*********** Validations Ends **********/

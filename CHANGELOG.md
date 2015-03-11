@@ -1,3 +1,35 @@
+# 11-03-2015 
+
+## Add
+- [x] Add route group for event
+- [x] Allow host to edit event 
+- [x] Kick/leave an event -> Delete entry
+
+## Upcoming
+- [] Separate Event location / address
+- [] Change 'Delete' to 'cancel' instead
+- [] Host hosted events
+- [] Fix allow date to be same
+- [] Reminder
+- [] Rating/feedback systems
+- [] Transfer from glyphicons to new icon font
+- [] Video shooting
+- [] Pick your icon event
+- [] Mobile 
+- [] Geolocation distance if you're going to the event
+- [] Accept / Decline invite
+- [] Notify users when an event is removed
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Dashboard - A map shows events you've joined on the map
+- [] Autoupdate client location for every x amount of time
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
+
 # 09-03-2015 
 
 ## Add

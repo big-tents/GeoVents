@@ -139,52 +139,6 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
-	|	Host Event (GET)
-	*/
-	Route::get('/event/host', [
-		'as' => 'event-host',
-		'uses' => 'EventController@getHostEvent'
-	]);
-
-	/*
-	|	Edit Event (GET)
-	*/
-	Route::get('/event/{event_id}/edit/', [
-		'uses' => 'EventController@getEditEvent'
-	]);
-
-	/*
-	|	Join Event (GET)
-	*/
-	Route::get('/event/{event_id}', [
-		'as' => 'event-join',
-		'uses' => 'EventController@getJoinEvent'
-	]);
-
-	/*
-	|	Join Event (POST)
-	*/
-	Route::post('/event/join/', [
-		'as' => 'event-join-request',
-		'uses' => 'EventController@postJoinEvent'
-	]);
-
-	/*
-	|	Leave Event (POST)
-	*/
-	Route::post('/event/leave', [
-		'as' => 'event-leave-request',
-		'uses' => 'EventController@postLeaveEvent'
-	]);
-
-	/*
-	|	Delete Event (POST)
-	*/
-	Route::post('/event/{$event_id}/delete', [
-		'as' => 'event-delete',
-		'uses' => 'EventController@postDeleteEvent'
-	]);
-	/*
 	|	Dashboard (GET)
 	*/
 	Route::get('/dashboard/', [
@@ -193,17 +147,89 @@ Route::group(['before'=>'auth'], function(){
 	]);
 
 	/*
-	|	CSRF Protected Group
+	|===============================================	
+	|	               Event Group                 |
+	|===============================================
 	*/
-	Route::group(['before'=>'csrf'], function(){
+	Route::group(['prefix'=>'event'], function(){
 		/*
-		|	Host Event (POST)
+		|	Host Event (GET)
 		*/
-		Route::post('/event/host', [
-			'as' => 'event-host-post',
-			'uses' => 'EventController@postHostEvent'
+		Route::get('/host/', [
+			'as' => 'event-host',
+			'uses' => 'EventController@getHostEvent'
 		]);
 
+		/*
+		|	Edit Event (GET)
+		*/
+		Route::get('/{event_id}/edit/', [
+			'uses' => 'EventController@getEditEvent'
+		]);
+
+		/*
+		|	Join Event (GET)
+		*/
+		Route::get('/{event_id}/', [
+			'as' => 'event-join',
+			'uses' => 'EventController@getJoinEvent'
+		]);
+		/*
+		|	Join Event (POST)
+		*/
+		Route::post('/join/', [
+			'as' => 'event-join-request',
+			'uses' => 'EventController@postJoinEvent'
+		]);
+		/*
+		|	Leave Event (POST)
+		*/
+		Route::post('/leave/', [
+			'as' => 'event-leave-request',
+			'uses' => 'EventController@postLeaveEvent'
+		]);
+		/*
+		|	Delete Event (POST)
+		*/
+		Route::post('/{$event_id}/delete/', [
+			'as' => 'event-delete',
+			'uses' => 'EventController@postDeleteEvent'
+		]);
+
+		/*
+		Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx	
+		X	           CSRF PROTECTED GROUP            X
+		Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		*/
+		Route::group(['before'=>'csrf'], function(){
+
+			/*
+			|	Host Event (POST)
+			*/
+			Route::post('/host/', [
+				'as' => 'event-host-post',
+				'uses' => 'EventController@postHostEvent'
+			]);
+
+			/*
+			|	Edit Event (POST)
+			*/
+			Route::post('/{$event_id}/edit/', [
+				'as' => 'event-edit',
+				'uses' => 'EventController@postEditEvent'
+			]);
+		});// End CSRF PROTECTED GROUP
+
+	});// End Event Group 
+
+
+	/*
+	|===============================================	
+	|	            CSRF PROTECT GROUP             |
+	|===============================================
+	*/
+	Route::group(['before'=>'csrf'], function(){
+	
 		/*
 		|	Settings (POST)
 		*/
@@ -227,14 +253,6 @@ Route::group(['before'=>'auth'], function(){
 			'as'   => 'profile-edit-post',
 			'uses' => 'ProfileController@postEditProfile'
 		]);
-
-		/*
-		|	Edit Event (POST)
-		*/
-		// Route::post('/event/{event_id}/edit', [
-		// 	'as'   => 'event-edit',
-		// 	'uses' => 'EventController@postEditEvent'
-		// ]);
 
 	});
 });
