@@ -71,6 +71,7 @@ class EventControllerApi extends EventController{
         ->where('e_name', 'LIKE', '%' . $input . '%')
         ->orWhere('e_location', 'LIKE', '%' . $input . '%')
         ->orWhere('type', 'LIKE', '%' . $input . '%')
+        ->having('audience', '!=', 1)
         ->get();
 
         // return pretty JSON result

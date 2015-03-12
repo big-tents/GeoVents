@@ -61,12 +61,12 @@ function getEvents(){
 		    	var edate = new Date(e.e_endDate * 1000);
 		    	var sddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
 		    	var eddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
-		    	// var description = e.e_description.substr(0,80) + '...';
 		    	var description = htmlEntities(e.e_description).substr(0, 80) + '...';
 		    	var location = e.e_location;
 		    	var totalJoined = e.totalJoined;
 		    	var maxAttendees = e.total_attendees;
-		    	var status = (totalJoined >= maxAttendees) ? '<b>FULL</b>' : totalJoined + ' / ' + maxAttendees;
+		    	var isFull = totalJoined >= maxAttendees;
+		    	var status =  isFull ? '<b><strike>' + totalJoined + ' / ' + maxAttendees + '</strike></b>' : totalJoined + ' / ' + maxAttendees;
 		    	var createdAt = e.created_at;
 
 		    	//Client infomation
@@ -79,12 +79,12 @@ function getEvents(){
 
 		    	var tr = '<tr>';
 		    		
-		    	if(e.joined==1){
+		    	if(e.joined==1 || isFull){
 		    		tr = '<tr class="active">';
-		    		button = '<a href="event/' + e.id + '" class="btn btn-warning">View</a>';
+		    		button = '<a href="event/' + e.id + '" class="btn btn-info">View</a>';
 		    	}else if(e.hosting==1){
 		    		tr = '<tr class="active">';
-		    		button = '<a href="event/' + e.id + '" class="btn btn-danger">Hosting</a>';
+		    		button = '<a href="event/' + e.id + '" class="btn btn-primary">Hosting</a>';
 		    	}
 
 		    	table.append(tr +

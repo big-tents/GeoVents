@@ -441,13 +441,13 @@ class EventController extends BaseController{
 					->with('message', 'You\'ve joined an event.');
 			break;
 
-			//Private (Friends/Invites only) | Invisible to public
+			//Private : Hidden from search | Invite only
 			case 1:
 				return Redirect::to($last_url)
 					->with('message', 'Sorry, this event is private.');
 			break;
 
-			//Restricted (Friends/Invites only) | Invisible to public
+			//Restricted : Shows up in search | Invite only | Ask to join option
 			case 2:
 				return Redirect::to($last_url)
 					->with('message', 'Sorry, this event is restricted.');
