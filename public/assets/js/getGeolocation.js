@@ -43,7 +43,7 @@ function initialize(map_canvas) {
 
 //getGeoLocationFromMap
 function getGeoLocationFromMap() {
-  var address = document.getElementById('event_location').value;
+  var address = document.getElementById('event-address').value;
   
   // North-East and South-West of the UK
    var ne = new google.maps.LatLng(59.00, 2.00);
@@ -79,8 +79,10 @@ function getGeoLocationFromMap() {
       map.setCenter(location);
       map.setZoom(16);
       marker.setPosition(location);
+       $("#event-alert").hide();
     }else{
-      alert('Geocode was not successful for the following reason: ' + status);
+      $("#event-alert").show();
+      $("#event-address-alert").html('Geocode was not successful for the following reason: ' + status);
     }
   });
 }

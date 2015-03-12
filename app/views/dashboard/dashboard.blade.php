@@ -38,7 +38,7 @@
 				<tr>
 					<td>
 					<a href="event/{{ $he->id }}">
-					{{ $he->e_name }}
+					{{ $he->e_name }} ({{ count(json_decode($he['attendees'], true)) }})
 					</a>
 					</td>
 				</tr>

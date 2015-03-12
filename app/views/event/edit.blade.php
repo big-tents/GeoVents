@@ -70,10 +70,15 @@
         <td>{{ Form::label('event_location', 'Location: ') }}</td>
         <td>
         {{ Form::text('event_location', e($e->e_location), ['class' => 'form-control']) }}
-
         </td>
     </tr>
 
+    {{ Form::text('event-address', Input::old('event-address'), ['id'=>'event-address', 'class'=>'form-control']) }}
+
+    <div id="event-alert" class="alert alert-warning" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span id="event-address-alert"></span>
+    </div>
 
     <!--////////// Map Canvas //////////-->
     <tr>
@@ -82,8 +87,15 @@
         </td>
     </tr>
 
-
-    <!--////////// Total Attendees //////////-->
+    <tr>
+        <td>{{ Form::label('audience', 'Audience: ') }}</td>
+        <td>
+        {{ Form::radio('audience', 0, $isPublic, ['id'=>'e_public']) }} {{ Form::label('e_public', 'Public') }}<br/>
+        {{ Form::radio('audience', 1, $isPrivate, ['id'=>'e_private']) }} {{ Form::label('e_private', 'Private') }}<br/>
+        {{ Form::radio('audience', 2, $isRestricted, ['id'=>'e_restricted']) }} {{ Form::label('e_restricted', 'Restricted') }}
+        </td>
+    </tr>
+    <!--////////// Max Attendees //////////-->
     <tr>
         <td>{{ Form::label('max_attendees', 'Maximum Attendees: ') }}</td>
         <td>{{ Form::text('max_attendees', e($e->total_attendees), ['class' => 'form-control']) }}</td>
@@ -126,7 +138,7 @@
 
 <!-- HIDDEN VALUES -->
 {{ Form::input('hidden', 'event_id', $e->id) }}
-{{ Form::input('hidden', 'audience', $e->audience) }}
+<!--{{ Form::input('hidden', 'audience', $e->audience) }}-->
 {{ Form::input('hidden', 'EventLongitude', $e->e_lng, ['id'=>'EventLongitude']) }}
 {{ Form::input('hidden', 'EventLatitude', $e->e_lat, ['id'=>'EventLatitude']) }}
 
@@ -142,10 +154,10 @@ $().ready(function(){
     });
 
     //Get geolocation after
-    $("#event_location").blur(function(){
+    $("#event-address").keyup(function(){
         getGeoLocationFromMap();
     });
-    
+
     //Initilize date pickers
     $(".start_datepicker").datepicker({dateFormat: 'dd-mm-yy', altField: '#event_date', defaultDate : $("#chosen_event_date").text()}).hide();
     $(".end_datepicker").datepicker({dateFormat: 'dd-mm-yy', altField: '#event_end_date', defaultDate : $("#chosen_event_end_date").text()}).hide();
@@ -170,6 +182,7 @@ $().ready(function(){
     $("#btn_map").click(function(){
         $("#map-canvas-fullscreen").show();
         $("#btn-close-map").show();
+        $("#event-address").show();
         google.maps.event.addDomListener(window, 'load', initialize('map-canvas-fullscreen'));
     });
 
@@ -177,6 +190,8 @@ $().ready(function(){
     $("#btn-close-map").click(function(){
         $("#map-canvas-fullscreen").hide();
         $("#btn-close-map").hide();
+        $("#event-address").hide();
+        $("#event-alert").hide();
     });
 
     //  Initilize google map

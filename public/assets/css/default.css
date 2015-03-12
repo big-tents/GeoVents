@@ -183,3 +183,25 @@ aside[role='events_all']{
 	display:none;
 	border-radius:0;
 }
+#event-address{
+	display:none;
+	position: fixed;
+	left: 50%;
+	z-index: 99999;
+	opacity: 0.9;
+	top: 25%;
+	width: 80%;
+	margin-left: -40%;
+}
+#event-alert{
+	display:none;
+	z-index: 999999;
+	position: fixed;
+	opacity: 0.9;
+	width: 80%;
+	height: 50px;
+	top: 15%;
+	left: 50%;
+	margin-left: -40%;
+	font-size:11px;
+}

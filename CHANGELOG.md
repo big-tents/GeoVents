@@ -1,3 +1,37 @@
+# 12-03-2015 
+
+## Add
+- [x] Add search location on map
+- [x] Allow to change restriction
+- [x] Add number of attendees in dashboard
+- [x] Separate Event location / address
+- [x] Start date has to be less than end date 
+- [x] End date has to be greater than start date
+
+## Upcoming
+- [] Move Register / Login to Home Page
+- [] Show nearlyby markers 
+- [] Change 'Delete' to 'cancel' instead
+- [] Host hosted events in profile page
+- [] Reminder
+- [] Rating/feedback systems
+- [] Transfer from glyphicons to new icon font
+- [] Video shooting
+- [] Pick your icon event
+- [] Mobile 
+- [] Geolocation distance if you're going to the event
+- [] Accept / Decline invite
+- [] Notify users when an event is removed
+- [] Hide Private Events and Set password for restricted events
+- [] Recreate migrations
+- [] Function/Method comments
+- [] When event is over -> ???
+- [] Clean events every 24 hours using Cronjob(Unix) or Windows Task Scheduler
+- [] Dashboard - A map shows events you've joined on the map
+- [] Autoupdate client location for every x amount of time
+
+## Note to self
+- [] What if JSON file is too large? Produce partial of JSON data in route
 # 11-03-2015 
 
 ## Add
@@ -6,6 +40,7 @@
 - [x] Kick/leave an event -> Delete entry
 
 ## Upcoming
+- [] Allow to change restriction
 - [] Separate Event location / address
 - [] Change 'Delete' to 'cancel' instead
 - [] Host hosted events

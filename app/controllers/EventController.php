@@ -97,8 +97,8 @@ class EventController extends BaseController{
 		$validation = Validator::make(Input::all(), [
 			'event_name'        => 'required|min:3|basic_title|max:50', 
 			'event_type'        => 'required|min:3|max:20',
-			'event_date'        =>	'required|date_format:d-m-Y|after_now|one_year|before:' . Input::get('event_end_date'),
-			'event_end_date'    => 'required|date_format:d-m-Y|after_now|one_year|after:' . Input::get('event_date'),
+			'event_date'        =>	'required|date_format:d-m-Y|after_now|one_year',
+			'event_end_date'    => 'required|date_format:d-m-Y|after_now|one_year',
 			'event_description' => 'required|min:3', 
 			'event_location'    => 'required|min:3',
 			'EventLatitude'     =>	'required|float',
@@ -106,6 +106,16 @@ class EventController extends BaseController{
 			'max_attendees'     =>	'required|numeric',
 			'audience'          =>	'required|numeric|max:2'
 		]);
+
+		//Convert date into UK format
+		$start_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
+		$end_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_end_date'))->getTimeStamp();
+		
+		//Check if start date is less than end date, and if end date is greater than start date
+		if($start_timestamp > $end_timestamp || $end_timestamp < $start_timestamp){
+			return Redirect::route('event-host')
+				->with('message', 'Event start date has to be less than end date; Event end date has to be greater than start date.');
+		}
 
 		//If validation fails
 		if($validation->fails()){
@@ -129,9 +139,7 @@ class EventController extends BaseController{
 
 			}
 
-			//Convert date into UK format
-			$start_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
-			$end_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_end_date'))->getTimeStamp();
+			
 
 			//Get event_type_id
 			$event_type_id = EventType::where('type', '=', Input::get('event_type'))->first()->id;
@@ -182,12 +190,19 @@ class EventController extends BaseController{
 			->where('event_id', '=', $event_id)
 			->get();
 
+			$isPublic = ($event->audience) == 0 ? true : false;
+			$isPrivate = ($event->audience) == 1 ? true : false;
+			$isRestricted = ($event->audience) == 2 ? true : false;
+
 			//If event exists
 			if($event){
 				return View::make('event.edit')
 					->with('title', $event->e_name . ' - edit ')
 					->with('e', $event)
 					->with('e_type', $event->eventType->type)
+					->with('isPublic', $isPublic)
+					->with('isPrivate', $isPrivate)
+					->with('isRestricted', $isRestricted)
 					->with('totalJoined', $totalJoined)
 					->with('joinedAttendees', $joinedAttendees);
 			}
@@ -212,8 +227,8 @@ class EventController extends BaseController{
 		$validation = Validator::make(Input::all(), [
 			'event_name'        => 'required|min:3|basic_title|max:50', 
 			'event_type'        => 'required|min:3|max:20',
-			'event_date'        =>	'required|date_format:d-m-Y|after_now|one_year|before:' . Input::get('event_end_date'),
-			'event_end_date'    => 'required|date_format:d-m-Y|after_now|one_year|after:' . Input::get('event_date'),
+			'event_date'        =>	'required|date_format:d-m-Y|after_now|one_year',
+			'event_end_date'    => 'required|date_format:d-m-Y|after_now|one_year',
 			'event_description' => 'required|min:3', 
 			'event_location'    => 'required|min:3',
 			'EventLatitude'     =>	'required|float',
@@ -221,7 +236,17 @@ class EventController extends BaseController{
 			'max_attendees'     =>	'required|numeric',
 			'audience'          =>	'required|numeric|max:2'
 		]);
+
+		//Convert date into UK format
+		$start_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
+		$end_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_end_date'))->getTimeStamp();
 		
+		//Check if start date is less than end date, and if end date is greater than start date
+		if($start_timestamp > $end_timestamp || $end_timestamp < $start_timestamp){
+			return Redirect::route('event-host')
+				->with('message', 'Event start date has to be less than end date; Event end date has to be greater than start date.');
+		}
+
 		//If validation failes
 		if($validation->fails()){
 			return Redirect::to('event/' . $event_id . '/edit/')
@@ -239,10 +264,6 @@ class EventController extends BaseController{
 					'type'	=>	Input::get('event_type')
 				]);
 			}
-
-			//Convert date into UK format
-			$start_timestamp = DateTime::createFromFormat('j-n-Y', Input::get('event_date'))->getTimeStamp();
-			$end_timestamp   = DateTime::createFromFormat('j-n-Y', Input::get('event_end_date'))->getTimeStamp();
 
 			//Get event_type_id
 			$event_type_id = EventType::where('type', '=', Input::get('event_type'))->first()->id;

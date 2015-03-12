@@ -13,7 +13,7 @@
 
 <!-- <div id="map-canvas"></div> -->
 <div id="map-canvas-fullscreen"></div>
-<span id="btn-close-map" class="btn btn-primary">Close Map</span>
+<span id="btn-close-map" class="btn btn-primary">Confirm Location</span>
 <table class="table">
 	
 	<!--////////// Event Location //////////-->
@@ -26,8 +26,13 @@
 			{{ Form::input('hidden', 'EventLongitude', -2.78772939999998932, ['id'=>'EventLongitude']) }}
 		</td>
 	</tr>
+	
+	{{ Form::text('event-address', Input::old('event-address'), ['id'=>'event-address', 'class'=>'form-control']) }}
 
-
+	<div id="event-alert" class="alert alert-warning" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span id="event-address-alert"></span>
+	</div>
 
 	<!--////////// Event Map //////////-->
 	<tr>
@@ -120,14 +125,14 @@
 <!-- Onload JavaScript -->
 <script>
 $().ready(function(){
-	
+
 	//Get event types
 	$("#e_type").keyup(function(){
 		getEventTypes();
 	});
 
 	//Get geolocation after
-	$("#event_location").blur(function(){
+	$("#event-address").keyup(function(){
 		getGeoLocationFromMap();
 	});
 
@@ -158,6 +163,7 @@ $().ready(function(){
 	$("#btn_map").click(function(){
 		$("#map-canvas-fullscreen").show();
 		$("#btn-close-map").show();
+		$("#event-address").show();
 		google.maps.event.addDomListener(window, 'load', initialize('map-canvas-fullscreen'));
 
 	});
@@ -166,6 +172,8 @@ $().ready(function(){
 	$("#btn-close-map").click(function(){
 		$("#map-canvas-fullscreen").hide();
 		$("#btn-close-map").hide();
+		$("#event-address").hide();
+		$("#event-alert").hide();
 	});
 
 });
