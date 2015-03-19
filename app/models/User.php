@@ -178,7 +178,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 * Send friend request
 	 */
 	public function sendEventInvite($user, $event)
-	    {
+	{
 	
 	    $user_id = Auth::user()->id;
 	    $result = DB::table('joined_events')
@@ -198,7 +198,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 	}
 	
 	
-	    }
+	}
  
 
 
