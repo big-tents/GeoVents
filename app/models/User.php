@@ -117,5 +117,158 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 
     }
+    
+    
+    // ------------------------------------------------------------------------------------------------------------
+
+
+
+	 /**
+	 * Create a pivot table :D
+	 */
+	public function Invites()
+	{
+	
+		return $this->belongsToMany('User', 'friends_events', 'user_id', 'friend_id', 'event_id')
+					->withPivot('event_id')->withPivot('status')->withTimestamps();
+	
+	}
+	
+	
+	
+	/**
+	 * Create a pivot table :D
+	 */
+	public function InvitesRe()
+	{
+	
+		return $this->belongsToMany('User', 'friends_events', 'friend_id', 'user_id', 'event_id')
+					->withPivot('event_id')->withPivot('status')->withTimestamps();
+	
+	}
+	
+	
+	
+	/**
+	 * Create a pivot table :D
+	 */
+	public function inviteMyRequests()
+	{
+	
+		return $this->belongsToMany('User', 'friends_events', 'friend_id', 'user_id', 'event_id')
+					->withPivot('event_id')->withPivot('status')->withTimestamps()->wherePivot('status', '=', 'rev');
+	
+	}
+	
+	
+	/**
+	 * Create a pivot table :D
+	 */
+	public function inviteMyEvents()
+	{
+	
+		return $this->belongsToMany('User', 'friends_events', 'friend_id', 'user_id', 'event_id')
+					->withPivot('event_id')->withPivot('status')->withTimestamps()->wherePivot('status', '=', 'accepted');
+	
+	}
+	
+	
+	
+	/**
+	 * Send friend request
+	 */
+	public function sendEventInvite($user, $event)
+	    {
+	
+	    $user_id = Auth::user()->id;
+	    $result = DB::table('joined_events')
+			    	->where('attendee_id', '=', $user)
+			    	->where('host_id', '=', $user_id)
+			    	->where('event_id', '=', $event)
+			    	->get();
+	
+	
+	
+		if ( $result == NULL )
+		{
+	
+	        $this->Invites()->attach($user, array('event_id' => $event, 'status' => 'rev'));
+	 		$this->InvitesRe()->attach($user, array('event_id' => $event, 'status' => 'sent'));
+	
+	 	}
+	
+	
+	    }
+ 
+
+
+    /**
+     * Accept friend request from another user
+     */
+    public function acceptEventInvite($user, $event)
+    {
+
+    	$user_id = Auth::user()->id;
+    	DB::table('friends_events')
+    		->where('user_id', '=', $user_id)
+    		->where('friend_id', '=', $user)
+    		->where('event_id', '=', $event)
+    		->update( array('status' => "accepted") );
+
+
+
+    	DB::table('friends_events')
+    		->where('user_id', '=', $user)
+    		->where('friend_id', '=', $user_id)
+    		->where('event_id', '=', $event)
+    		->update( array('status' => "accepted") );
+
+
+
+	    DB::table('joined_events')
+	    	->insert( array(
+	    			'attendee_id' => $user_id,
+	    			'host_id' => $user, 
+	    			'event_id' => $event,
+	    			'status' => 0
+	    		));
+
+
+
+    }
+
+
+
+    /**
+     * Decline request or remove friend
+     */
+    public function removeEventInvite($user, $event)
+    {
+
+
+   	$user_id = Auth::user()->id;
+    	DB::table('friends_events')
+    		->where('user_id', '=', $user_id)
+    		->where('friend_id', '=', $user)
+    		->where('event_id', '=', $event)
+    		->delete();
+
+
+    	DB::table('friends_events')
+    		->where('user_id', '=', $user)
+    		->where('friend_id', '=', $user_id)
+    		->where('event_id', '=', $event)
+    		->delete();
+
+
+	    DB::table('joined_events')
+	    	->where('attendee_id', '=', $user_id)
+	    	->where('host_id', '=', $user)
+	    	->where('event_id', '=', $event)
+	    	->delete();
+
+
+    }
+
 
 }
