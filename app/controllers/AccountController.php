@@ -39,6 +39,8 @@ class AccountController extends BaseController{
 				'password'     => Hash::make(Input::get('password')),
 				'email'        => Input::get('email'),
 				'code'         => $code,
+				'e_lat'		=> Input::get('e_lat'),
+				'e_lng'		=> Input::get('e_lng')
 			]);
 
 			//Send verification code to user
