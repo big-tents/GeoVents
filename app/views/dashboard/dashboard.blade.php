@@ -19,11 +19,12 @@
 			@foreach($joined_events as $je)
 				<tr>
 					<td><a href="event/{{ $je->event->first()->id }}">{{ e($je->event->first()->e_name) }}</a></td>
-				</tr>
+					<td>{{ link_to_action('invite-remove', 'Leave Event', array('user' => $je->host_id, 'event' => $je->event_id )) }}</td>				</tr>
 			@endforeach
 		</table>
 	</div>
 </div>
+
 
 <hr>
 

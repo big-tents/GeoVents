@@ -55,6 +55,42 @@ Route::group(['before'=>'auth'], function(){
 
 
 	/*
+	| Invite (GET)
+	*/
+	Route::get('/invite/', [
+		'as'   => 'invite',
+		'uses' => 'InviteController@getIndex'
+	]);
+
+
+	/*
+	| Invite (POST)
+	*/
+	Route::post('/invite/post', [
+		'as'   => 'invite-post',
+		'uses' => 'InviteController@postInvites'
+	]);
+
+
+	/*
+	| Invite (GET)
+	*/
+	Route::get('/invite/post-accept/{user}/{event}', [
+		'as'   => 'invite-accept',
+		'uses' => 'InviteController@getAcceptInvite'
+	]);
+
+
+	/*
+	| Invite (GET)
+	*/
+	Route::get('/invite/post-remove/{user}/{event}', [
+		'as'   => 'invite-remove',
+		'uses' => 'InviteController@getRemoveInvite'
+	]);
+	
+	
+	/*
 	| Friend (GET)
 	*/
 	Route::get('/friend/', [
