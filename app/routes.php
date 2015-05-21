@@ -53,6 +53,22 @@ Route::get('/event/', function(){return Redirect::route('events');});
 */
 Route::group(['before'=>'auth'], function(){
 
+	/*
+	| Invite (GET)
+	*/
+	Route::get('/recommend/', [
+		'as'   => 'recommend',
+		'uses' => 'RecommendedController@getIndex'
+	]);
+
+
+	/*
+	| Invite (Post)
+	*/
+	Route::post('/recommend/location', [
+		'as'   => 'recommend-post',
+		'uses' => 'RecommendedController@postLocation'
+	]);
 
 	/*
 	| Invite (GET)
