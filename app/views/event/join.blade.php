@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}
 	@if($isJoined) <span style="color:green;font-weight:bold;">(Joined)</span> @endif
 	@if($isHost) 
@@ -115,4 +116,6 @@ $('.read-more').click(function(){
 	}
 });
 </script>
+
+</section>
 @stop

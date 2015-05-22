@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
 <hr>
 
@@ -21,4 +22,5 @@
 
 {{ Form::close() }}
 <hr>
+</section>
 @stop

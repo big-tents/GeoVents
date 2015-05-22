@@ -2,7 +2,11 @@
 
 @section('content')
 
-	
+	<!--Events Near -->
+    <article id="events_near">
+        <h1><span>x</span> events</h1><br/>
+        <h2>near your location</h2>
+    </article><!-- /Events Near -->
 	@if(Auth::check())
 
 	@else
@@ -15,7 +19,7 @@
 	{{ Form::open(['url'=>URL::route('account-login-post'), 'method'=>'POST']) }}
 	
 	{{ Form::token() }}
-	<table class="table">
+	<table class="table" style="width:500px;">
 		<tr>
 			<td>{{ Form::label('email', 'Email: ') }}</td>
 			<td>{{ Form::email('email', Input::old('email'), ['class'=>'bs-input bs-max']) }}</td>

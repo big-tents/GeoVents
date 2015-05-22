@@ -69,16 +69,19 @@ function showBackgroundMap(){
             position: position,
             map: map,
             title: locations[i][0],
-            icon: iconMe
+            icon: iconMe,
+            id: locations[i][0]
             });  
         }else{
             marker = new google.maps.Marker({
             position: position,
             map: map,
             title: locations[i][0],
-            icon: icon
+            icon: icon,
+            id: locations[i][3]
             });  
         }
+            markers.push(marker);
         
          // Allow each marker to have an info window    
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -87,31 +90,33 @@ function showBackgroundMap(){
                 // console.log(locations[1][0]);
                 // console.log(locations[2][0]);
                 // console.log(locations[3][0]);
-                infoWindow.setContent(locations[i][0]);
+                infoWindow.setContent(locations[i][4]);
                 infoWindow.open(map, marker);
                 // map.setCenter(marker.getPosition());
+                map.panTo(marker.getPosition());
             }
         })(marker, i));
 
         // Automatically center the map fitting all locations on the screen
-        map.fitBounds(bounds);
+       
 
-        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-        // var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-            // this.setZoom(14);
-            // google.maps.event.removeListener(boundsListener);
-        // });
     }
 
     var circle = new google.maps.Circle({
         center:  new google.maps.LatLng($.cookie('client_latitude'), $.cookie('client_longitude')),
-        radius: 4 * 1000,
+        radius: setDistance * 1000,
         fillColor: "#000",
         fillOpacity: 0.1,
         strokeOpacity: 0.5,
         strokeWeight: 0.5,
         map: map
     });
-
+     map.fitBounds(circle.getBounds());
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        // var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+            // this.setZoom(14);
+            // google.maps.event.removeListener(boundsListener);
+        // });
+    map.fitBounds(bounds);
     // locations.length = 1;
 }

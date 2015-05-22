@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
 
 @include('common.message')
@@ -20,14 +21,14 @@
 	<tr>
 		<td>{{ Form::label('event_location', 'Event Location: ') }}</td>
 		<td>
-			{{ Form::text('event_location', Input::old('event_location'), ['class'=>'form-control'])}}
+			{{ Form::text('event_location', Input::old('event_location'), ['class'=>'bs-input bs-max'])}}
 			<!-- default Lancaster's LatLng values -->
 			{{ Form::input('hidden', 'EventLatitude', 54.0103942, ['id'=>'EventLatitude']) }}
 			{{ Form::input('hidden', 'EventLongitude', -2.78772939999998932, ['id'=>'EventLongitude']) }}
 		</td>
 	</tr>
 	
-	{{ Form::text('event-address', Input::old('event-address'), ['id'=>'event-address', 'class'=>'form-control']) }}
+	{{ Form::text('event-address', Input::old('event-address'), ['id'=>'event-address', 'class'=>'bs-input bs-max']) }}
 
 	<div id="event-alert" class="alert alert-warning" role="alert">
 		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -46,7 +47,7 @@
 	<!--////////// Event Name //////////-->
 	<tr>
 		<td>{{ Form::label('event_name', 'Event Name: ') }}</td>
-		<td>{{ Form::text('event_name', Input::old('event_name'), ['class'=>'form-control'])}}</td>
+		<td>{{ Form::text('event_name', Input::old('event_name'), ['class'=>'bs-input bs-max'])}}</td>
 	</tr>
 
 	
@@ -55,7 +56,7 @@
 	<tr>
 
 		<td>{{ Form::label('event_type', 'Event Type: ') }}</td>
-		<td>{{ Form::text('event_type', null, ['id'=>'e_type', 'list'=>'event_type', 'class'=>'form-control'], Input::old('event_type')) }}</td>
+		<td>{{ Form::text('event_type', null, ['id'=>'e_type', 'list'=>'event_type', 'class'=>'bs-input bs-max'], Input::old('event_type')) }}</td>
 		<datalist id="event_type"></datalist>
 	</tr>
 	
@@ -93,7 +94,7 @@
 	<!--////////// Event Description //////////-->
 	<tr>
 		<td>{{ Form::label('event_description', 'Description: ') }}</td>
-		<td>{{ Form::textarea('event_description', Input::old('event_description'), ['class'=>'form-control'])}}</td>
+		<td>{{ Form::textarea('event_description', Input::old('event_description'), ['class'=>'bs-input bs-max'])}}</td>
 	</tr>
 	
 
@@ -101,7 +102,7 @@
 	<!--////////// Event Max Attendees //////////-->
 	<tr>
 		<td>{{ Form::label('max_attendees', 'Maximum Attendees: ') }}</td>
-		<td>{{ Form::input('number', 'max_attendees', 8, ['class'=>'form-control']) }}</td>
+		<td>{{ Form::input('number', 'max_attendees', 8, ['class'=>'bs-input bs-max']) }}</td>
 	</tr>
 	
 
@@ -179,5 +180,5 @@ $().ready(function(){
 });
 </script>
 <!-- End/ onload JavaScript -->
-
+</section>
 @stop

@@ -1,6 +1,8 @@
 //DEFINE BASE URL
 var BASE_URL = $('meta[name="BASE_URL"]').attr('content');
 var locations = [['YOU', $.cookie('client_latitude'), $.cookie('client_longitude')]];
+var markers = [];
+var setDistance = 4;
 
 $().ready(function(){
 	
@@ -38,6 +40,8 @@ function getEventTypes(){
  */
 function getEvents(){
 	locations.length = 1;
+	markers.length = 1;
+	var noOfFoundEvents = 0;
 	var table = $("#events-table-body");
 	table.html("Loading...");
 	$.ajax({
@@ -45,82 +49,106 @@ function getEvents(){
 	     url: BASE_URL + "/api/events/" + $("input[name=filter]").val(),
 		 dataType: "json",
 		 success: function(data){
-		 	
 	 		table.empty();
-	 		if(!data.length){
-	 			$("#events-table-msg").html("No results were found.");
-	 		}
 		    $.each(data, function(index, e){
-		    	var noOfFoundEvents = data.length;
+		    	
 		    	var client_latitude = $.cookie('client_latitude');
 				var client_longitude = $.cookie('client_longitude');
-		    	
+
 		    	// Events Information
 				var lat = e.e_lat;
 		    	var lng = e.e_lng;
-		    	var eName = e.e_name;
-
-		    	var id = e.id;
-		    	var type = e.type;
-		    	var audience = (e.audience === 0) ? "Public" : (e.audience === 1) ? "Private" : "Restricted";
-		    	
-		    	var sdate = new Date(e.e_date * 1000);
-		    	var edate = new Date(e.e_endDate * 1000);
-		    	var sddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
-		    	var eddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
-		    	var description = htmlEntities(e.e_description).substr(0, 80) + '...';
-		    	var location = e.e_location;
-		    	var totalJoined = e.totalJoined;
-		    	var maxAttendees = e.total_attendees;
-		    	var isFull = totalJoined >= maxAttendees;
-		    	var status =  isFull ? '<b><strike>' + totalJoined + ' / ' + maxAttendees + '</strike></b>' : totalJoined + ' / ' + maxAttendees;
-		    	var createdAt = e.created_at;
-
+				
 		    	//Client infomation
 		    	var pos1 = new google.maps.LatLng(client_latitude, client_longitude);
 		    	var pos2 = new google.maps.LatLng(lat, lng);
 
 		    	var distance = calculateDistance(pos1, pos2);
 
-		    	//Cap within 5 km
-		    	if(distance <= 5){
-		    		locations.push([eName, lat, lng]);
-		    	}
-		    	
-				var button = '<a href="event/' + e.id + '" class="btn btn-success">Join</a>';
+		    	if(distance <= setDistance){
 
-		    	var tr = '<tr>';
-		    	
-		    	if(e.joined==1 || isFull){
-		    		tr = '<tr class="active">';
-		    		button = '<a href="event/' + e.id + '" class="btn btn-info">View</a>';
-		    	}else if(e.hosting==1){
-		    		tr = '<tr class="active">';
-		    		button = '<a href="event/' + e.id + '" class="btn btn-primary">Hosting</a>';
-		    	}
+		    		noOfFoundEvents++;
+			    	var eName = e.e_name;
+			    	var id = e.id;
+			    	var type = e.type;
+			    	var audience = (e.audience === 0) ? "Public" : (e.audience === 1) ? "Private" : "Restricted";
+			    	
+			    	var sdate = new Date(e.e_date * 1000);
+			    	var edate = new Date(e.e_endDate * 1000);
+			    	var sddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
+			    	var eddmmyyyy = dateFormatter(edate.getDate()) +'/'+ dateFormatter((edate.getMonth()+1)) +'/'+ edate.getFullYear();
+			    	var description = htmlEntities(e.e_description).substr(0, 80) + '...';
+			    	var location = e.e_location;
+			    	var totalJoined = e.totalJoined;
+			    	var maxAttendees = e.total_attendees;
+			    	var isFull = totalJoined >= maxAttendees;
+			    	var status =  isFull ? '<b><strike>' + totalJoined + ' / ' + maxAttendees + '</strike></b>' : totalJoined + ' / ' + maxAttendees;
+			    	var createdAt = e.created_at;
 
-		    	table.append(tr +
-		    	"<td>" + type + "</td>" + 
-		    	"<td>" + audience + "</td>" + 
-		    	"<td>" + eName + "</td>" + 
-		    	"<td>" + sddmmyyyy + "</td>" + 
-		    	"<td>" + eddmmyyyy + "</td>" + 
-		    	"<td>" + description + "</td>" + 
-		    	"<td>" + location + "</td>" + 
-		    	"<td>" + status + "</td>" + 
-		    	"<td>" + distance + " km"+ "</td>" + 
-		    	"<td>" + button + "</td>" + 
-		    	"</tr>");
+
+					var btnView = '<span class="btn btn-info btnView" id="view_' + noOfFoundEvents +'" >View</span>';
+
+					var btnJoin = '<a href="event/' + e.id + '" class="btn btn-success">Join</a>';
+
+			    	var tr = '<tr>';
+			    	
+			    	if(e.joined==1){
+			    		// tr = '<tr class="active">';
+			    		btnJoin = '<a href="event/' + e.id + '" class="btn btn-info">Going</a>';
+			    	}else if(e.hosting==1){
+			    		// tr = '<tr class="active">';
+			    		btnJoin = '<a href="event/' + e.id + '" class="btn btn-primary">Hosting</a>';
+			    	}
+
+			    	locations.push(
+			    		[eName, 
+			    		lat, 
+			    		lng, 
+			    		id, 
+				    		'<div id="iw-container">' +
+                    '<div class="iw-title">'+eName+' (' + sddmmyyyy + ' - '+eddmmyyyy+')</div>' +
+                    '<div class="iw-content">' +
+                      '<div class="iw-subTitle">'+type+'</div>' +
+                      '<p>'+description+'</p>'+
+                      '<p>'+btnJoin+'</p>'+
+                    '</div>' +
+                    '<div class="iw-bottom-gradient"></div>' +
+                  '</div>'
+ 						]);
+
+			    	table.append(tr +
+			    	// "<td>" + type + "</td>" + 
+			    	// "<td>" + audience + "</td>" + 
+			    	"<td>" + eName + "</td>" + 
+			    	// "<td>" + sddmmyyyy + "</td>" + 
+			    	// "<td>" + eddmmyyyy + "</td>" + 
+			    	// "<td>" + description + "</td>" + 
+			    	// "<td>" + location + "</td>" + 
+			    	// "<td>" + status + "</td>" + 
+			    	"<td>" + distance + " km"+ "</td>" + 
+			    	"<td>" + btnView + '<span class="btnJoin">' + btnJoin +  "</span></td>" + 
+			    	"</tr>");
+
+		    	}
+		    });
+				for(i=1;i<=noOfFoundEvents;i++)
+					addView(i);
 
 		    	$("#events_table").trigger('update');
-		    	$("#events-table-msg").html(noOfFoundEvents + " events found.");
-		    });
+		    	var message = (noOfFoundEvents==0) ? ("No results were found") : (noOfFoundEvents + " events found.");
+		    	$("#events-table-msg").html(message);
+
 			showBackgroundMap();
 		 }
 	});
 	
 }//End of getEvents()
 
+function addView(i){
+	$('#view_' + i).click(function(){
+		google.maps.event.trigger(markers[i+1], 'click');
+	})
+}
 /*
  * Escapte html entities
  * Snippet from: https://css-tricks.com/snippets/javascript/htmlentities-for-javascript/

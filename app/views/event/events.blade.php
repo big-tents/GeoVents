@@ -1,7 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
-
+<section id="page-events">
 <!-- Onload JavaScript -->
 <script>
 $().ready(function(){
@@ -51,6 +51,36 @@ $().ready(function(){
     <button id="sort_distance" class="bs-input bs-small">Sort by distance</button>
     <button id="update_location" class="bs-input bs-small">Update my location</button>
 
+  <!-- Distance Selector -->
+  <span id="distance-value">4 km</span>
+  <script>
+  $(function() {
+  	var max = 15;
+    var select = $( "#min-distance" );
+	for(i=1;i<max+1;i++)
+		$('#min-distance').append($("<option></option>").attr("value",i).text(i)); 
+	
+    var slider = $( "<div id='slider'></div>" ).insertBefore( select ).slider({
+      min: 1,
+      max: max,
+      range: "min",
+      value: 4,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 1;
+        $("#distance-value").html(ui.value + " km");
+        setDistance = ui.value;
+        // showBackgroundMap();
+        getEvents();
+      }
+    });
+    $( "#min-distance" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+  </script>
+  <select style="display:none;" name="min-distance" id="min-distance" value="5"></select>
+  <!-- /Distance Selector -->
+
 </article><!-- /Search Events -->
 
 
@@ -62,14 +92,14 @@ $().ready(function(){
 	<!-- Events Table Header -->
 	<thead>
 		<tr>
-			<th>Event Type</th>
-			<th>Restriction</th>
+<!-- 			<th>Event Type</th>
+			<th>Restriction</th> -->
 			<th>Event Name</th>
-			<th>Start Date</th>
+<!-- 			<th>Start Date</th>
 			<th>End Date</th>
 			<th>Description</th>
 			<th>Location</th>
-			<th id="header_attendees">Max. Attendees</th>
+			<th id="header_attendees">Max. Attendees</th> -->
 			<th id="header_distance">Distance</th>
 			<th></th>
 		</tr>
@@ -82,5 +112,5 @@ $().ready(function(){
 </table>
 </div>
 <!-- /Events Table -->
-
+</section>
 @stop

@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
 
 @include('common.message')
@@ -42,6 +43,5 @@
 {{ Form::close() }}
 
 <a href="{{ URL::route('account-delete') }}" class="btn btn-danger">Delete my account</a>
-
-<hr>
+</section>
 @stop

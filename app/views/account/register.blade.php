@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>Register Page</h2>
 
 	<!-- If there's error, show errors -->
@@ -71,6 +72,5 @@
 
 	{{ Form::close() }}
 <!-- Register Field Ends-->
-
-<hr>
+</section>
 @stop

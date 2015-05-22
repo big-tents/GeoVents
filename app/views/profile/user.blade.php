@@ -2,7 +2,7 @@
 
 
 @section('content')
-
+<section class="page-general">
 
 @include('common.message')
 <img style="width: 200px; height: 200px; float:left;" src="{{{$profile->image}}}" class="thumbnail"/> 
@@ -111,4 +111,5 @@
 
 </div>
 
+</section>
 @stop

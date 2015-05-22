@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
 
 @include('common.message')
@@ -30,4 +31,6 @@
 {{ Form::submit('Create Profile', ['class'=>'btn btn-primary btn-block']) }}
 {{ Form::close() }}
 <hr>
+
+</section>
 @stop

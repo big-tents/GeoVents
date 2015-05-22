@@ -72,12 +72,6 @@
 
 <!-- Main Container -->
 <main>
-    <!--Events Near -->
-    <article id="events_near">
-        <h1><span>4</span> events</h1><br/>
-        <h2>near your location</h2>
-    </article><!-- /Events Near -->
-    
     <!-- Content Holder -->
     <article id="content-holder">
         @yield('content')
@@ -94,6 +88,7 @@
                 <span><a href="{{ URL::to('invite') }}">Event Invites</a></span>
                 <span><a href="{{ URL::to('recommend') }}">Suggestions</a></span>
                 <span><a href="{{ URL::route('account-settings') }}">Account Settings</a></span>
+                <span><a href="{{ URL::route('event-host') }}">Host Event</a></span>
                 <span><a href="{{ URL::route('account-logout') }}">Logout</a></span>
             @else
               <span><a href="{{ URL::route('account-login') }}">Login</a></span>

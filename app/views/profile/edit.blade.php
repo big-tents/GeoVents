@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
 <hr>
 
@@ -28,5 +29,5 @@
 </table>
 {{ Form::submit('Edit Profile' , ['class'=>'btn btn-danger']) }}
 {{ Form::close() }}
-<hr>
+</section>
 @stop

@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
 
 
@@ -88,5 +89,5 @@
 {{ Form::submit('Send Invites', ['class'=>'btn btn-primary btn-block']) }}
 {{ Form::close() }}
 
-
+</section>
 @stop

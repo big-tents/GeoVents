@@ -1,6 +1,7 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}
 </h2>
 
@@ -23,13 +24,13 @@
     <!--////////// Event Name //////////-->
     <tr>
         <td>{{ Form::label('event_name', 'Event Name: ') }}</td>
-        <td>{{ Form::text('event_name', e($e->e_name), ['class' => 'form-control']) }}</td>
+        <td>{{ Form::text('event_name', e($e->e_name), ['class' => 'bs-input']) }}</td>
     </tr>
 
     <!--////////// Event Type //////////-->
     <tr>
         <td>{{ Form::label('event_type', 'Event Type: ') }}</td>
-        <td>{{ Form::text('event_type', e($e_type), ['id'=>'e_type', 'list'=>'event_type', 'class'=>'form-control'], Input::old('event_type')) }}</td>
+        <td>{{ Form::text('event_type', e($e_type), ['id'=>'e_type', 'list'=>'event_type', 'class'=>'bs-input'], Input::old('event_type')) }}</td>
         <datalist id="event_type"></datalist>
     </tr>
 
@@ -61,7 +62,7 @@
     <!--////////// Description //////////-->
     <tr>
         <td>{{ Form::label('event_description', 'Description: ') }}</td>
-        <td>{{ Form::textarea('event_description', e($e->e_description), ['class' => 'form-control']) }}</td>
+        <td>{{ Form::textarea('event_description', e($e->e_description), ['class' => 'bs-input']) }}</td>
     </tr>
 
 
@@ -69,11 +70,11 @@
     <tr>
         <td>{{ Form::label('event_location', 'Location: ') }}</td>
         <td>
-        {{ Form::text('event_location', e($e->e_location), ['class' => 'form-control']) }}
+        {{ Form::text('event_location', e($e->e_location), ['class' => 'bs-input']) }}
         </td>
     </tr>
 
-    {{ Form::text('event-address', Input::old('event-address'), ['id'=>'event-address', 'class'=>'form-control']) }}
+    {{ Form::text('event-address', Input::old('event-address'), ['id'=>'event-address', 'class'=>'bs-input']) }}
 
     <div id="event-alert" class="alert alert-warning" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -98,7 +99,7 @@
     <!--////////// Max Attendees //////////-->
     <tr>
         <td>{{ Form::label('max_attendees', 'Maximum Attendees: ') }}</td>
-        <td>{{ Form::text('max_attendees', e($e->total_attendees), ['class' => 'form-control']) }}</td>
+        <td>{{ Form::text('max_attendees', e($e->total_attendees), ['class' => 'bs-input']) }}</td>
     </tr>
     
 <style>
@@ -200,4 +201,5 @@ $().ready(function(){
 </script>
 <!-- End/ onload JavaScript -->
 
+</section>
 @stop

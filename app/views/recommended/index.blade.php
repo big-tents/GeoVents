@@ -1,9 +1,8 @@
 @extends('templates.v2')
 
 @section('content')
+<section class="page-general">
 <h2>{{ $title }}</h2>
-<hr>
-
 
 <!-- Register Field -->
 {{ Form::open(['url'=>URL::route('recommend-post'), 'method'=>'POST']) }}
@@ -107,5 +106,5 @@
 {{ Form::close() }}
 
 
-
+</section>
 @stop
