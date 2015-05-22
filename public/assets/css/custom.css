@@ -4,7 +4,7 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+  /*padding-top: 50px;*/
 }
 
 .dropdown-nav{
@@ -228,7 +228,7 @@ color:white;
  * Mobile events page
  */
 /*https://css-tricks.com/responsive-data-tables/*/
-@media only screen and (max-width: 800px) {
+/*@media only screen and (max-width: 800px) {*/
     
     /* Force table to not be like tables anymore */
   #tableless table, 
@@ -238,6 +238,7 @@ color:white;
   #tableless td, 
   #tableless tr { 
     display: block; 
+    background-color:rgba(0,0,0,0.10);
   }
  
   /* Hide table headers (but not display: none;, for accessibility) */
@@ -247,11 +248,11 @@ color:white;
     left: -9999px;
   }
  
-  #tableless tr { border: 1px solid #ccc; margin-bottom:10px;}
+  #tableless tr { border: 1px solid rgba(0,0,0,0.05); margin-bottom:10px;}
  
   #tableless td { /* Acts like a row */
     border: none;
-    border-bottom: 1px solid #eee; 
+    border-bottom: 1px solid rgba(0,0,0,0.5); 
     position: relative;
     padding-left: 50%; 
     white-space: normal;
@@ -279,7 +280,7 @@ color:white;
   #tableless #events_table td:nth-of-type(8):before { content: "Max. Attendees"; }
   #tableless #events_table td:nth-of-type(9):before { content: "Distance"; }
   #tableless #events_table td:nth-child(10) > a{width:100%;};
-}
+/*}*/
 
 /* READ MORE*/
 .read-more-content{

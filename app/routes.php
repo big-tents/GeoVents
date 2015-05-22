@@ -21,7 +21,7 @@
 */
 Route::get('/', [
 	'as'   => 'home', 
-	'uses' => 'HomeController@getIndex'
+	'uses' => 'AccountController@getLogin'
 ]);
 
 /*

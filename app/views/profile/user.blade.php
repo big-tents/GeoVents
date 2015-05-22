@@ -1,4 +1,4 @@
-@extends('templates.v1')
+@extends('templates.v2')
 
 @section('content')
 <h2>{{ ucfirst($title) }}</h2>

@@ -1,11 +1,15 @@
 //DEFINE BASE URL
 var BASE_URL = $('meta[name="BASE_URL"]').attr('content');
+var locations = [['YOU', $.cookie('client_latitude'), $.cookie('client_longitude')]];
 
 $().ready(function(){
+	
 	//Set client latlng cookies if not set
 	if(typeof $.cookie('client_latitude') === 'undefined' || typeof $.cookie('client_longitude') === 'undefined'){
 		getLocation();
+		showBackgroundMap();
 	}
+	showBackgroundMap();
 });
 /**
  * Get event types
@@ -33,6 +37,7 @@ function getEventTypes(){
  * Path: event/eventsv2
  */
 function getEvents(){
+	locations.length = 1;
 	var table = $("#events-table-body");
 	table.html("Loading...");
 	$.ajax({
@@ -43,20 +48,22 @@ function getEvents(){
 		 	
 	 		table.empty();
 	 		if(!data.length){
-	 			table.html('No results were found.');
+	 			$("#events-table-msg").html("No results were found.");
 	 		}
 		    $.each(data, function(index, e){
-
+		    	var noOfFoundEvents = data.length;
 		    	var client_latitude = $.cookie('client_latitude');
 				var client_longitude = $.cookie('client_longitude');
 		    	
 		    	// Events Information
 				var lat = e.e_lat;
 		    	var lng = e.e_lng;
+		    	var eName = e.e_name;
+
 		    	var id = e.id;
 		    	var type = e.type;
 		    	var audience = (e.audience === 0) ? "Public" : (e.audience === 1) ? "Private" : "Restricted";
-		    	var eName = e.e_name;
+		    	
 		    	var sdate = new Date(e.e_date * 1000);
 		    	var edate = new Date(e.e_endDate * 1000);
 		    	var sddmmyyyy = dateFormatter(sdate.getDate()) +'/'+ dateFormatter((sdate.getMonth()+1)) +'/'+ sdate.getFullYear();
@@ -75,10 +82,15 @@ function getEvents(){
 
 		    	var distance = calculateDistance(pos1, pos2);
 
+		    	//Cap within 5 km
+		    	if(distance <= 5){
+		    		locations.push([eName, lat, lng]);
+		    	}
+		    	
 				var button = '<a href="event/' + e.id + '" class="btn btn-success">Join</a>';
 
 		    	var tr = '<tr>';
-		    		
+		    	
 		    	if(e.joined==1 || isFull){
 		    		tr = '<tr class="active">';
 		    		button = '<a href="event/' + e.id + '" class="btn btn-info">View</a>';
@@ -96,14 +108,17 @@ function getEvents(){
 		    	"<td>" + description + "</td>" + 
 		    	"<td>" + location + "</td>" + 
 		    	"<td>" + status + "</td>" + 
-		    	"<td>" + distance + "</td>" + 
+		    	"<td>" + distance + " km"+ "</td>" + 
 		    	"<td>" + button + "</td>" + 
 		    	"</tr>");
 
 		    	$("#events_table").trigger('update');
+		    	$("#events-table-msg").html(noOfFoundEvents + " events found.");
 		    });
+			showBackgroundMap();
 		 }
 	});
+	
 }//End of getEvents()
 
 /*
@@ -134,8 +149,7 @@ function showPosition(position) {
 	$.cookie('client_longitude', position.coords.longitude);
 }
 function calculateDistance(pos1, pos2){
-	unit = " km";
-	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(2) + unit;
+	return (google.maps.geometry.spherical.computeDistanceBetween(pos1, pos2) / 1000).toFixed(2);
 }
 
 /**

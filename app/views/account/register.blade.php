@@ -1,9 +1,7 @@
-@extends('templates.v1')
+@extends('templates.v2')
 
 @section('content')
 <h2>Register Page</h2>
-<hr>
-
 
 	<!-- If there's error, show errors -->
 	@include('common.errors')
@@ -15,23 +13,22 @@
 		<table class="table">
 			<tr>
 				<td>{{ Form::label('username', 'Username: ') }}</td>
-				<td>{{ Form::text('username', Input::old('username'), ['class'=>'form-control']) }}</td>
+				<td>{{ Form::text('username', Input::old('username'), ['class'=>'bs-input bs-max']) }}</td>
 			</tr>
 			<tr>
 				<td>{{ Form::label('password', 'Password: ') }}</td>
-				<td>{{ Form::password('password', ['class'=>'form-control'])}}</td>
+				<td>{{ Form::password('password', ['class'=>'bs-input bs-max'])}}</td>
 			</tr>
 			<tr>
 				<td>{{ Form::label('password', 'Password again: ') }}</td>
-				<td>{{ Form::password('password_again', ['class'=>'form-control'])}}</td>
+				<td>{{ Form::password('password_again', ['class'=>'bs-input bs-max'])}}</td>
 			</tr>
 			<tr>
 				<td>{{ Form::label('email', 'Email: ') }}</td>
-				<td>{{ Form::email('email', Input::old('email'), ['class'=>'form-control']) }}</td>
+				<td>{{ Form::email('email', Input::old('email'), ['class'=>'bs-input bs-max']) }}</td>
 			</tr>
 			<tr>
-				<td>{{ Form::hidden('e_lat', '', ['id'=>'e_lat']) }}</td>
-				<td>{{ Form::hidden('e_lng', '', ['id'=>'e_lng']) }}</td>
+				<td>{{ Form::hidden('e_lat', '', ['id'=>'e_lat']) }}{{ Form::hidden('e_lng', '', ['id'=>'e_lng']) }}</td>
 				<td>{{ Form::submit('Register account', ['class'=>'btn btn-block btn-primary']) }}</td>
 			</tr>
 		</table>

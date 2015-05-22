@@ -1,7 +1,6 @@
-@extends('templates.v1')
+@extends('templates.v2')
 
 @section('content')
-@include('common.message')
 
 <!-- Onload JavaScript -->
 <script>
@@ -13,6 +12,7 @@ $().ready(function(){
 
 	$("#search").click(function(){
 		getEvents();
+		// setInterval(function () {sortByDistance(0)}, 1000);
 	});
 
 	/*----- Sorting Options -----*/
@@ -31,28 +31,33 @@ $().ready(function(){
 </script>
 <!-- End/ onload JavaScript -->
 
+<style>
+	#events_near{
+		display:none;	
+	}
+	#content-holder{
+		top:30px;
+		max-height:750px
+	}
+</style>
 <!--Geolocation Message-->
 <p id="msg"></p>
-<!-- <span id="lat">XX</span>
-<span>, </span>
-<span id="lng">YY</span> -->
-<div class="input-group btn-group"> 
-	<span class="input-group-addon">Filter</span>
-	<input id="filter" name="filter" type="text" class="form-control" placeholder="Type your keywords here...">
-		<button id="search" class="btn btn-default">Search</button>
 
-		<!-- Sort Buttons-->
-		<button id="sort_distance" class="btn btn-default btn-info">Sort by distance</button>
-		<button id="update_location" class="btn btn-default btn-primary">Update my location</button>
-</div>
-<hr>
+<!-- Search Events -->
+<article id="events_search">
+    <h3>Search events<span id="noOfFoundEvents"></span></h3>
+    <input type="text" name="filter" placeholder="Type your keywords here..." class="bs-input bs-search">
+    <button id="search" class="bs-input bs-btn-search">Search!</button>
+    <button id="sort_distance" class="bs-input bs-small">Sort by distance</button>
+    <button id="update_location" class="bs-input bs-small">Update my location</button>
 
+</article><!-- /Search Events -->
 
 
 
 <!-- Events Table -->
 <div id="tableless">
-<table id="events_table" class="table table-hover .table-condensed">
+<table id="events_table" class="table table-hover">
 	
 	<!-- Events Table Header -->
 	<thead>
@@ -71,7 +76,9 @@ $().ready(function(){
 	</thead>
 	
 	<!-- Events Table Body -->
-	<tbody id="events-table-body"></tbody>
+	<tbody id="events-table-body">
+		<span id="events-table-msg"></span>
+	</tbody>
 </table>
 </div>
 <!-- /Events Table -->
