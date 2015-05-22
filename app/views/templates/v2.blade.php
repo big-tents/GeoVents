@@ -93,7 +93,6 @@
                 <span><a href="{{ URL::to('friend') }}">Friends</a></span>
                 <span><a href="{{ URL::to('invite') }}">Event Invites</a></span>
                 <span><a href="{{ URL::to('recommend') }}">Suggestions</a></span>
-                <span><a href="{{ URL::to('dashboard') }}">Dashboard</a></span>
                 <span><a href="{{ URL::route('account-settings') }}">Account Settings</a></span>
                 <span><a href="{{ URL::route('account-logout') }}">Logout</a></span>
             @else

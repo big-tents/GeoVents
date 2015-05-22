@@ -20,10 +20,20 @@ class ProfileController extends BaseController{
 
 			//If user has created a profile already
 			if($profile){
+				
+				$joined_events = JoinedEvents::with('event')->where('attendee_id', '=', $user_id)->get();
+				$hosted_events = EEvent::with('attendees')->where('host_id', '=', $user_id)->get();
+				$friends = Auth::user()->friendsMyFriends;
+				
+
 				return View::make('profile.user')
 					->with('title', $username . "'s Profile")
 					->with('profile', $profile)
-					->with('user_id', $user_id);
+					->with('user_id', $user_id)
+					->with('joined_events', $joined_events)
+					->with('hosted_events', $hosted_events)
+					->with('friends', $friends);
+					
 			}else{
 
 				//If user has not created a profile but it's logged, and current user equals to username on the url
