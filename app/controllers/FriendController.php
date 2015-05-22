@@ -38,10 +38,20 @@ class FriendController extends BaseController
 
 	public function getSendRequest($id)
 	{
+		$message = "You request has been sent";
 
-		$user = User::find($id);
-	  	Auth::user()->sendRequest($id);
-	  	return Redirect::back();
+		try
+		{
+			$user = User::find($id);
+		  	Auth::user()->sendRequest($id);
+	  	}
+	  	catch ( Exception $e )
+	  	{
+	  		$message = "You have already sent a friend request";
+	  	}
+
+
+	  	return Redirect::back()->with('message', $message);
 
 	}
 
@@ -51,9 +61,19 @@ class FriendController extends BaseController
 	{
 
 		// Do stuff here
-		$user = User::find($id);
-	  	Auth::user()->acceptRequest($id);
-	  	return Redirect::back();
+		$message = "You have accepted the request";
+
+		try
+		{
+			$user = User::find($id);
+		  	Auth::user()->acceptRequest($id);
+	  	}
+	  	catch ( Exception $e )
+	  	{
+	  		$message = "You have already accepted the request";
+	  	}
+
+	  	return Redirect::back()->with('message', $message);
 
 	}
 
@@ -62,9 +82,20 @@ class FriendController extends BaseController
 	public function getRemoveRequest($id)
 	{
 
-		$user = User::find($id);
-	  	Auth::user()->removeRequest($user);
-	  	return Redirect::back();
+		$message = "You declined the request";
+
+		try
+		{
+			$user = User::find($id);
+	  		Auth::user()->removeRequest($user);
+		}
+		catch ( Exception $e )
+		{
+			$message = "You have already declined the reqest";
+		}
+
+
+	  	return Redirect::back()->with('message', $message);
 
 	}
 
