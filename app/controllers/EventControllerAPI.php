@@ -78,4 +78,22 @@ class EventControllerApi extends EventController{
         return Response::json($events, 200, array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+      * (GET/API) Events :: Get Nearby Events
+      *
+      * @param string $input   
+      *
+      * @return Response found events as JSON
+      */
+    public function getNearbyEvents($input = '')
+    {
+        //Get events
+        $events = DB::table('events')
+        ->select(['e_lat','e_lng',])
+        ->get();
+
+        // return pretty JSON result
+        return Response::json($events, 200, array(), JSON_PRETTY_PRINT);
+    }
+
 }

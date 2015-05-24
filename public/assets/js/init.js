@@ -4,6 +4,9 @@ var locations = [['YOU', $.cookie('client_latitude'), $.cookie('client_longitude
 var markers = [];
 var setDistance = 4;
 
+var temp1 = 54.0103;
+var temp2 = -2.7877;
+
 $().ready(function(){
 	
 	//Set client latlng cookies if not set

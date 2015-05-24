@@ -44,7 +44,13 @@ Route::get('/eventsv2/',[
 */
 Route::get('/event/', function(){return Redirect::route('events');});
 
-
+/*
+|	Events (API) - (WHEN NOT LOGGED IN)
+*/
+Route::get('/api/events-nearby/{input?}', [
+	'as' => 'api-filter-events-nearby',
+	'uses' => 'EventControllerAPI@getNearbyEvents'
+]);	
 
 /*
 |===============================================	
@@ -52,7 +58,7 @@ Route::get('/event/', function(){return Redirect::route('events');});
 |===============================================
 */
 Route::group(['before'=>'auth'], function(){
-
+	
 	/*
 	| Invite (GET)
 	*/

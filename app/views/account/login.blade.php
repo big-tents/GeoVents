@@ -1,14 +1,20 @@
 @extends('templates.v2')
 
 @section('content')
+<section id="page-login">
+<script>
+$().ready(function(){
+    getNearbyEvents();
+});
 
+</script>
 	<!--Events Near -->
     <article id="events_near">
-        <h1><span>x</span> events</h1><br/>
+        <h1><span id="x_events_founded">x</span> events</h1><br/>
         <h2>near your location</h2>
     </article><!-- /Events Near -->
 	@if(Auth::check())
-
+		<script>window.location.replace(BASE_URL + "/events");</script>
 	@else
 	<h2>Login</h2>
 
@@ -42,4 +48,6 @@
 	</table>
 	{{ Form::close()}}
 @endif
+
+</section>
 @stop

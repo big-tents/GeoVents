@@ -5,26 +5,25 @@
 <!-- Onload JavaScript -->
 <script>
 $().ready(function(){
-	// $("#lat").html($.cookie('client_latitude'));
-	// $("#lng").html($.cookie('client_longitude'));
-	
-	getEvents();
+    // $("#lat").html($.cookie('client_latitude'));
+    // $("#lng").html($.cookie('client_longitude'));
+    
+    getEvents();
 
-	$("#search").click(function(){
-		getEvents();
-		// setInterval(function () {sortByDistance(0)}, 1000);
-	});
+    $("#search").click(function(){
+        getEvents();
+    });
 
-	/*----- Sorting Options -----*/
-	/*---------------------------*/
-	$("#sort_distance").click(function(){
-		sortByDistance(0);
-	});
+    /*----- Sorting Options -----*/
+    /*---------------------------*/
+    $("#sort_distance").click(function(){
+        sortByDistance(0);
+    });
 
-	/*Update client location*/
-	$("#update_location").click(function(){
-		getLocation();
-	});
+    /*Update client location*/
+    $("#update_location").click(function(){
+        getLocation();
+    });
 
 });
 
@@ -32,13 +31,13 @@ $().ready(function(){
 <!-- End/ onload JavaScript -->
 
 <style>
-	#events_near{
-		display:none;	
-	}
-	#content-holder{
-		top:30px;
-		max-height:750px
-	}
+    #events_near{
+        display:none;   
+    }
+    #content-holder{
+        top:30px;
+        max-height:750px
+    }
 </style>
 <!--Geolocation Message-->
 <p id="msg"></p>
@@ -55,11 +54,11 @@ $().ready(function(){
   <span id="distance-value">4 km</span>
   <script>
   $(function() {
-  	var max = 15;
+    var max = 15;
     var select = $( "#min-distance" );
-	for(i=1;i<max+1;i++)
-		$('#min-distance').append($("<option></option>").attr("value",i).text(i)); 
-	
+    for(i=1;i<max+1;i++)
+        $('#min-distance').append($("<option></option>").attr("value",i).text(i)); 
+    
     var slider = $( "<div id='slider'></div>" ).insertBefore( select ).slider({
       min: 1,
       max: max,
@@ -88,27 +87,27 @@ $().ready(function(){
 <!-- Events Table -->
 <div id="tableless">
 <table id="events_table" class="table table-hover">
-	
-	<!-- Events Table Header -->
-	<thead>
-		<tr>
-<!-- 			<th>Event Type</th>
-			<th>Restriction</th> -->
-			<th>Event Name</th>
-<!-- 			<th>Start Date</th>
-			<th>End Date</th>
-			<th>Description</th>
-			<th>Location</th>
-			<th id="header_attendees">Max. Attendees</th> -->
-			<th id="header_distance">Distance</th>
-			<th></th>
-		</tr>
-	</thead>
-	
-	<!-- Events Table Body -->
-	<tbody id="events-table-body">
-		<span id="events-table-msg"></span>
-	</tbody>
+    
+    <!-- Events Table Header -->
+    <thead>
+        <tr>
+<!--            <th>Event Type</th>
+            <th>Restriction</th> -->
+            <th>Event Name</th>
+<!--            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th id="header_attendees">Max. Attendees</th> -->
+            <th id="header_distance">Distance</th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <!-- Events Table Body -->
+    <tbody id="events-table-body">
+        <span id="events-table-msg"></span>
+    </tbody>
 </table>
 </div>
 <!-- /Events Table -->
