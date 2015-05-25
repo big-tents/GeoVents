@@ -491,17 +491,12 @@ class EventController extends BaseController{
 
 
 
-
 	/**
-	  * (POST) Delete Event :: Allow hosts to delete an event and remove its related entries
-	  *    
-	  *
-	  *	@return dashboard/dashboard.blade.php | dashboard
+	  * (GET) Delete Event :: Allow hosts to delete an event and remove its related entries
+	  * @return dashboard/dashboard.blade.php | Profile
 	  */
-	public function postDeleteEvent()
+	public function getDeleteEvent($event_id)
 	{
-		//Get event id from hidden input
-		$event_id = Input::get('event_id');
 
 		//Get Event
 		$event = EEvent::where('id', '=', $event_id);
@@ -525,7 +520,7 @@ class EventController extends BaseController{
 			$event->delete();
 
 			//Redirect user back to dashboard
-			return Redirect::route('dashboard')
+			return Redirect::route('profile-user', array('username'=>Auth::user()->username))
 				->with('message', 'You have successfully deleted <b><i>' . $event_name . '</i></b>.');
 
 		//If user is not the host of the event
