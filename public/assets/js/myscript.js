@@ -7,17 +7,13 @@ function showBackgroundMap(){
     var icon = BASE_URL + "/assets/images/marker.png";
     
     //Default location if cookies not set
-    if(typeof $.cookie('client_latitude') === 'undefined'){
-        var client_latitude = 54.0103;
-        var client_longitude = -2.7877;
-        console.log("IF " + client_latitude);
-        console.log("IF " + client_longitude);
-    }else{
+    // if(typeof $.cookie('client_latitude') !== 'undefined'){
+    //     var client_latitude = temp1;
+    //     var client_longitude = temp2;
+    // }else{
         var client_latitude = $.cookie('client_latitude');
-        var client_longitude = $.cookie('client_longitude');
-        console.log("ELSE " + client_latitude);
-        console.log("ELSE " + client_longitude);       
-    }
+        var client_longitude = $.cookie('client_longitude');      
+    // }
 
     var Options = {
         zoom: 14,
@@ -41,7 +37,7 @@ function showBackgroundMap(){
         for(var i=0; i<locations.length;i++){
             var position = new google.maps.LatLng(locations[i][1], locations[i][2]);
             bounds.extend(position);
-
+            
             if(locations[i][0] == "YOU"){
                 marker = new google.maps.Marker({
                 position: position,

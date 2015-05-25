@@ -85,9 +85,10 @@
             @if(Auth::check())
                 <span><a href="{{ URL::to('user', Auth::user()->username) }}">My Profile</a></span>
                 <span><a href="{{ URL::route('events') }}">Find Events</a></span>
+                <!-- <span><a href="{{ URL::route('friend') }}">Find Friends</a></span> -->
                 <span><a href="{{ URL::route('event-host') }}">Host Event</a></span>
                 <span><a href="{{ URL::to('invite') }}">Event Invites</a></span>
-                <span><a href="{{ URL::route('account-settings') }}">Account Settings</a></span>
+                <!-- <span><a href="{{ URL::route('account-settings') }}">Account Settings</a></span> -->
                 <span><a href="{{ URL::route('account-logout') }}">Logout</a></span>
                 <!-- <span><a href="{{ URL::to('friend') }}">Friends</a></span> -->
                 <!-- <span><a href="{{ URL::to('recommend') }}">Suggestions</a></span> -->

@@ -5,111 +5,123 @@
 <section class="page-general">
 
 @include('common.message')
-<img style="width: 200px; height: 200px; float:left;" src="{{{$profile->image}}}" class="thumbnail"/> 
-<h2 style="float:right;">{{ ucfirst($title) }}</h2>
 
+<section id="profile-left">
+	<aside id="profile-pic">
+		<h2 style="float:right;">{{ ucfirst($title) }}</h2>
+		<img style="width: 200px; height: 200px; float:left;" src="{{{$profile->image}}}" class="thumbnail"/> 
+		
+		<!--Edit Button-->
+		@if (Auth::check() && Auth::user()->id == $user_id)
+		<a href="{{ e(URL::route('profile-edit')) }}" class="profile-edit" />Edit Profile</a>
+		<a href="{{ URL::route('account-settings') }}" class="profile-settings">Settings</a>
+		<a href="{{ URL::route('friend') }}" class="profile-settings">Find Friends</a>
+		@else
+		<a href="{{ e(URL::route('friend-request', array('id' => $user_id))) }}" class="profile-edit">Befriend</a>
+		@endif
 
-@if (Auth::check() && Auth::user()->id == $user_id)
-<a href="{{ e(URL::route('profile-edit')) }}" class="btn btn-primary" style="float:right; margin-right:16px;" />Edit Profile</a>
-@else
-<a href="{{ e(URL::route('friend-request', array('id' => $user_id))) }}" style="float:right; margin-right:16px;">Befriend</a>
-@endif
+	</aside>
 
+	<!-- Friends -->
+	@if (count($friends) > 0)
+	<aside id="profile-friends">
+		<table class="table table-hover.table-condensed">
+			<thead>
+				<tr>
 
-<div class="table-responsive col-md-4" style="width:100%;float:left;">
+					<th>Your Friend(s):</th>
+					@if (Auth::check() && Auth::user()->id == $user_id)
+						<th>Remove Friend</th>
+					@endif
 
+				</tr>
+			</thead>
 
-@if (count($hosted_events) > 0)
-<div class="table-responsive col-md-4">
-	<table class="table table-hover.table-condensed">
-		<thead>
-			<tr>
-				<th>Event(s) Hosted:</th>
-			</tr>
-		</thead>
+			<tbody>
 
-		<tbody>
+				@foreach($friends as $fr)
+				<tr>
+					<td><a href="{{ $fr->username }}">{{  $fr->username }}</a></td>
 
-			@foreach($hosted_events as $he)
-			<tr>
-				<td>
-					<a href="../event/{{ $he->id }}">{{ $he->e_name }} ({{ count(json_decode($he['attendees'], true)) }})</a>
-				</td>
-			</tr>
-			@endforeach
+					@if (Auth::check() && Auth::user()->id == $user_id)
+						<td>{{ link_to_action('friend-remove', 'Remove', array('id' => $fr->id)) }}</td>
+					@endif
+				</tr>
+				@endforeach
 
-		</tbody>
-	</table>
-</div>
-@endif
+			</tbody>
+		</table>
+	</aside>
+	@endif
+	<!-- /Friends -->
 
+</section>
 
-@if (count($joined_events) > 0)
-<div class="table-responsive col-md-4">
-	<table class="table table-hover.table-condensed">
-		<thead>
-			<tr>
+<section id="profile-right">
+	<!-- Hosted Events -->
+	@if (count($hosted_events) > 0)
+	<aside id="profile-hosting">
+		<table class="table table-hover.table-condensed">
+			<thead>
+				<tr>
+					<th>Event(s) Hosting:</th>
+					<th>People Going:</th>
+				</tr>
+			</thead>
 
-				<th>Event(s) Joined:</th>
-				@if (Auth::check() && Auth::user()->id == $user_id)
-					<th>Leave event:</th>
-				@endif
+			<tbody>
 
-			</tr>
-		</thead>
+				@foreach($hosted_events as $he)
+				<tr>
+					<td>
+						<a href="../event/{{ $he->id }}">{{ $he->e_name }} </a>
+					</td>
+					<td>
+						{{ count(json_decode($he['attendees'], true)) }}
+					</td>
+				</tr>
+				@endforeach
 
-		<tbody>
+			</tbody>
+		</table>
+	</aside>
+	@endif
+	<!-- /Hosted Events -->
 
-			@foreach($joined_events as $je)
-			<tr>
+	<!-- Joined Events -->
+	@if (count($joined_events) > 0)
+	<aside id="profile-joining">
+		<table class="table table-hover.table-condensed">
+			<thead>
+				<tr>
 
-				<td><a href="../event/{{ $je->event->first()->id }}">{{ e($je->event->first()->e_name) }}</a></td>
+					<th>Event(s) Going:</th>
+					@if (Auth::check() && Auth::user()->id == $user_id)
+						<th>Leave event:</th>
+					@endif
 
-				@if (Auth::check() && Auth::user()->id == $user_id)
-					<td>{{ link_to_action('invite-remove', 'Leave', array('user' => $je->host_id, 'event' => $je->event_id )) }}</td>			
-				@endif
+				</tr>
+			</thead>
 
-			</tr>
-			@endforeach
+			<tbody>
 
-		</tbody>
-	</table>
-</div>
-@endif
+				@foreach($joined_events as $je)
+				<tr>
 
+					<td><a href="../event/{{ $je->event->first()->id }}">{{ e($je->event->first()->e_name) }}</a></td>
 
-@if (count($friends) > 0)
-<div class="table-responsive col-md-4">
-	<table class="table table-hover.table-condensed">
-		<thead>
-			<tr>
+					@if (Auth::check() && Auth::user()->id == $user_id)
+						<td>{{ link_to_action('invite-remove', 'Leave', array('user' => $je->host_id, 'event' => $je->event_id )) }}</td>			
+					@endif
 
-				<th>Your Friend(s):</th>
-				@if (Auth::check() && Auth::user()->id == $user_id)
-					<th>Remove Friend</th>
-				@endif
+				</tr>
+				@endforeach
 
-			</tr>
-		</thead>
-
-		<tbody>
-
-			@foreach($friends as $fr)
-			<tr>
-				<td><a href="{{ $fr->username }}">{{  $fr->username }}</a></td>
-
-				@if (Auth::check() && Auth::user()->id == $user_id)
-					<td>{{ link_to_action('friend-remove', 'Remove', array('id' => $fr->id)) }}</td>
-				@endif
-			</tr>
-			@endforeach
-
-		</tbody>
-	</table>
-</div>
-@endif
-
-</div>
-
+			</tbody>
+		</table>
+	</aside>
+	@endif
+	<!-- Joined Events -->
+	</section>
 </section>
 @stop

@@ -10,7 +10,7 @@ $().ready(function(){
 </script>
 	<!--Events Near -->
     <article id="events_near">
-        <h1><span id="x_events_founded">x</span> events</h1><br/>
+        <h1><span id="x_events_founded">Loading...</span> events</h1><br/>
         <h2>near your location</h2>
     </article><!-- /Events Near -->
 	@if(Auth::check())
