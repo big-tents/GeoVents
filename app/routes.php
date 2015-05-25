@@ -24,13 +24,6 @@ Route::get('/', [
 	'uses' => 'AccountController@getLogin'
 ]);
 
-/*
-|	Profile Page
-*/
-Route::get('/user/{username}',[
-	'as'   => 'profile-user',
-	'uses' => 'ProfileController@getUser'
-]);
 
 /*
 |	Events Page
@@ -59,6 +52,14 @@ Route::get('/api/events-nearby/{input?}', [
 */
 Route::group(['before'=>'auth'], function(){
 	
+	/*
+	|	Profile Page
+	*/
+	Route::get('/user/{username}',[
+		'as'   => 'profile-user',
+		'uses' => 'ProfileController@getUser'
+	]);
+
 	/*
 	| Invite (GET)
 	*/
@@ -246,12 +247,13 @@ Route::group(['before'=>'auth'], function(){
 			'as' => 'event-leave-request',
 			'uses' => 'EventController@postLeaveEvent'
 		]);
+
 		/*
 		|	Delete Event (POST)
 		*/
-		Route::post('/{$event_id}/delete/', [
+		Route::get('/delete/{event_id}', [
 			'as' => 'event-delete',
-			'uses' => 'EventController@postDeleteEvent'
+			'uses' => 'EventController@getDeleteEvent'
 		]);
 
 		/*
