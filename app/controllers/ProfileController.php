@@ -23,7 +23,7 @@ class ProfileController extends BaseController{
 				
 				$joined_events = JoinedEvents::with('event')->where('attendee_id', '=', $user_id)->get();
 				$hosted_events = EEvent::with('attendees')->where('host_id', '=', $user_id)->get();
-				$friends = Auth::user()->friendsMyFriends;
+				$friends = $user->friendsMyFriends;
 				
 
 				return View::make('profile.user')
