@@ -130,9 +130,11 @@
 
     <!--////////// Confirm Buttons //////////-->
     <tr>
-        <td colspan="2">
+        <td>
+        {{ link_to_action('event-delete', 'Delete', array('event_id'=>$e->id), ['class'=>'btn btn-block btn-danger'] ) }}
+        </td>
+        <td>
         {{ Form::submit('Confirm', ['class'=>'btn btn-block btn-primary']) }}
-        <!--{{ Form::submit('Delete Event', ['class'=>'btn btn-block btn-danger']) }}-->
         </td>
     </tr>
     </table>
